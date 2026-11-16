@@ -89,6 +89,8 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
         log(f"[mix] keep probability per source: "
             + ", ".join(f"{s}={p:.2f}" for s, p in sorted(keep_prob.items())))
     docs = tokens = chars = 0
+    prov_path = out_bin.replace(".bin", ".provenance.jsonl")
+    prov = open(prov_path, "w", encoding="utf-8")
     per_source: Counter = Counter()
     per_lang: Counter = Counter()
     per_domain: Counter = Counter()
@@ -116,6 +118,25 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
                     continue
                 seq = [tokenizer.eot_id] + ids + [tokenizer.eot_id]
                 np.asarray(seq, dtype=np.uint16).tofile(fh)
+                # Attribution must survive tokenisation: every token range is
+                # traceable to its document, source, licence and revision.
+                prov.write(json.dumps({
+                    "start": tokens, "end": tokens + len(seq),
+                    "document_id": rec.get("document_id"),
+                    "parent_document_id": rec.get("parent_document_id"),
+                    "source_id": rec.get("source_id"),
+                    "source_url": rec.get("source_url"),
+                    "original_record_id": rec.get("original_record_id"),
+                    "dataset_revision": rec.get("dataset_revision"),
+                    "license": rec.get("license"),
+                    "canonical_license": rec.get("canonical_license"),
+                    "language": rec.get("language"),
+                    "domain": rec.get("domain"),
+                    "content_hash": rec.get("content_hash"),
+                    "processing_version": rec.get("processing_version"),
+                    "quality_flags": rec.get("quality_flags"),
+                    "split": rec.get("split"),
+                }, ensure_ascii=False) + "\n")
                 docs += 1
                 tokens += len(seq)
                 chars += len(text)
@@ -129,6 +150,7 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
                 if max_tokens and tokens >= max_tokens:
                     stop = True
                     break
+    prov.close()
     os.replace(tmp, out_bin)
     size = os.path.getsize(out_bin)
     return {
@@ -144,6 +166,8 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
         "language_composition": dict(per_lang),
         "domain_composition": dict(per_domain),
         "truncated_at_max_tokens": bool(stop),
+        "provenance": os.path.relpath(prov_path, ROOT),
+        "provenance_sha256": sha256_file(prov_path),
         "sources": [os.path.relpath(p, ROOT) for p in split_files],
     }
 
@@ -181,8 +205,11 @@ def main() -> None:
                       "eot_id": int(tokenizer.eot_id),
                       "hash": hashlib.sha256(json.dumps(
                           tokenizer.to_state_dict(), sort_keys=True).encode()).hexdigest()},
+        # The manifest of the corpus the splits came from, not a hard-coded path:
+        # a v6 build must never claim it was built from v5.
         "curated_manifest": os.path.relpath(
-            os.path.join(ROOT, "data", "curated_v5", "raw_manifest.json"), ROOT),
+            os.path.join(os.path.dirname(os.path.abspath(args.splits)),
+                         "raw_manifest.json"), ROOT),
         "framing": "<eot> document <eot>, uint16 little-endian",
     }
     missing = []

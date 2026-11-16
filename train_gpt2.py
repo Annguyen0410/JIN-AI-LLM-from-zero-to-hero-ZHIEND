@@ -277,6 +277,74 @@ def evaluate(model, batcher: ShardBatcher, iters: int, amp_dtype, use_amp: bool)
 
 # ── checkpointing ──────────────────────────────────────────────────────
 
+# Bump when the batch sampler changes behaviour: a resume across sampler
+# versions cannot reproduce the same batch sequence even with identical data.
+SAMPLE_IMPL_VERSION = 1
+DATA_FRAMING = "<eot> document <eot>, uint16 little-endian"
+
+
+def _sha_payload(payload) -> str:
+    return hashlib.sha256(json.dumps(payload, sort_keys=True,
+                                     default=str).encode()).hexdigest()
+
+
+def experiment_fingerprint(model, tokenizer, dataset_manifest: dict,
+                           args, total_steps: int) -> dict:
+    """Everything that must be identical for a resume to reproduce a run.
+
+    The Phase 14 guard compared corpus hashes, arch id, tokenizer kind and step
+    budget. That let a resume change learning rate, warmup, batch geometry,
+    dropout, seed or precision and still claim to be the same experiment.
+    """
+    return {
+        "architecture": model.export_config(),
+        "arch_id": model.arch_id,
+        "preset": args.preset,
+        "tokenizer": {"kind": tokenizer.kind,
+                      "vocab_size": tokenizer.vocab_size,
+                      "state_hash": _sha_payload(tokenizer.to_state_dict())},
+        "corpus": {"train_sha256": dataset_manifest["train"]["sha256"],
+                   "val_sha256": dataset_manifest["val"]["sha256"]},
+        "data": {"seq_len": args.seq_len, "batch_size": args.batch_size,
+                 "grad_accum": args.grad_accum,
+                 "effective_batch_tokens": args.batch_size * args.grad_accum * args.seq_len,
+                 "framing": DATA_FRAMING,
+                 "sampler": f"numpy-pcg64.v{SAMPLE_IMPL_VERSION}"},
+        "optimizer": {"kind": "adamw", "betas": [0.9, 0.95], "eps": 1e-8,
+                      "weight_decay": 0.1, "grad_clip": 1.0},
+        "schedule": {"kind": "cosine_with_warmup", "total_steps": total_steps,
+                     "warmup": args.warmup, "peak_lr": args.lr,
+                     "min_lr_ratio": args.min_lr_ratio},
+        "precision": {"amp": not args.no_amp, "amp_dtype": "float16"},
+        "seed": args.seed,
+        "dropout": args.dropout,
+        "code_revision": os.popen("git rev-parse HEAD").read().strip() or None,
+    }
+
+
+def _flatten(prefix: str, value, out: dict) -> None:
+    if isinstance(value, dict):
+        for k, v in value.items():
+            _flatten(f"{prefix}.{k}" if prefix else k, v, out)
+    else:
+        out[prefix] = value
+
+
+def compare_fingerprints(old: dict, new: dict,
+                         ignore: tuple[str, ...] = ()) -> list[tuple]:
+    """Dotted-key differences, ignoring keys explicitly permitted to change."""
+    a, b = {}, {}
+    _flatten("", old, a)
+    _flatten("", new, b)
+    diffs = []
+    for key in sorted(set(a) | set(b)):
+        if key in ignore:
+            continue
+        if a.get(key) != b.get(key):
+            diffs.append((key, a.get(key), b.get(key)))
+    return diffs
+
+
 def _np_state_to_dict(state) -> dict:
     """NumPy global RNG state as plain ints.
 
@@ -299,7 +367,7 @@ def _np_state_from_dict(data):
 
 def verify_resume_compatibility(blob: dict, model, tokenizer, dataset_manifest: dict,
                                 total_steps: int, extend_budget: bool,
-                                log_fn=print) -> None:
+                                log_fn=print, current_fingerprint: dict | None = None) -> None:
     """Refuse a resume that would silently change the experiment."""
     old = blob.get("dataset_manifest", {})
     if old.get("train", {}).get("sha256") != dataset_manifest["train"]["sha256"]:
@@ -321,6 +389,21 @@ def verify_resume_compatibility(blob: dict, model, tokenizer, dataset_manifest: 
             "intentionally continue with the new budget.")
     if old_total != total_steps:
         log_fn(f"[Resume] extending budget {old_total} -> {total_steps} (--extend-budget)")
+
+    # Full experiment-configuration check (Phase 15F).
+    old_fp = blob.get("experiment_config")
+    if old_fp and current_fingerprint is not None:
+        ignore = ("schedule.total_steps",) if extend_budget else ()
+        diffs = compare_fingerprints(old_fp, current_fingerprint, ignore=ignore)
+        if diffs:
+            detail = "; ".join(f"{k}: {o!r} -> {n!r}" for k, o, n in diffs[:8])
+            raise SystemExit(
+                "[Fatal] Training configuration changed since this checkpoint: "
+                f"{detail}. A different configuration is a different experiment; "
+                "start a new --out-dir instead of resuming.")
+        if extend_budget and old_total != total_steps:
+            log_fn("[Resume] LR schedule is NOT the original trajectory: the cosine "
+                   "decay now spans a longer budget. This is explicit, not silent.")
 
 
 def restore_training_state(blob: dict, model, optimizer, scaler=None,
@@ -373,6 +456,8 @@ def save_state(path: str, model, optimizer, scaler, step: int, tokens_seen: int,
         "training_revision": meta.get("revision"),
         "training_args": meta["training_args"],
         "dataset_manifest": meta["dataset_manifest"],
+        "experiment_config": meta.get("experiment_config"),
+        "experiment_config_hash": meta.get("experiment_config_hash"),
         "tokenizer": meta["tokenizer"],
         # Canonical key read by utils.tokenizer_from_state / app / chat / bench.
         "tokenizer_state": {"kind": meta["tokenizer"]["kind"],
@@ -529,8 +614,12 @@ def main() -> None:
     amp_dtype = torch.float16
     scaler = torch.amp.GradScaler("cuda") if use_amp else None
 
+    fingerprint = experiment_fingerprint(model, tokenizer, dataset_manifest, args,
+                                        total_steps)
     meta = {
         "architecture_id": model.arch_id,
+        "experiment_config": fingerprint,
+        "experiment_config_hash": _sha_payload(fingerprint),
         "training_args": vars(args),
         "dataset_manifest": dataset_manifest,
         "tokenizer": {"kind": tokenizer.kind, "vocab_size": tokenizer.vocab_size,
@@ -573,8 +662,11 @@ def main() -> None:
         blob = torch.load(ckpt_path, map_location="cpu", weights_only=True, mmap=True)
 
         # ── refuse unsafe partial restorations, then restore everything ──
+        current_fp = experiment_fingerprint(model, tokenizer, dataset_manifest, args,
+                                            total_steps)
         verify_resume_compatibility(blob, model, tokenizer, dataset_manifest,
-                                    total_steps, args.extend_budget, log_fn=log)
+                                    total_steps, args.extend_budget, log_fn=log,
+                                    current_fingerprint=current_fp)
         restore_training_state(blob, model, optimizer, scaler, train_batcher, device)
         start_step = int(blob["iteration"])
         tokens_seen = int(blob["tokens_seen"])

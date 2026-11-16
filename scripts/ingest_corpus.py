@@ -39,6 +39,9 @@ from dataclasses import dataclass
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
+
+from license_policy import POLICY_VERSION, classify_source, detect_pii  # noqa: E402
+
 OUT_ROOT = os.path.join(ROOT, "data", "curated_v5")
 DOWNLOAD_REPORT = os.path.join(ROOT, "data", "downloads", "general_v1",
                                "download_report.json")
@@ -68,6 +71,7 @@ class Source:
     attribution: str | None
     text_field: str | None = None
     language_hint: str | None = None
+    policy_key: str | None = None     # key into REVIEWED_SOURCES (never a display name)
     notes: str = ""
 
 
@@ -129,6 +133,7 @@ def discover_sources(max_report_entries: int = 60) -> list[Source]:
             attribution=meta["attribution"],
             text_field=(meta["text_columns"] or [None])[0],
             language_hint="en",
+            policy_key=dataset_id,
             notes=meta.get("quality_evidence") or "",
         ))
 
@@ -145,7 +150,7 @@ def discover_sources(max_report_entries: int = 60) -> list[Source]:
             source_url="data/prepared_v4/manifest.json",
             commercial_ok=True, redistribution_ok=True,
             attribution="See data/prepared_v4/pretrain_sources.jsonl",
-            language_hint=None),
+            language_hint=None, policy_key="prepared_v4"),
         )
 
     # Local seed conversations (project-authored).
@@ -158,6 +163,7 @@ def discover_sources(max_report_entries: int = 60) -> list[Source]:
             license="Project-authored", license_status="documented",
             source_url=None, commercial_ok=True, redistribution_ok=True,
             attribution="Project-authored data", language_hint=None,
+            policy_key="project_seed"
         ))
     return sources
 
@@ -330,7 +336,9 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
 
     written = 0
     skipped = 0
+    decision = classify_source(src.policy_key or src.source_id, src.license)
     flags_count: dict[str, int] = {}
+    pii_count: dict[str, int] = {}
     lang_count: dict[str, int] = {}
     chars = 0
     t0 = time.time()
@@ -350,6 +358,11 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
                     if {"empty", "corrupted_encoding"} & set(flags):
                         skipped += 1
                         continue
+                    pii = detect_pii(text)
+                    if pii:
+                        flags.append("possible_pii")
+                    decision = classify_source(src.policy_key or src.source_id,
+                                                 src.license)
                     lang = src.language_hint or detect_language(text)
                     if lang is None:
                         lang = detect_language(text)
@@ -360,6 +373,8 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
                         "source_url": rec.get("url") or src.source_url,
                         "license": src.license,
                         "license_status": src.license_status,
+                        **decision.as_dict(),
+                        "pii_findings": pii,
                         "language": lang,
                         "domain": src.domain,
                         "text": text,
@@ -375,6 +390,8 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
                     chars += len(text)
                     for f in flags:
                         flags_count[f] = flags_count.get(f, 0) + 1
+                    for kind, count in pii.items():
+                        pii_count[kind] = pii_count.get(kind, 0) + count
                     lang_count[lang] = lang_count.get(lang, 0) + 1
             except SystemExit:
                 raise
@@ -394,6 +411,7 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
         "documents": written, "skipped": skipped, "chars": chars,
         "avg_chars": round(chars / max(1, written), 1),
         "languages": lang_count, "quality_flags": flags_count,
+        "pii_findings": pii_count, "license_decision": decision.as_dict(),
         "output": os.path.relpath(out_path, ROOT),
         "output_sha256": hashlib.sha256(open(out_path, "rb").read()).hexdigest()
         if os.path.getsize(out_path) < 200 * 1024 * 1024 else None,
@@ -403,13 +421,17 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
 
 
 def main() -> None:
+    global OUT_ROOT
     ap = argparse.ArgumentParser(description="Phase 2 corpus ingestion")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--source", default=None)
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--max-docs-per-source", type=int, default=200_000)
     ap.add_argument("--min-chars", type=int, default=200)
+    ap.add_argument("--out-root", default=OUT_ROOT,
+                    help="where documents/ and raw_manifest.json are written")
     args = ap.parse_args()
+    OUT_ROOT = args.out_root
 
     sources = discover_sources()
     if args.list or not (args.source or args.all):

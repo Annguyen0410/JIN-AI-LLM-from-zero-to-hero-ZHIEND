@@ -1,78 +1,203 @@
-"""Corpus dedup: kill the canned-answer repetition that caused the echo.
+"""Tests for exact deduplication (Phase 15B).
 
-The May corpus had 30,020 assistant turns but only 755 distinct answers, so the
-model learned a fixed answer set and parroted it. These tests pin the two guards
-that fix it: whole-conversation duplicates and over-repeated answer sequences.
+These tests exercise the defect that Phase 14 shipped: pass 2 looked up
+``seen[hash]`` for *every* occurrence, so duplicates of a retained document were
+written again (1,897 such records were measured in the v5 train split). Every
+test below therefore audits the **written output**, not internal counters.
 """
 
 from __future__ import annotations
 
-import unittest
+import json
+import os
+import subprocess
+import sys
 
-import build_instruct_dataset as bid
-from chat_template import ROLE_ASSISTANT, ROLE_SYSTEM, ROLE_USER
+import pytest
 
-
-def conv(user: str, assistant: str) -> list[dict]:
-    return [
-        {"role": ROLE_SYSTEM, "content": "You are Jin."},
-        {"role": ROLE_USER, "content": user},
-        {"role": ROLE_ASSISTANT, "content": assistant},
-    ]
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 
 
-class TestDedup(unittest.TestCase):
-    def test_exact_duplicates_are_dropped(self):
-        data = [conv("Hi", "Hello!")] * 40 + [conv("Bye", "Goodbye!")]
-        kept, stats = bid.dedup_conversations(data)
-        self.assertEqual(len(kept), 2)
-        self.assertEqual(stats["dropped_duplicates"], 39)
-
-    def test_duplicates_that_differ_only_in_whitespace_and_case_are_dropped(self):
-        data = [conv("Hi", "Hello  there!"), conv("hi", "hello there!")]
-        kept, stats = bid.dedup_conversations(data)
-        self.assertEqual(len(kept), 1)
-        self.assertEqual(stats["dropped_duplicates"], 1)
-
-    def test_repeated_answer_sequences_are_capped(self):
-        # Different questions, identical answer set — the "2 + 2 = 4." pattern.
-        data = [conv(f"What is {n} + {n}?", "2 + 2 = 4.") for n in range(10)]
-        kept, stats = bid.dedup_conversations(data, max_identical_answers=2)
-        self.assertEqual(len(kept), 2)
-        self.assertEqual(stats["dropped_repeated_answers"], 8)
-
-    def test_answer_cap_can_be_disabled(self):
-        data = [conv(f"Q{n}", "Same answer.") for n in range(10)]
-        kept, _ = bid.dedup_conversations(data, max_identical_answers=0)
-        self.assertEqual(len(kept), 10)
-
-    def test_distinct_conversations_survive(self):
-        data = [conv(f"Q{n}", f"A{n}") for n in range(50)]
-        kept, stats = bid.dedup_conversations(data)
-        self.assertEqual(len(kept), 50)
-        self.assertEqual(stats["dropped_duplicates"], 0)
-        self.assertEqual(stats["dropped_repeated_answers"], 0)
-
-    def test_fingerprint_ignores_key_order_of_roles(self):
-        a = conv("Hi", "Hello")
-        b = conv("Hi", "Hello")
-        self.assertEqual(bid.conversation_fingerprint(a), bid.conversation_fingerprint(b))
+def write_documents(path: str, records: list[dict]) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        for rec in records:
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
-class TestAnswerStats(unittest.TestCase):
-    def test_reports_the_echo_metric(self):
-        data = [conv("Q1", "2 + 2 = 4."), conv("Q2", "2 + 2 = 4."), conv("Q3", "Unique.")]
-        stats = bid.answer_stats(data)
-        self.assertEqual(stats["turns"], 3)
-        self.assertEqual(stats["unique_answers"], 2)
-        self.assertAlmostEqual(stats["repeat_ratio"], 1 / 3, places=4)
-        self.assertEqual(stats["top_answers"][0], ("2 + 2 = 4.", 2))
+def doc(text: str, source: str, doc_id: str, language: str = "en",
+        domain: str = "knowledge", flags: list[str] | None = None) -> dict:
+    import hashlib
+    norm = " ".join(text.split())
+    return {
+        "document_id": f"{source}:{doc_id}",
+        "source_id": source,
+        "source_name": source,
+        "source_url": f"https://example.invalid/{doc_id}",
+        "license": "project-authored",
+        "license_status": "documented",
+        "canonical_license": "project-authored",
+        "eligible_for_training_mixture": True,
+        "language": language,
+        "domain": domain,
+        "text": text,
+        "original_format": "txt",
+        "original_record_id": doc_id,
+        "content_hash": hashlib.sha256(norm.encode()).hexdigest(),
+        "quality_flags": flags or [],
+        "ingestion_timestamp": "2026-11-16T00:00:00",
+    }
 
-    def test_empty_corpus_does_not_divide_by_zero(self):
-        stats = bid.answer_stats([])
-        self.assertEqual(stats["turns"], 0)
-        self.assertEqual(stats["repeat_ratio"], 0.0)
+
+def run_verify(tmp_path, extra_args: list[str] | None = None) -> dict:
+    in_root = tmp_path / "curated"
+    out_root = tmp_path / "curated"
+    cmd = [sys.executable, os.path.join(ROOT, "scripts", "verify_corpus.py"),
+           "--in-root", str(in_root), "--out-root", str(out_root),
+           "--min-chars", "10", "--seed", "7"]
+    if extra_args:
+        cmd += extra_args
+    proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True,
+                          encoding="utf-8", errors="replace")
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    return json.load(open(out_root / "reports" / "dedup_quality_splits.json",
+                          encoding="utf-8"))
 
 
-if __name__ == "__main__":
-    unittest.main()
+def read_split(root, name: str) -> list[dict]:
+    path = root / "splits" / f"{name}.jsonl"
+    if not path.exists():
+        return []
+    with open(path, encoding="utf-8") as fh:
+        return [json.loads(line) for line in fh if line.strip()]
+
+
+def assert_unique_hashes(records: list[dict]) -> None:
+    hashes = [r["content_hash"] for r in records]
+    assert len(hashes) == len(set(hashes)), "duplicate content_hash in output"
+
+
+def test_identical_documents_within_one_source(tmp_path):
+    text = "The same paragraph appears twice in one source file. " * 5
+    write_documents(str(tmp_path / "curated" / "documents" / "a.jsonl"), [
+        doc(text, "src_a", "1"), doc(text, "src_a", "2"), doc(text, "src_a", "3"),
+        doc("A different paragraph that is long enough to survive filtering. " * 3,
+            "src_a", "4"),
+    ])
+    report = run_verify(tmp_path)
+    total = sum(len(read_split(tmp_path / "curated", s)) for s in ("train", "val", "test"))
+    assert report["exact_duplicates_removed"] == 2
+    assert total == 2                      # 2 unique documents written, not 4
+    for split in ("train", "val", "test"):
+        assert_unique_hashes(read_split(tmp_path / "curated", split))
+
+
+def test_identical_documents_across_sources(tmp_path):
+    text = "Cross-source duplication is still duplication, byte for byte. " * 5
+    write_documents(str(tmp_path / "curated" / "documents" / "a.jsonl"),
+                    [doc(text, "src_a", "1")])
+    write_documents(str(tmp_path / "curated" / "documents" / "b.jsonl"),
+                    [doc(text, "src_b", "1")])
+    report = run_verify(tmp_path)
+    total = sum(len(read_split(tmp_path / "curated", s)) for s in ("train", "val", "test"))
+    assert report["exact_duplicates_removed"] == 1
+    assert total == 1
+
+
+def test_identical_documents_in_different_files_same_hash(tmp_path):
+    text = "Same file contents, different file names, one document. " * 5
+    write_documents(str(tmp_path / "curated" / "documents" / "x.jsonl"),
+                    [doc(text, "src_a", "1"), doc(text, "src_a", "2")])
+    write_documents(str(tmp_path / "curated" / "documents" / "y.jsonl"),
+                    [doc(text, "src_a", "3")])
+    run_verify(tmp_path)
+    total = sum(len(read_split(tmp_path / "curated", s)) for s in ("train", "val", "test"))
+    assert total == 1
+    assert_unique_hashes(read_split(tmp_path / "curated", "train"))
+
+
+def test_near_duplicate_cluster_keeps_one_representative(tmp_path):
+    # A reformatted copy: identical body, one different closing sentence.
+    body = " ".join(f"Sentence number {i} explains a different part of the survey."
+                    for i in range(20))
+    variants = [f"{body} Closing remark variant {i}." for i in range(4)]
+    write_documents(str(tmp_path / "curated" / "documents" / "n.jsonl"),
+                    [doc(v, "src_a", str(i)) for i, v in enumerate(variants)])
+    report = run_verify(tmp_path, ["--near-dup-threshold", "0.8"])
+    total = sum(len(read_split(tmp_path / "curated", s)) for s in ("train", "val", "test"))
+    assert total == 1, "near-duplicate cluster must contribute exactly one document"
+    assert report["near_duplicate"]["clusters"] == 1
+    assert_unique_hashes(read_split(tmp_path / "curated", "train"))
+
+
+def test_near_duplicate_different_lengths(tmp_path):
+    long_text = ("Alpha beta gamma delta epsilon zeta eta theta iota kappa. " * 40)
+    short_text = long_text[:600] + " Tail sentence differs."
+    write_documents(str(tmp_path / "curated" / "documents" / "n.jsonl"),
+                    [doc(long_text, "src_a", "long"), doc(short_text, "src_a", "short"),
+                     doc("Completely unrelated text about marine biology fieldwork. " * 6,
+                         "src_a", "other")])
+    report = run_verify(tmp_path)
+    total = sum(len(read_split(tmp_path / "curated", s)) for s in ("train", "val", "test"))
+    assert total <= 3
+    assert report["exact_duplicates_removed"] == 0
+
+
+def test_repeated_runs_are_deterministic(tmp_path):
+    records = [doc(f"Document number {i} with unique content {i * 7919}. " * 4,
+                   f"src_{i % 3}", str(i)) for i in range(60)]
+    write_documents(str(tmp_path / "curated" / "documents" / "d.jsonl"), records)
+    first = run_verify(tmp_path)
+    hashes_first = {s: [r["content_hash"] for r in read_split(tmp_path / "curated", s)]
+                    for s in ("train", "val", "test")}
+    second = run_verify(tmp_path)
+    hashes_second = {s: [r["content_hash"] for r in read_split(tmp_path / "curated", s)]
+                     for s in ("train", "val", "test")}
+    assert first["splits"] == second["splits"]
+    assert hashes_first == hashes_second
+
+
+def test_output_counts_match_unique_documents(tmp_path):
+    records = [doc(f"Unique body {i} " + "padding words here " * 20, "src_a", str(i))
+               for i in range(30)]
+    records += [records[0], records[1], records[2]]          # 3 exact duplicates
+    write_documents(str(tmp_path / "curated" / "documents" / "c.jsonl"), records)
+    report = run_verify(tmp_path)
+    written = sum(report["splits"][s]["chunks"] for s in ("train", "val", "test"))
+    assert report["documents_in"] == 33
+    assert report["exact_duplicates_removed"] == 3
+    assert written == 30
+    assert report["output_audit"]["extra_duplicate_records"] == 0
+
+
+def test_cluster_disjoint_splits(tmp_path):
+    records = [doc(f"Cluster member {i} discussing topic {i % 5}. " * 6, "src_a", str(i))
+               for i in range(80)]
+    write_documents(str(tmp_path / "curated" / "documents" / "s.jsonl"), records)
+    report = run_verify(tmp_path)
+    audit = report["output_audit"]
+    assert audit["train_val_overlap"] == 0
+    assert audit["train_test_overlap"] == 0
+    assert audit["val_test_overlap"] == 0
+    clusters = {}
+    for split in ("train", "val", "test"):
+        for rec in read_split(tmp_path / "curated", split):
+            clusters.setdefault(rec["cluster_id"], set()).add(split)
+    assert all(len(v) == 1 for v in clusters.values()), "a cluster straddles splits"
+
+
+def test_pii_documents_are_excluded(tmp_path):
+    clean = "A perfectly ordinary paragraph about rivers and their valleys. " * 4
+    with_email = ("Contact the author at someone@example.com for details about the "
+                  "river survey carried out last spring. " * 4)
+    write_documents(str(tmp_path / "curated" / "documents" / "p.jsonl"),
+                    [doc(clean, "src_a", "clean"),
+                     doc(with_email, "src_a", "email", flags=["possible_pii"])])
+    report = run_verify(tmp_path)
+    written = [r for s in ("train", "val", "test")
+               for r in read_split(tmp_path / "curated", s)]
+    assert len(written) == 1
+    assert "email" not in written[0]["text"]
+    assert report["pii"]["excluded_documents"] == 1
+    assert report["pii"]["policy"] == "exclude"

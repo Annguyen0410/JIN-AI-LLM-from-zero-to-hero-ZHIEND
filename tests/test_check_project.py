@@ -1,6 +1,13 @@
 from __future__ import annotations
 import unittest
-from scripts.check_project import GROUPS, iter_tests, select_suite, test_group
+import scripts.check_project as check_project
+from scripts.check_project import GROUPS, iter_tests, select_suite
+
+# NOTE: ``test_group`` is imported through the module on purpose. Importing the
+# function by name made pytest collect it as a test and fail on its ``test_id``
+# parameter ("fixture 'test_id' not found"), which is a real defect in this repo
+# and not a reason to skip the file.
+# (also deliberately not rebound to a module-level test_* name)
 
 
 def named_case(name):
@@ -18,7 +25,7 @@ class TestGroups(unittest.TestCase):
             ("test_phase3.TestTokenizerExtension.test_x", "shared"),
             ("test_storage.StorageTests.test_x", "shared"),
         ):
-            self.assertEqual(test_group(name), expected)
+            self.assertEqual(check_project.test_group(name), expected)
 
     def test_partition_no_loss_or_duplicate(self):
         cases = [named_case(name) for name in (

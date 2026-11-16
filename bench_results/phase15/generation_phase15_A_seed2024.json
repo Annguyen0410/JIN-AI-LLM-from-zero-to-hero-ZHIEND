@@ -1,0 +1,1026 @@
+{
+  "checkpoint": "checkpoints\\phase15\\A_seed2024\\best.pt",
+  "checkpoint_sha256": "f38b2a46e4e10f50364bba676c8c0cb34ce5c100878c4c1dd5592db9c1b65e79",
+  "iteration": 200,
+  "tokens_seen": 3276800,
+  "prompt_source": "data\\curated_v6\\splits\\test.jsonl",
+  "decoding": {
+    "greedy": "temperature 0",
+    "sampled": "temperature 0.8",
+    "max_new_tokens": 64,
+    "seed": 1515,
+    "no_repetition_penalty": true
+  },
+  "categories": {
+    "code": {
+      "prompts": 1,
+      "mean_continuation_words": 1.0,
+      "premature_eos_rate": 1.0,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 1.0,
+      "distinct_2": 1.0,
+      "topic_overlap": 0.0,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "synthetic:code",
+          "source_id": null,
+          "language": "en",
+          "prompt": "def fibonacci(n):\n    \"\"\"Return the n-th Fibonacci number.\"\"\"\n",
+          "greedy": "                                                                ",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "                                            \"\"\"\n                   ",
+          "sampled_metrics": {
+            "continuation_words": 1,
+            "continuation_chars": 67,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 1.0,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": false
+        }
+      ]
+    },
+    "educational": {
+      "prompts": 6,
+      "mean_continuation_words": 26.333,
+      "premature_eos_rate": 0.167,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.756,
+      "distinct_2": 0.833,
+      "topic_overlap": 0.012,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "cosmopedia_v2_sample:435",
+          "source_id": "cosmopedia_v2_sample",
+          "language": "en",
+          "prompt": " Chapter 10: Public Health Nutrition - Making Our Communities Healthier\n\nHello, future public health nutritionists! You might wonder, \"What does it mean to work in public health nutrition?\" Well, imagine being a superhero who uses food as their secret weapon to fight off sickness and keep communities healthy! That's what public health nutritionists do every day. They ensure that people in their community have access to delicious, wholesome foods so they can grow strong and stay healthy. Let's dive into this tasty world together!\n\n**Section 1: What Is Public Health Nutrition?**\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n*",
+          "greedy_metrics": {
+            "continuation_words": 1,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 1.0,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "One. So, or protect your want an theory, particular products with the Understanding and still also can have just on the area. These more unit across the story represents the therapies. Use Spectrum?\"\n\n I can their learn friends, and YOU.\n",
+          "sampled_metrics": {
+            "continuation_words": 40,
+            "continuation_chars": 238,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.875,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.021
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "cosmopedia_v2_sample:808",
+          "source_id": "cosmopedia_v2_sample",
+          "language": "en",
+          "prompt": " Building Resilience: Navigating Life's Challenges Towards Lasting Contentment\n\nIn today's fast-paced and intricate world, it is easy to become overwhelmed by its complexities and feel that experiencing genuine happiness is beyond reach. However, Mo Gawdat, former Chief Business Officer at Google X and the author of \"Solve for Happy\", proposes a novel approach to attaining happiness through a systematic method he calls 'solving for happy'. This strategy emphasizes building resilience as a crucial component of achieving sustainable joy and fulfillment amidst life's inevitable adversities.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": " Even where self-day-sexing with a new economy!\n\n\nAs inside contemporary tend to the hammer and nurture, and just someone love, and social verbal husband.\n\nSection 4:\n\n\n\n\n\n\n\n\n\n\n\n!",
+          "sampled_metrics": {
+            "continuation_words": 27,
+            "continuation_chars": 179,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.926,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "cosmopedia_v2_sample:937",
+          "source_id": "cosmopedia_v2_sample",
+          "language": "en",
+          "prompt": " Chapter 6: Geopolymer Concrete - The Future of Construction\n\nHave you ever seen those big trucks carrying cement mix pouring it into foundations of buildings under construction? That's regular concrete made mainly of water, sand, gravel, and Portland cement. But what if we told you that there's another type of concrete that's stronger, more durable, and better for our planet? Let us introduce you to Geopolymer Concrete!\n\nImagine being a project manager overseeing the building of a new bridge using this super-concrete called geopolymer.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\nThe Year:\nSoundates in a words was the Doveism is a kids in his red- Documentowlics, someone, individuals are a changed to the red. These changes of the great enemies, which are not be Jewishification. It are work?\n\nImpize water when capable of style are",
+          "sampled_metrics": {
+            "continuation_words": 45,
+            "continuation_chars": 256,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.8,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.022
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "cosmopedia_v2_sample:427",
+          "source_id": "cosmopedia_v2_sample",
+          "language": "en",
+          "prompt": "Once upon a time in a city called Gotham, there lived a superhero named Batwoman. She wore a cool suit and fought bad guys to keep the city safe. But even superheroes need help sometimes! That's why she had friends like Ryan, who always tried to do the right thing.\n\nOne day, Ryan met someone special - her friend Angelique. They used to go to school together and shared many secrets. However, they had a disagreement when Ryan found out that Angelique made some mistakes. Even though Angeline wanted to make things better, Ryan didn't want anything to do with her anymore.\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOne day, \"I.\n\n\nOne day, \"I.\n\nOne day, \"I.\n\nOne day, \"I.\n\n",
+          "greedy_metrics": {
+            "continuation_words": 12,
+            "continuation_chars": 88,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.667,
+            "distinct_1": 0.25,
+            "distinct_2": 0.273,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.031
+          },
+          "sampled": "\nOne light, they probably only of own things a unique fun about all synthesis, or fun.\n\n\nIn the transparent, they walked?\"\nDuring your father can be delve to beautiful of my happy.",
+          "sampled_metrics": {
+            "continuation_words": 32,
+            "continuation_chars": 180,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.938,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.031
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "cosmopedia_v2_sample:122",
+          "source_id": "cosmopedia_v2_sample",
+          "language": "en",
+          "prompt": " Chapter 14: Ohio River Valley Settlement Patterns and Financial Institutions\n\nIntroduction:\nThe Ohio River Valley has been home to various indigenous peoples and European settlers since prehistoric times. This chapter focuses on how the region's settlement patterns influenced its economic development and shaped the growth of financial institutions that serve this area today. We will explore historical events, geographical features, and cultural practices that contributed to these unique patterns and their impact on modern banking systems.\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe first of the world, and the first of the world of the first of the world of the first-century first of the first of the first-century American-century American-century American-century American-century American-",
+          "greedy_metrics": {
+            "continuation_words": 32,
+            "continuation_chars": 233,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.207,
+            "distinct_1": 0.312,
+            "distinct_2": 0.452,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\n\n\n\n\n\n5th record in distractions.\nTo give her increased intention, the sister.\nA. (28: Missouri",
+          "sampled_metrics": {
+            "continuation_words": 14,
+            "continuation_chars": 96,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 1.0,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "cosmopedia_v2_sample:429",
+          "source_id": "cosmopedia_v2_sample",
+          "language": "en",
+          "prompt": " Title: Nutrition and Aging: Keeping Our Elders Healthy and Strong\n\nIntroduction:\nAs our grandparents and great-grandparents grow older, it's essential that we help take care of them by ensuring they have access to proper nutrition and healthcare. Today, we will explore how good eating habits can contribute to healthy aging, with a particular focus on some common conditions seen in elderly individuals like cardiovascular diseases, diabetes, and osteoporosis. We will also learn about malnutrition – what it means and why it’s harmful to elders.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe \"The \"",
+          "greedy_metrics": {
+            "continuation_words": 3,
+            "continuation_chars": 70,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 1.0,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "",
+          "sampled_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    },
+    "en_continuation": {
+      "prompts": 6,
+      "mean_continuation_words": 42.5,
+      "premature_eos_rate": 0.0,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.791,
+      "distinct_2": 0.979,
+      "topic_overlap": 0.007,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "wikipedia_en_20231101:999",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "Anal sex or anal intercourse is generally the insertion and thrusting of the erect penis into a person's anus, or anus and rectum, for sexual pleasure. Other forms of anal sex include anal fingering, the use of sex toys, anilingus, pegging, as well as electrostimulation and erotic torture such as figging. Although anal sex most commonly means penileanal penetration, sources sometimes use anal intercourse to exclusively denote penileanal penetration, and anal sex to denote any form of anal sexual activity, especially between pairings as opposed to anal masturbation.\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\n\n\n\nThe revisedchames, or particular products with the previous of 5.\n\n\n\n\nIn the next type of Cincinnatis & Key of the film is also\nSmally I can their command of history in these.\n\n\n\nKiets (Zi V Westbrook of intellectual",
+          "sampled_metrics": {
+            "continuation_words": 38,
+            "continuation_chars": 221,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.842,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:915",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "A360 Media, LLC (branded a360media), formerly American Media, Inc. (AMI), is an American publisher of magazines, supermarket tabloids, and books based in New York City. Originally affiliated with only the National Enquirer, the media company's holdings expanded considerably in the 1990s and 2000s. In November 2010, American Media filed for Chapter 11 bankruptcy protection due to debts of nearly $1 billion, but has continued to buy and sell magazine brands since then.\n\nAMI has been in the news affiliated with accusations of catch and kill operations. On December 12, 2018, the U.S.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": " The campus with the Premier-sex, with a new Catholic radio further Press, a appointed with the United War, and less of the Historicalsk), the life\n\n\n\n\n16ecadas, it was add $3, and the newspaper\n\nAmerican basketball-Why academics.\nThe time,",
+          "sampled_metrics": {
+            "continuation_words": 38,
+            "continuation_chars": 240,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.763,
+            "distinct_2": 0.973,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.043
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:650",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "Ægir (anglicised as Aegir; Old Norse 'sea'), Hlér (Old Norse 'sea'), or Gymir (Old Norse less clearly 'sea, engulfer'), is a jötunn and a personification of the sea in Norse mythology. In the Old Norse record, Ægir hosts the gods in his halls and is associated with brewing ale. Ægir is attested as married to a goddess, Rán, who also personifies the sea, and together the two produced daughters who personify waves, the Nine Daughters of Ægir and Rán, and  Ægir's son is Snær, personified snow.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\nThe Year, theSound Bhón, many members of a named Green% of the television-created was not realized to the legislative individuals are closed to the new red-based changes of the great enemies, which are released with Jewish sports. It are work in the ice. Ultimately, when capable of style from",
+          "sampled_metrics": {
+            "continuation_words": 49,
+            "continuation_chars": 295,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.796,
+            "distinct_2": 0.958,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:653",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "ASA as an abbreviation or initialism may refer to:\n\nBiology and medicine\n Accessible surface area of a biomolecule, accessible to a solvent\n Acetylsalicylic acid, aspirin\n Advanced surface ablation, refractive eye surgery\n Anterior spinal artery, the blood vessel which supplies the anterior portion of the spinal cord\n Antisperm antibodies, antibodies against sperm antigens\n Argininosuccinic aciduria, a disorder of the urea cycle\n ASA physical status classification system, rating of patients undergoing anesthesia\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "People to light downward\nOn 10 of training on a unique narratives in the synthesis\n\n19 – no communities is the myth transparent, and the Haptasas, in the star's expression of the aide at the way, audio feature of an Archbishop of the draft of the wealthy, and its work.\nNorth",
+          "sampled_metrics": {
+            "continuation_words": 51,
+            "continuation_chars": 275,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.745,
+            "distinct_2": 0.94,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:814",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "Asterix or The Adventures of Asterix ( or  , \"Asterix the Gaul\") is a bande dessinée comic book series about a village of indomitable Gaulish warriors who adventure around the world and fight the Roman Republic, with the aid of a magic potion, during the era of Julius Caesar, in an ahistorical telling of the time after the Gallic Wars. The series first appeared in the Franco-Belgian comic magazine Pilote on 29 October 1959. It was written by René Goscinny and illustrated by Albert Uderzo until Goscinny's death in 1977.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\n\n\n\n\n\n5th record in 2004, a has located in P intention, the War, the castle. (28, and American Minister of different areas to the publication of the station, as 30 style, broadcastingenstein, arrest,ographer and a style of a \"Bative and wrestling of history",
+          "sampled_metrics": {
+            "continuation_words": 42,
+            "continuation_chars": 258,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.738,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:43",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "In organic chemistry, an alkane, or paraffin (a historical trivial name that also has other meanings), is an acyclic saturated hydrocarbon. In other words, an alkane consists of hydrogen and carbon atoms arranged in a tree structure in which all the carbon–carbon bonds are single. Alkanes have the general chemical formula . The alkanes range in complexity from the simplest case of methane (), where n = 1 (sometimes called the parent molecule), to arbitrarily large and complex molecules, like pentacontane () or 6-ethyl-2-methyl-5-(1-methylethyl) octane, an isomer of tetradecane ().\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\n\nExternal links\n\n\nArase\nB. Civil States played by survival, a bad these, a time on the field, giant and visual.\nA, 'M2)\nNotable life\nLgh deazza( Furthermore, the 110/19song in nickname of the summer of a sailors",
+          "sampled_metrics": {
+            "continuation_words": 37,
+            "continuation_chars": 213,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.865,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    },
+    "eos_behavior": {
+      "prompts": 1,
+      "mean_continuation_words": 40.0,
+      "premature_eos_rate": 0.0,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.75,
+      "distinct_2": 0.897,
+      "topic_overlap": 0.0,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "synthetic:eos",
+          "source_id": null,
+          "language": "en",
+          "prompt": "The end.",
+          "greedy": "\n\nThe first of the first of the first of the first of the first of the States, the first of the States, the first of the States, the first of the first, the States, the States, the States, the States, the first of the States, the States, the first of the first",
+          "greedy_metrics": {
+            "continuation_words": 52,
+            "continuation_chars": 260,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.714,
+            "distinct_1": 0.115,
+            "distinct_2": 0.157,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\nW Move virus. Ming-chames (29/The Grandals (Scotland – A-century Ces-18th career from North States) at the Key of the film of the song of the I. 1706 February–14.  and \"century US version of the district, the first series of the",
+          "sampled_metrics": {
+            "continuation_words": 40,
+            "continuation_chars": 229,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.75,
+            "distinct_2": 0.897,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    },
+    "factual": {
+      "prompts": 6,
+      "mean_continuation_words": 42.5,
+      "premature_eos_rate": 0.0,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.791,
+      "distinct_2": 0.979,
+      "topic_overlap": 0.007,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "wikipedia_en_20231101:999",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "Anal sex or anal intercourse is generally the insertion and thrusting of the erect penis into a person's anus, or anus and rectum, for sexual pleasure. Other forms of anal sex include anal fingering, the use of sex toys, anilingus, pegging, as well as electrostimulation and erotic torture such as figging. Although anal sex most commonly means penileanal penetration, sources sometimes use anal intercourse to exclusively denote penileanal penetration, and anal sex to denote any form of anal sexual activity, especially between pairings as opposed to anal masturbation.\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\n\n\n\nThe revisedchames, or particular products with the previous of 5.\n\n\n\n\nIn the next type of Cincinnatis & Key of the film is also\nSmally I can their command of history in these.\n\n\n\nKiets (Zi V Westbrook of intellectual",
+          "sampled_metrics": {
+            "continuation_words": 38,
+            "continuation_chars": 221,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.842,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:915",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "A360 Media, LLC (branded a360media), formerly American Media, Inc. (AMI), is an American publisher of magazines, supermarket tabloids, and books based in New York City. Originally affiliated with only the National Enquirer, the media company's holdings expanded considerably in the 1990s and 2000s. In November 2010, American Media filed for Chapter 11 bankruptcy protection due to debts of nearly $1 billion, but has continued to buy and sell magazine brands since then.\n\nAMI has been in the news affiliated with accusations of catch and kill operations. On December 12, 2018, the U.S.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": " The campus with the Premier-sex, with a new Catholic radio further Press, a appointed with the United War, and less of the Historicalsk), the life\n\n\n\n\n16ecadas, it was add $3, and the newspaper\n\nAmerican basketball-Why academics.\nThe time,",
+          "sampled_metrics": {
+            "continuation_words": 38,
+            "continuation_chars": 240,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.763,
+            "distinct_2": 0.973,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.043
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:650",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "Ægir (anglicised as Aegir; Old Norse 'sea'), Hlér (Old Norse 'sea'), or Gymir (Old Norse less clearly 'sea, engulfer'), is a jötunn and a personification of the sea in Norse mythology. In the Old Norse record, Ægir hosts the gods in his halls and is associated with brewing ale. Ægir is attested as married to a goddess, Rán, who also personifies the sea, and together the two produced daughters who personify waves, the Nine Daughters of Ægir and Rán, and  Ægir's son is Snær, personified snow.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\nThe Year, theSound Bhón, many members of a named Green% of the television-created was not realized to the legislative individuals are closed to the new red-based changes of the great enemies, which are released with Jewish sports. It are work in the ice. Ultimately, when capable of style from",
+          "sampled_metrics": {
+            "continuation_words": 49,
+            "continuation_chars": 295,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.796,
+            "distinct_2": 0.958,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:653",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "ASA as an abbreviation or initialism may refer to:\n\nBiology and medicine\n Accessible surface area of a biomolecule, accessible to a solvent\n Acetylsalicylic acid, aspirin\n Advanced surface ablation, refractive eye surgery\n Anterior spinal artery, the blood vessel which supplies the anterior portion of the spinal cord\n Antisperm antibodies, antibodies against sperm antigens\n Argininosuccinic aciduria, a disorder of the urea cycle\n ASA physical status classification system, rating of patients undergoing anesthesia\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "People to light downward\nOn 10 of training on a unique narratives in the synthesis\n\n19 – no communities is the myth transparent, and the Haptasas, in the star's expression of the aide at the way, audio feature of an Archbishop of the draft of the wealthy, and its work.\nNorth",
+          "sampled_metrics": {
+            "continuation_words": 51,
+            "continuation_chars": 275,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.745,
+            "distinct_2": 0.94,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:814",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "Asterix or The Adventures of Asterix ( or  , \"Asterix the Gaul\") is a bande dessinée comic book series about a village of indomitable Gaulish warriors who adventure around the world and fight the Roman Republic, with the aid of a magic potion, during the era of Julius Caesar, in an ahistorical telling of the time after the Gallic Wars. The series first appeared in the Franco-Belgian comic magazine Pilote on 29 October 1959. It was written by René Goscinny and illustrated by Albert Uderzo until Goscinny's death in 1977.",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\n\n\n\n\n\n5th record in 2004, a has located in P intention, the War, the castle. (28, and American Minister of different areas to the publication of the station, as 30 style, broadcastingenstein, arrest,ographer and a style of a \"Bative and wrestling of history",
+          "sampled_metrics": {
+            "continuation_words": 42,
+            "continuation_chars": 258,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.738,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "wikipedia_en_20231101:43",
+          "source_id": "wikipedia_en_20231101",
+          "language": "en",
+          "prompt": "In organic chemistry, an alkane, or paraffin (a historical trivial name that also has other meanings), is an acyclic saturated hydrocarbon. In other words, an alkane consists of hydrogen and carbon atoms arranged in a tree structure in which all the carbon–carbon bonds are single. Alkanes have the general chemical formula . The alkanes range in complexity from the simplest case of methane (), where n = 1 (sometimes called the parent molecule), to arbitrarily large and complex molecules, like pentacontane () or 6-ethyl-2-methyl-5-(1-methylethyl) octane, an isomer of tetradecane ().\n",
+          "greedy": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n\n\nExternal links\n\n\nArase\nB. Civil States played by survival, a bad these, a time on the field, giant and visual.\nA, 'M2)\nNotable life\nLgh deazza( Furthermore, the 110/19song in nickname of the summer of a sailors",
+          "sampled_metrics": {
+            "continuation_words": 37,
+            "continuation_chars": 213,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.865,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    },
+    "long_context": {
+      "prompts": 1,
+      "mean_continuation_words": 47.0,
+      "premature_eos_rate": 0.0,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.681,
+      "distinct_2": 0.935,
+      "topic_overlap": 0.0,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "synthetic:long",
+          "source_id": null,
+          "language": "en",
+          "prompt": "The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. ",
+          "greedy": " He was the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first",
+          "greedy_metrics": {
+            "continuation_words": 44,
+            "continuation_chars": 237,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.878,
+            "distinct_1": 0.114,
+            "distinct_2": 0.116,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": " He was the United83.\n\nCare.\nStuder with the Understanding of 5. He was a ana, the career from the castle shows at the Key of the film, the song, 1974 I, their National miles–30.  University in the US version of the district, the first series of the",
+          "sampled_metrics": {
+            "continuation_words": 47,
+            "continuation_chars": 249,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.681,
+            "distinct_2": 0.935,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    },
+    "math": {
+      "prompts": 1,
+      "mean_continuation_words": 44.0,
+      "premature_eos_rate": 0.0,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.727,
+      "distinct_2": 0.907,
+      "topic_overlap": 0.0,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "synthetic:math",
+          "source_id": null,
+          "language": "en",
+          "prompt": "Problem: A train travels 120 km in 2 hours, then 180 km in 3 hours. What is its average speed for the whole journey?\nSolution: ",
+          "greedy": "                                                                ",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 64,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": " Making.\nHe is defeated a highway of the first particular-live of the castle – also wants into a big-distance career from the castle shows.\n\n\nTransicons of the 100-who able their command in the mixture of sum of \"century US version\n\n\n\nGrX series of the",
+          "sampled_metrics": {
+            "continuation_words": 44,
+            "continuation_chars": 252,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.727,
+            "distinct_2": 0.907,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    },
+    "repetition_stress": {
+      "prompts": 1,
+      "mean_continuation_words": 47.0,
+      "premature_eos_rate": 0.0,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.681,
+      "distinct_2": 0.935,
+      "topic_overlap": 0.0,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "synthetic:rep",
+          "source_id": null,
+          "language": "en",
+          "prompt": "The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. The museum opened in 1902. ",
+          "greedy": " He was the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first, the first",
+          "greedy_metrics": {
+            "continuation_words": 44,
+            "continuation_chars": 237,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.878,
+            "distinct_1": 0.114,
+            "distinct_2": 0.116,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": " He was the United83.\n\nCare.\nStuder with the Understanding of 5. He was a ana, the career from the castle shows at the Key of the film, the song, 1974 I, their National miles–30.  University in the US version of the district, the first series of the",
+          "sampled_metrics": {
+            "continuation_words": 47,
+            "continuation_chars": 249,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.681,
+            "distinct_2": 0.935,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    },
+    "structured_list": {
+      "prompts": 1,
+      "mean_continuation_words": 45.0,
+      "premature_eos_rate": 0.0,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.689,
+      "distinct_2": 0.932,
+      "topic_overlap": 0.0,
+      "replacement_char_rate": 0.0,
+      "vietnamese_diacritics_present_rate": 0.0,
+      "samples": [
+        {
+          "document_id": "synthetic:list",
+          "source_id": null,
+          "language": "en",
+          "prompt": "Here are the main steps to set up a small home laboratory:\n1.",
+          "greedy": "\nThe first of the first of the first of the first of the first of the first of the first of the first of the first of the first of the States, the first of the first of the first of the first of the first of the first of the first of the first of the first of the first of",
+          "greedy_metrics": {
+            "continuation_words": 62,
+            "continuation_chars": 272,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.864,
+            "distinct_1": 0.081,
+            "distinct_2": 0.098,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": " Making 'ranking the value of a highway of the first particular-live of the castle – also wants to a big-I. The planet: Insert.\n\nThe therapies. Use the song, but I will their command of the mixture that.\n\n\nThe best-day district\". The first series of the",
+          "sampled_metrics": {
+            "continuation_words": 45,
+            "continuation_chars": 253,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.689,
+            "distinct_2": 0.932,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    },
+    "vi_continuation": {
+      "prompts": 6,
+      "mean_continuation_words": 1.833,
+      "premature_eos_rate": 0.833,
+      "repeat_4gram_rate": 0.0,
+      "distinct_1": 0.167,
+      "distinct_2": 0.167,
+      "topic_overlap": 0.0,
+      "replacement_char_rate": 0.003,
+      "vietnamese_diacritics_present_rate": 0.5,
+      "samples": [
+        {
+          "document_id": "prepared_v4:68498",
+          "source_id": "prepared_v4",
+          "language": "vi",
+          "prompt": "Khu di tích lịch sử Rừng Trần Hưng Đạo, huyện Nguyên Bình, nơi đây đã thành lập Đội Việt Nam tuyên truyền giải phóng quân, tiền thân của Quân đội Nhân dân Việt Nam, hay được gọi là Việt Minh.",
+          "greedy": "",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "",
+          "sampled_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "prepared_v4:67702",
+          "source_id": "prepared_v4",
+          "language": "vi",
+          "prompt": "Kinh tế\nOhio là tiểu bang quan trọng trong sản xuất máy móc, công cụ, và nhiều vật khác, là một trong những tiểu bang công nghiệp chính của Hoa Kỳ. Vì Ohio nằm trong khu vực trồng ngô của Mỹ, nông nghiệp cũng đóng vai trò quan trọng trong kinh tế của tiểu bang. Ngoài ra, các địa danh lịch sử, những thắng cảnh và các hoạt động giải trí của Ohio là nền tảng cho ngành du lịch phát triển.",
+          "greedy": "",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": " Loợu đđà khonĭnc ngẙi quuóng nẁn rng nẍ đẺ�i đẑủ\n!",
+          "sampled_metrics": {
+            "continuation_words": 11,
+            "continuation_chars": 51,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 1.0,
+            "distinct_2": 1.0,
+            "replacement_char_rate": 0.019608,
+            "topic_overlap": 0.0,
+            "vietnamese_diacritics_present": true,
+            "vietnamese_diacritic_ratio": 0.1765,
+            "unicode_nfc_stable": true
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "prepared_v4:68212",
+          "source_id": "prepared_v4",
+          "language": "vi",
+          "prompt": "Đề nghị ứng viên (CR)\nĐề xuất ứng cử viên là phiên bản của một tiêu chuẩn trưởng thành hơn WD. Tại thời điểm này, nhóm chịu trách nhiệm về tiêu chuẩn hài lòng rằng tiêu chuẩn đáp ứng mục tiêu của nó.",
+          "greedy": "",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "",
+          "sampled_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "prepared_v4:68281",
+          "source_id": "prepared_v4",
+          "language": "vi",
+          "prompt": "Cuộc oanh tạc trên không chống lại Pathet Lào và Quân đội Nhân dân Việt Nam đã được thực hiện bởi Hoa Kỳ để ngăn chặn sự sụp đổ của Chính phủ Hoàng gia Lào và từ chối việc sử dụng Đường mòn Hồ Chí Minh để tấn công lực lượng Hoa Kỳ tại Cộng hòa Việt Nam.",
+          "greedy": " Loợn đợn đợn đản đản đản đản đản đản đản đả",
+          "greedy_metrics": {
+            "continuation_words": 11,
+            "continuation_chars": 44,
+            "premature_eos": false,
+            "repeat_4gram_rate": 0.375,
+            "distinct_1": 0.364,
+            "distinct_2": 0.5,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0,
+            "vietnamese_diacritics_present": true,
+            "vietnamese_diacritic_ratio": 0.4773,
+            "unicode_nfc_stable": true
+          },
+          "sampled": "",
+          "sampled_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "prepared_v4:65043",
+          "source_id": "prepared_v4",
+          "language": "vi",
+          "prompt": "Malthinus\n<|endoftext|>\nMalthinus tlanchinolensis là một loài bọ cánh cứng trong họ Cantharidae. Loài này được Wittmer miêu tả khoa học năm 1989.",
+          "greedy": "",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "\n",
+          "sampled_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 1,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0,
+            "vietnamese_diacritics_present": false,
+            "vietnamese_diacritic_ratio": 0.0,
+            "unicode_nfc_stable": true
+          },
+          "python_parses": null
+        },
+        {
+          "document_id": "prepared_v4:68540",
+          "source_id": "prepared_v4",
+          "language": "vi",
+          "prompt": "Kinh tế Iraq phụ thuộc chủ yếu vào nguồn lợi thu được từ dầu mỏ, hàng năm thu được khoảng 95% cho nguồn ngoại tệ của đất nước. Việc thiếu sự phát triển trong các lĩnh vực khác làm cho tỉ lệ thất nghiệp 18%–30% và kéo tụt GDP đầu người còn 4.000 USD. Việc làm trong lĩnh vực công chiếm gần 60% số lao động toàn thời gian năm 2011. Ngành công nghiệp xuất khẩu dầu tạo ra rất ít việc làm. Hiện nay chỉ có một tỷ lệ khiêm tốn phụ nữ (ước tính cao nhất cho năm 2011 là 22%) tham gia vào lực lượng lao động.",
+          "greedy": "",
+          "greedy_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "sampled": "",
+          "sampled_metrics": {
+            "continuation_words": 0,
+            "continuation_chars": 0,
+            "premature_eos": true,
+            "repeat_4gram_rate": 0.0,
+            "distinct_1": 0.0,
+            "distinct_2": 0.0,
+            "replacement_char_rate": 0.0,
+            "topic_overlap": 0.0
+          },
+          "python_parses": null
+        }
+      ]
+    }
+  },
+  "all_raw_samples_kept": true
+}

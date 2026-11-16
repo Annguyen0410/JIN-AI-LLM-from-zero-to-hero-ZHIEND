@@ -187,3 +187,131 @@ def test_validation_is_deterministic_and_fp32():
         assert first["loss"] == second["loss"]
         assert first["tokens_scored"] == second["tokens_scored"] == 2 * BATCH * SEQ
         assert first["loss_dtype"] == "fp32_cross_entropy"
+
+
+# ── Phase 15F: full experiment-configuration fingerprint ─────────────────
+
+class StubTokenizer:
+    kind = "gpt2_bpe"
+
+    def __init__(self, vocab_size: int = VOCAB, salt: str = ""):
+        self.vocab_size = vocab_size
+        self.salt = salt
+
+    def to_state_dict(self):
+        return {"kind": self.kind, "vocab_size": self.vocab_size, "salt": self.salt}
+
+
+def make_args(**overrides):
+    base = dict(preset="gpt2_small_reference", seq_len=SEQ, batch_size=BATCH,
+                grad_accum=1, warmup=2, lr=6e-4, min_lr_ratio=0.1, seed=1337,
+                dropout=0.0, no_amp=True)
+    base.update(overrides)
+    return type("Args", (), base)()
+
+
+def make_blob(model, tokenizer, manifest, args, steps):
+    fp = train_gpt2.experiment_fingerprint(model, tokenizer, manifest, args, steps)
+    return {"experiment_config": fp,
+            "architecture_id": model.arch_id,
+            "dataset_manifest": manifest,
+            "tokenizer": {"kind": tokenizer.kind, "vocab_size": tokenizer.vocab_size},
+            "schedule": {"total_steps": steps}}, fp
+
+
+MANIFEST = {"train": {"sha256": "train-hash"}, "val": {"sha256": "val-hash"}}
+
+
+@pytest.mark.parametrize("override", [
+    {"lr": 3e-4},            # learning rate
+    {"warmup": 5},           # warmup
+    {"seq_len": 32},         # sequence length (also changes effective tokens)
+    {"batch_size": 4},       # batch size
+    {"grad_accum": 2},       # gradient accumulation
+    {"dropout": 0.1},        # dropout
+    {"seed": 7},             # sampling seed
+    {"preset": "tiny"},      # model preset
+    {"min_lr_ratio": 0.0},   # schedule floor
+])
+def test_resume_refuses_any_changed_hyperparameter(override):
+    model = build_model()
+    tok = StubTokenizer()
+    args = make_args()
+    blob, old_fp = make_blob(model, tok, MANIFEST, args, 4)
+    changed = make_args(**override)
+    new_fp = train_gpt2.experiment_fingerprint(model, tok, MANIFEST, changed, 4)
+    with pytest.raises(SystemExit):
+        train_gpt2.verify_resume_compatibility(
+            blob, model, tok, MANIFEST, 4, False, log_fn=lambda *_: None,
+            current_fingerprint=new_fp)
+
+
+def test_resume_refuses_tokenizer_state_change_with_same_vocab():
+    model = build_model()
+    tok_old = StubTokenizer()
+    args = make_args()
+    blob, _ = make_blob(model, tok_old, MANIFEST, args, 4)
+    tok_new = StubTokenizer(salt="rebuilt")          # same vocab, different state
+    assert tok_new.vocab_size == tok_old.vocab_size
+    new_fp = train_gpt2.experiment_fingerprint(model, tok_new, MANIFEST, args, 4)
+    with pytest.raises(SystemExit):
+        train_gpt2.verify_resume_compatibility(
+            blob, model, tok_new, MANIFEST, 4, False, log_fn=lambda *_: None,
+            current_fingerprint=new_fp)
+
+
+def test_resume_refuses_sampler_version_change():
+    model = build_model()
+    tok = StubTokenizer()
+    args = make_args()
+    blob, old_fp = make_blob(model, tok, MANIFEST, args, 4)
+    mutated = dict(old_fp)
+    mutated["data"] = dict(old_fp["data"], sampler="numpy-pcg64.v999")
+    with pytest.raises(SystemExit):
+        train_gpt2.verify_resume_compatibility(
+            blob, model, tok, MANIFEST, 4, False, log_fn=lambda *_: None,
+            current_fingerprint=mutated)
+
+
+def test_extend_budget_changes_only_the_step_budget():
+    model = build_model()
+    tok = StubTokenizer()
+    args = make_args()
+    blob, _ = make_blob(model, tok, MANIFEST, args, 4)
+    longer = train_gpt2.experiment_fingerprint(model, tok, MANIFEST, args, 8)
+
+    with pytest.raises(SystemExit):
+        train_gpt2.verify_resume_compatibility(
+            blob, model, tok, MANIFEST, 8, False, log_fn=lambda *_: None,
+            current_fingerprint=longer)
+
+    logs = []
+    train_gpt2.verify_resume_compatibility(
+        blob, model, tok, MANIFEST, 8, True, log_fn=logs.append,
+        current_fingerprint=longer)
+    assert any("NOT the original trajectory" in m for m in logs)
+
+    # --extend-budget must not license a hyperparameter change.
+    tampered = train_gpt2.experiment_fingerprint(
+        model, tok, MANIFEST, make_args(lr=1e-3), 8)
+    with pytest.raises(SystemExit):
+        train_gpt2.verify_resume_compatibility(
+            blob, model, tok, MANIFEST, 8, True, log_fn=lambda *_: None,
+            current_fingerprint=tampered)
+
+
+def test_fingerprint_is_deterministic_and_covers_key_fields():
+    model = build_model()
+    tok = StubTokenizer()
+    args = make_args()
+    fp1 = train_gpt2.experiment_fingerprint(model, tok, MANIFEST, args, 4)
+    fp2 = train_gpt2.experiment_fingerprint(model, tok, MANIFEST, args, 4)
+    assert fp1 == fp2
+    flat = {}
+    train_gpt2._flatten("", fp1, flat)
+    for key in ("schedule.peak_lr", "schedule.warmup", "data.seq_len",
+                "data.effective_batch_tokens", "data.sampler", "data.framing",
+                "optimizer.weight_decay", "optimizer.grad_clip", "dropout",
+                "seed", "tokenizer.state_hash", "corpus.train_sha256",
+                "architecture.vocab_size", "precision.amp_dtype"):
+        assert key in flat, key

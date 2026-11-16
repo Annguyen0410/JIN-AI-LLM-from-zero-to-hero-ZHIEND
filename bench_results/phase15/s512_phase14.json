@@ -1,0 +1,140 @@
+{
+  "protocol": "phase15.docindependent.v1",
+  "scoring": "fp32 cross-entropy on fp32 logits, document-independent, no padding, EOT framing, identical tokenizer ids",
+  "model": {
+    "checkpoint": "checkpoints\\gpt2_small\\phase14_wiki\\best.pt",
+    "sha256": "069d9da650a81dc9e2c0fee94d0e20dc46a5c4f7e266a6c381a72140f48266fa",
+    "architecture_id": "gpt2_small",
+    "iteration": 640,
+    "tokens_seen": 47185920
+  },
+  "tokenizer": {
+    "kind": "gpt2_bpe",
+    "vocab_size": 50257,
+    "eot_id": 50256
+  },
+  "val_jsonl": "data\\curated_v6\\benchmark\\clean_unseen.jsonl",
+  "val_sha256": "92b57ea52865ecd321a0d4fb56036800d487fd6fc23bc77ee4bdfc42105db084",
+  "sampling": {
+    "seed": 15,
+    "docs_per_stratum": 24,
+    "strata": [
+      "source_id",
+      "language",
+      "domain"
+    ],
+    "order": "sha256(seed.document_id)"
+  },
+  "strata": {
+    "cosmopedia_v2_sample|en|educational": {
+      "loss": 4.7187,
+      "perplexity": 112.02,
+      "documents": 24,
+      "windows": 18,
+      "tokens_scored": 9216,
+      "padding_tokens": 0,
+      "nll_sum": 43487.29,
+      "protocol": "phase15.docindependent.v1",
+      "source_id": "cosmopedia_v2_sample",
+      "language": "en",
+      "domain": "educational",
+      "document_ids": [
+        "cosmopedia_v2_sample:16170",
+        "cosmopedia_v2_sample:86447",
+        "cosmopedia_v2_sample:142961",
+        "cosmopedia_v2_sample:182592",
+        "cosmopedia_v2_sample:429",
+        "cosmopedia_v2_sample:49543",
+        "cosmopedia_v2_sample:102967",
+        "cosmopedia_v2_sample:7883",
+        "cosmopedia_v2_sample:91987",
+        "cosmopedia_v2_sample:107710",
+        "cosmopedia_v2_sample:188473",
+        "cosmopedia_v2_sample:25287",
+        "cosmopedia_v2_sample:135334",
+        "cosmopedia_v2_sample:58313",
+        "cosmopedia_v2_sample:94247",
+        "cosmopedia_v2_sample:168106",
+        "cosmopedia_v2_sample:195429",
+        "cosmopedia_v2_sample:5290",
+        "cosmopedia_v2_sample:160601",
+        "cosmopedia_v2_sample:112501",
+        "cosmopedia_v2_sample:76613",
+        "cosmopedia_v2_sample:104026",
+        "cosmopedia_v2_sample:1268",
+        "cosmopedia_v2_sample:60230"
+      ]
+    },
+    "project_seed|en|conversation": {
+      "loss": 0.0,
+      "perplexity": 1.0,
+      "documents": 7,
+      "windows": 0,
+      "tokens_scored": 0,
+      "padding_tokens": 0,
+      "nll_sum": 0.0,
+      "protocol": "phase15.docindependent.v1",
+      "source_id": "project_seed",
+      "language": "en",
+      "domain": "conversation",
+      "document_ids": [
+        "project_seed:290",
+        "project_seed:608",
+        "project_seed:411",
+        "project_seed:236",
+        "project_seed:609",
+        "project_seed:638",
+        "project_seed:483"
+      ]
+    },
+    "wikipedia_en_20231101|en|knowledge": {
+      "loss": 5.2328,
+      "perplexity": 187.31,
+      "documents": 24,
+      "windows": 27,
+      "tokens_scored": 13824,
+      "padding_tokens": 0,
+      "nll_sum": 72337.94,
+      "protocol": "phase15.docindependent.v1",
+      "source_id": "wikipedia_en_20231101",
+      "language": "en",
+      "domain": "knowledge",
+      "document_ids": [
+        "wikipedia_en_20231101:60837",
+        "wikipedia_en_20231101:88665",
+        "wikipedia_en_20231101:77886",
+        "wikipedia_en_20231101:63921",
+        "wikipedia_en_20231101:191653",
+        "wikipedia_en_20231101:36343",
+        "wikipedia_en_20231101:183026",
+        "wikipedia_en_20231101:195372",
+        "wikipedia_en_20231101:123723",
+        "wikipedia_en_20231101:16872",
+        "wikipedia_en_20231101:138542",
+        "wikipedia_en_20231101:193099",
+        "wikipedia_en_20231101:63254",
+        "wikipedia_en_20231101:20836",
+        "wikipedia_en_20231101:69959",
+        "wikipedia_en_20231101:156775",
+        "wikipedia_en_20231101:173602",
+        "wikipedia_en_20231101:149297",
+        "wikipedia_en_20231101:128497",
+        "wikipedia_en_20231101:194856",
+        "wikipedia_en_20231101:154803",
+        "wikipedia_en_20231101:28019",
+        "wikipedia_en_20231101:192111",
+        "wikipedia_en_20231101:65419"
+      ]
+    }
+  },
+  "aggregate": {
+    "loss": 5.0271,
+    "perplexity": 152.5,
+    "documents": 55,
+    "windows": 45,
+    "tokens_scored": 23040,
+    "padding_tokens": 0,
+    "nll_sum": 115825.23,
+    "protocol": "phase15.docindependent.v1"
+  }
+}

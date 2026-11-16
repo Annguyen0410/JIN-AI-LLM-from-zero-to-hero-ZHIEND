@@ -53,6 +53,52 @@
 > Các báo cáo `docs/GPT2_CLASS_*.md` là **lịch sử** (trước Phase 14) và đã được
 > đánh dấu tương ứng ở đầu mỗi file.
 
+> ## Trạng thái Phase 15 — 2026-11-16 (`MULTI_SEED_VARIANCE_MEASURED`)
+>
+> Phase 15 **sửa lỗi và đo lại**, không tuyên bố model mạnh hơn. Hai tuyên bố của
+> Phase 14 đã bị chứng minh là sai và được sửa trong báo cáo:
+>
+> - **Dedup sai:** `verify_corpus.py` cũ ghi lại bản trùng ở pass 2. Audit độc lập
+>   trên `data/curated_v5/splits` tìm thấy **2.091 bản ghi trùng** (1.897 train /
+>   153 val / 41 test). Leakage train↔val↔test vẫn là 0, nhưng “không có bản trùng”
+>   thì **sai**. Đã sửa bằng write-once + audit sau khi ghi; corpus mới
+>   `data/curated_v6` verify **passed: true**, 0 trùng, 0 leak.
+> - **License bị suy diễn:** chuỗi license khác rỗng từng bị coi là “được phép
+>   thương mại”. Nay chỉ nguồn có trong `REVIEWED_SOURCES` mới eligible; PII có
+>   detector + policy `exclude` (388 tài liệu bị loại, log không chứa nội dung).
+> - **Evaluation cũ padding:** metric theo domain bị pha token đệm. Evaluator mới
+>   chấm từng document, `padding_tokens: 0`, chọn mẫu stratified.
+>
+> **So sánh sạch (4.000 document chưa model nào thấy, 23.040 token/model, seq 512):**
+>
+> | Model | Loss | Perplexity |
+> |---|---|---|
+> | GPT-2 (tham chiếu) | 3,2497 | 25,78 |
+> | JIN Phase 14 | 5,0271 | 152,50 |
+> | JIN Phase 15 A (3,28M token) | 6,6793 | 795,74 |
+> | JIN pilot | 6,9281 | 1.020,56 |
+>
+> Phase 14 còn **1,78 nats / 5,9× perplexity** so với GPT-2 — khoảng cách thật,
+> không phải “gần GPT-2”.
+>
+> **Dao động do seed (đo được):** 3 seed cùng dữ liệu, cùng recipe → val loss
+> 6,3708 / 6,5227 / 6,5590; **sd 0,0956, biên độ 0,188 nats**. Hai mixture (B1
+> human-heavy 6,4874; B2 synthetic 6,5565) nằm **trong** biên độ seed ⇒ ở 4,1M
+> token không kết luận được mixture nào tốt hơn.
+>
+> **Sinh văn bản còn kém:** greedy lặp 4-gram 0,43–0,93; code 0/1 mẫu parse được;
+> prompt toán trả về 0 token. Không có tuyên bố “viết code / giải toán / hiểu
+> instruction”. Chi tiết + mẫu thô: `docs/PHASE15_GENERATION_REPORT.md`.
+>
+> **SFT: `NOT_READY_FOR_SFT`** — dữ liệu SFT chưa qua dedup/license/PII của Phase
+> 15: `docs/PHASE15_SFT_READINESS.md`.
+>
+> Đọc thêm: [release](docs/PHASE15_RELEASE_REPORT.md) ·
+> [dedup](docs/PHASE15_DEDUP_REPORT.md) · [license](docs/PHASE15_LICENSE_REPORT.md) ·
+> [privacy](docs/PHASE15_PRIVACY_REPORT.md) · [evaluation](docs/PHASE15_EVALUATION_REPORT.md) ·
+> [clean comparison](docs/PHASE15_CLEAN_COMPARISON.md) · [resume](docs/PHASE15_RESUME_REPORT.md) ·
+> [experiments](docs/PHASE15_TRAINING_EXPERIMENTS.md) · [data strategy](docs/PHASE15_DATA_STRATEGY.md).
+
 **Training chia rõ 3 loại:** mở [trung tâm Pretrain / SFT / Preference](docs/training/README.md) để chọn đúng dữ liệu, checkpoint, test và lệnh tiếp tục. [Kế hoạch dữ liệu tổng quát 70/30](docs/training/DATA_GENERALIST.md) tải từ nguồn công bố, trần mới 20 GiB; xem báo cáo tiến độ, không coi kế hoạch là dữ liệu đã sẵn sàng train. V4 60k là SFT, hash checkpoint đã khớp log; chưa có benchmark năng lực v4 mới.
 
 > **Verified status — 2026-09-30:** See [upgrade report](docs/UPGRADE_2026.md)
