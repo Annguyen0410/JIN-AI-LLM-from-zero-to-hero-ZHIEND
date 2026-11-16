@@ -1,0 +1,30 @@
+{
+  "disk_free_bytes": 666595176448,
+  "locations": {
+    "CUDA_CACHE_PATH": "D:\\Code folder\\Jin New\\cache\\cuda",
+    "HF_DATASETS_CACHE": "D:\\Code folder\\Jin New\\cache\\huggingface\\datasets",
+    "HF_HOME": "D:\\Code folder\\Jin New\\cache\\huggingface",
+    "HF_HUB_CACHE": "D:\\Code folder\\Jin New\\cache\\huggingface\\hub",
+    "HUGGINGFACE_HUB_CACHE": "D:\\Code folder\\Jin New\\cache\\huggingface\\hub",
+    "MPLCONFIGDIR": "D:\\Code folder\\Jin New\\cache\\matplotlib",
+    "NUMBA_CACHE_DIR": "D:\\Code folder\\Jin New\\cache\\numba",
+    "PIP_CACHE_DIR": "D:\\Code folder\\Jin New\\cache\\pip",
+    "TEMP": "D:\\Code folder\\Jin New\\cache\\tmp",
+    "TMP": "D:\\Code folder\\Jin New\\cache\\tmp",
+    "TMPDIR": "D:\\Code folder\\Jin New\\cache\\tmp",
+    "TORCHINDUCTOR_CACHE_DIR": "D:\\Code folder\\Jin New\\cache\\torch\\inductor",
+    "TORCH_HOME": "D:\\Code folder\\Jin New\\cache\\torch",
+    "TRITON_CACHE_DIR": "D:\\Code folder\\Jin New\\cache\\triton",
+    "XDG_CACHE_HOME": "D:\\Code folder\\Jin New\\cache\\xdg"
+  },
+  "outputs": {
+    "bench_results": "D:\\Code folder\\Jin New\\bench_results",
+    "cache": "D:\\Code folder\\Jin New\\cache",
+    "checkpoints": "D:\\Code folder\\Jin New\\checkpoints",
+    "data": "D:\\Code folder\\Jin New\\data",
+    "runs": "D:\\Code folder\\Jin New\\runs"
+  },
+  "policy": "Windows output drive D; environment applies only to this process and children",
+  "project_root": "D:\\Code folder\\Jin New",
+  "python": "D:\\Code folder\\Jin New\\.venv\\Scripts\\python.exe"
+}

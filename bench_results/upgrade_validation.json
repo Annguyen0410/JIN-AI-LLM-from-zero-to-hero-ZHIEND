@@ -1,0 +1,84 @@
+{
+  "actual_checkpoint_api": {
+    "grounded_sse": true,
+    "grounded_sync": true,
+    "memory_search": true,
+    "model_generation": true,
+    "request_id_header": true,
+    "verified_calculator": true
+  },
+  "checkpoint_inventory": [
+    {
+      "bytes": 58618700,
+      "path": "checkpoints\\jingpt.pt"
+    },
+    {
+      "bytes": 1247475570,
+      "path": "checkpoints\\jingpt_best.pt"
+    },
+    {
+      "bytes": 1773213904,
+      "path": "checkpoints\\jingpt_chat.pt"
+    },
+    {
+      "bytes": 1773215376,
+      "path": "checkpoints\\jingpt_chat_10kbase.pt"
+    },
+    {
+      "bytes": 1773213904,
+      "path": "checkpoints\\jingpt_chat_1600.pt"
+    },
+    {
+      "bytes": 1773213904,
+      "path": "checkpoints\\jingpt_chat_2000.pt"
+    },
+    {
+      "bytes": 1773213904,
+      "path": "checkpoints\\jingpt_chat_2400.pt"
+    },
+    {
+      "bytes": 1773213904,
+      "path": "checkpoints\\jingpt_chat_46k_sft4k.pt"
+    },
+    {
+      "bytes": 1773213904,
+      "path": "checkpoints\\jingpt_chat_pre46k.pt"
+    },
+    {
+      "bytes": 1773208758,
+      "path": "checkpoints\\jingpt_chat_seed_v1.pt"
+    },
+    {
+      "bytes": 1247476935,
+      "path": "checkpoints\\jingpt_latest.pt"
+    }
+  ],
+  "grounded_data_audit": {
+    "exact_duplicates": 1324,
+    "quality_warning": "Legacy answers were paired with unrelated search results; citations are not entailment verification. Rebuild into a separate directory.",
+    "rows": 2622,
+    "unique": 1298
+  },
+  "instruct": {
+    "manifest_path": "D:\\Code folder\\Jin New\\runs\\46b1a64a9d13484cb4d59f5e6a744a4e.json",
+    "step": 2,
+    "supervised_tokens": 29,
+    "tokens": 64,
+    "val_loss": 5.640133857727051,
+    "verified": true
+  },
+  "pretrain": {
+    "manifest_path": "D:\\Code folder\\Jin New\\runs\\a3a83a72ebaa4462a3c4e48a0f8cca73.json",
+    "step": 2,
+    "supervised_tokens": 64,
+    "tokens": 64,
+    "val_loss": 5.698573112487793,
+    "verified": true
+  },
+  "recovery": {
+    "index_snapshot_exists": true,
+    "source_zip_exists": true
+  },
+  "scope": "CPU training integration; NOT capability training",
+  "served_weights_modified": false
+}

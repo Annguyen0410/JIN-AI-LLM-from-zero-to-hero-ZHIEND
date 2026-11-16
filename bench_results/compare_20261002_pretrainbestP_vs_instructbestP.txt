@@ -1,0 +1,27 @@
+==================================================================
+COMPARE: kaggle_v4_pretrain_best  ->  kaggle_v4_instruct_best
+==================================================================
+| Metric | A | B | diff | diff% |
+|---|---|---|---|---|
+| held-out loss | 5.3887 | 5.8285 | +0.44 | +8.2% |
+| held-out ppl | 218.92 | 339.83 | +121 | +55.2% |
+| probe pass rate | 0.03 | 0.145 | +0.115 | +383.3% |
+| fluency avg score | 0.204 | 0.664 | +0.46 | +225.5% |
+| prefill tok/s | 8255.7 | 10092.8 | +1.84e+03 | +22.3% |
+| decode tok/s | 47.5 | 47.7 | +0.2 | +0.4% |
+| TTFT (ms) | 23.8 | 24.1 | +0.3 | +1.3% |
+| peak VRAM (GB) | 0.643 | 0.643 | +0 | +0.0% |
+
+| Domain | A pass | B pass | diff |
+|---|---|---|---|
+| factual | 0.000 | 0.091 | +0.091 |
+| math | 0.000 | 0.167 | +0.167 |
+| code | 0.111 | 0.333 | +0.222 |
+| reasoning | 0.000 | 0.250 | +0.250 |
+| vietnamese | 0.045 | 0.000 | -0.045 |
+| instruction_following | 0.100 | 0.300 | +0.200 |
+| safety | 0.000 | 0.000 | +0.000 |
+| long_context | 0.000 | 0.048 | +0.048 |
+
+forgetting_score (mean probe pass-rate drop on old domains): 0.0056
+(>=0; 0 = the new checkpoint lost nothing on the old probe set)

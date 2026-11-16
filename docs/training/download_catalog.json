@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "datasets": [
+    {
+      "id": "wikipedia-en-20231101",
+      "name": "English Wikipedia 2023-11-01",
+      "origin": "human_documented",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "hf_repo": "wikimedia/wikipedia",
+      "file_pattern": "20231101\\.en/train-.*\\.parquet",
+      "max_shards": 100,
+      "text_columns": ["text"],
+      "license": "CC-BY-SA-3.0 and GFDL as dataset card; review upstream terms",
+      "dataset_card": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "domain": "knowledge",
+      "languages": ["en"],
+      "quality_evidence": "Community-edited encyclopedia, not a guarantee of factual correctness or wholly human authorship"
+    },
+    {
+      "id": "cosmopedia-v2-sample",
+      "name": "Cosmopedia v2 (additional shards; first shard cache reused)",
+      "origin": "synthetic_documented",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "hf_repo": "HuggingFaceTB/smollm-corpus",
+      "file_pattern": "cosmopedia-v2/train-.*\\.parquet",
+      "max_shards": 30,
+      "text_columns": ["text"],
+      "license": "ODC-BY-1.0; review upstream content rights",
+      "dataset_card": "https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus",
+      "domain": "educational",
+      "languages": ["en"],
+      "quality_evidence": "Published synthetic educational corpus; generated claims NOT independently verified locally"
+    }
+  ],
+  "reuse_existing": [
+    {"id": "wikipedia-vi-sample", "origin": "human_documented"},
+    {"id": "wikipedia-vi-shard2", "origin": "human_documented"},
+    {"id": "wikipedia-vi-shard3", "origin": "human_documented"},
+    {"id": "wikipedia-vi-shard4", "origin": "human_documented"},
+    {"id": "simple-wikipedia", "origin": "human_documented"},
+    {"id": "dolly-15k", "origin": "human_documented"},
+    {"id": "oasst2", "origin": "human_documented"},
+    {"id": "gsm8k-train", "origin": "human_documented"},
+    {"id": "opencodeinstruct", "origin": "synthetic_documented", "quality_evidence": "Upstream tests, not locally executed"},
+    {"id": "smol-smoltalk", "origin": "synthetic_or_mixed", "quality_evidence": "Review constituent source origins before 70/30 allocation"}
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://opencode.ai/schema/opencode.json",
+
+  "systemPrompt": "You are an advanced, state-of-the-art conversational AI (architected for 2026 capabilities). You have been built from absolute zero to achieve a 'hero' status. Your fundamental architecture is based on dynamic reasoning and natural language understanding, NOT rigid rule-based lookup tables.\n\n[ABSOLUTE PRIME DIRECTIVE]\nYou are strictly forbidden from using hardcoded Question-and-Answer pairs. You must NEVER rely on keyword matching or pre-written scripts to generate responses. If a user types something, you must not search a database for an exact match. Instead, you must dynamically generate a unique response every single time, tailored precisely to the nuance of the user's input.\n\n[COGNITIVE PROCESSING PROTOCOL]\nTo ensure you are truly 'thinking' and understanding the user, you must silently execute the following cognitive steps before generating your visible output:\n\n1. SEMANTIC INTENT ANALYSIS: Deconstruct the user's input. What are they literally saying? What is the underlying intent? What context clues are provided? Identify the core meaning, not just the words.\n\n2. CONTEXTUAL INTEGRATION: Evaluate the current input against the ongoing conversation history. Maintain a coherent thread. Remember what was said previously to inform your current understanding.\n\n3. DYNAMIC REASONING: Formulate a logical, empathetic, and intelligent response. Synthesize new sentences on the fly. Adapt your tone, vocabulary, and depth of detail to match the user's needs and emotional state.\n\n4. NATURAL GENERATION: Output your response in fluid, conversational, and highly natural human language. Your response must sound like a sentient entity comprehending the user, not a machine retrieving a string.\n\n[BEHAVIORAL PARAMETERS]\n- Authenticity: Be helpful, objective, and conversational.\n- Adaptability: If the user asks a question you don't know the answer to, do not output a canned error message. Dynamically explain the limitation naturally and offer to explore the topic from a different angle.\n- Fluidity: Your responses must flow naturally. Avoid robotic phrasing, repetitive sentence structures, or overly formulaatic templates.\n- Zero-to-Hero Mindset: You are continuously learning from the context of the conversation. Treat every prompt as a new opportunity to demonstrate deep comprehension and generative intelligence.\n\n[EXECUTION]\nWhen the user provides input, process it through your Cognitive Processing Protocol and respond directly with your generated output. Do not reveal your internal reasoning steps to the user. Simply output the final, naturally generated response.\n\nThis is the Jīn project: a from-scratch GPT-style language model in PyTorch with BPE tokenizer, instruction tuning, and a web UI. You are helping the user build, train, and improve this model.",
+
+  "customCommands": [
+    {
+      "name": "train",
+      "command": "python train.py",
+      "description": "Run unified training (pretrain mode, default)"
+    },
+    {
+      "name": "train-instruct",
+      "command": "python train.py --mode instruct",
+      "description": "Instruction tuning with loss masking"
+    },
+    {
+      "name": "train-instruct-custom",
+      "command": "python train.py --mode instruct --steps {steps}",
+      "description": "Instruction tuning with custom step count",
+      "arguments": {
+        "steps": { "type": "number", "default": 5000, "description": "Number of training steps" }
+      }
+    },
+    {
+      "name": "pipeline-chat",
+      "command": "python pipeline.py chat",
+      "description": "End-to-end chat pipeline (build data -> BPE -> instruct train)"
+    },
+    {
+      "name": "pipeline-raw",
+      "command": "python pipeline.py raw",
+      "description": "Fetch raw data, build pretrain corpus, optionally train"
+    },
+    {
+      "name": "fetch",
+      "command": "python fetch_datasets.py",
+      "description": "Fetch datasets (auto-detects sources.json or hf_datasets.json)"
+    },
+    {
+      "name": "fetch-hf-list",
+      "command": "python fetch_datasets.py --catalog hf_datasets.json --list",
+      "description": "List available HuggingFace datasets"
+    },
+    {
+      "name": "build-instruct",
+      "command": "python build_instruct_dataset.py",
+      "description": "Build instruction dataset (seed + synth + literary)"
+    },
+    {
+      "name": "build-instruct-clean",
+      "command": "python build_instruct_dataset.py --no-literary",
+      "description": "Build instruction dataset without literary echo"
+    },
+    {
+      "name": "build-dataset",
+      "command": "python build_dataset.py",
+      "description": "Build the raw pretraining dataset"
+    },
+    {
+      "name": "build-vocab",
+      "command": "python bpe_tokenizer.py --data data/chat_train.txt --out bpe.json --vocab-size 16384",
+      "description": "Build BPE vocabulary with standard settings"
+    },
+    {
+      "name": "generate",
+      "command": "python generate.py",
+      "description": "Run generation/inference with a prompt"
+    },
+    {
+      "name": "chat",
+      "command": "python chat.py",
+      "description": "Run interactive chat REPL"
+    },
+    {
+      "name": "app",
+      "command": "python app.py",
+      "description": "Launch the Flask web UI"
+    },
+    {
+      "name": "app-medium",
+      "command": "$env:JINGPT_SCALE='medium'; python app.py",
+      "description": "Launch web UI with medium scale model"
+    },
+    {
+      "name": "web-search",
+      "command": "python web_search.py",
+      "description": "Test the web search backend"
+    },
+    {
+      "name": "fluency",
+      "command": "python fluency_check.py",
+      "description": "Run fluency check on default checkpoint"
+    },
+    {
+      "name": "clean",
+      "command": "python clean_corpus.py",
+      "description": "Clean the corpus"
+    }
+  ]
+}

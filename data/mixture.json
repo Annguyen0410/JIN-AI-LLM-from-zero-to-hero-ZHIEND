@@ -1,0 +1,49 @@
+{
+  "status": "template_not_materialized",
+  "_comment": "Curriculum mixing schedule (Phase 3). 'stages' are applied in order over training progress [0..1]. Each stage lists domains with relative weights; weights are normalized. 'domains' maps domain -> source file (plain text). Train.py samples batches by domain weight and logs the realized mix.",
+  "domains": {
+    "prose": "data/curated/train_prose.txt",
+    "wiki": "data/curated/train_wiki.txt",
+    "code": "data/curated/train_code.txt",
+    "math": "data/curated/train_math.txt",
+    "vietnamese": "data/curated/train_vi.txt"
+  },
+  "stages": [
+    {
+      "name": "foundation",
+      "start": 0.0,
+      "end": 0.6,
+      "weights": {
+        "prose": 0.40,
+        "wiki": 0.20,
+        "code": 0.20,
+        "math": 0.10,
+        "vietnamese": 0.10
+      }
+    },
+    {
+      "name": "reasoning",
+      "start": 0.6,
+      "end": 0.9,
+      "weights": {
+        "prose": 0.20,
+        "wiki": 0.15,
+        "code": 0.25,
+        "math": 0.25,
+        "vietnamese": 0.15
+      }
+    },
+    {
+      "name": "anneal_high_quality",
+      "start": 0.9,
+      "end": 1.0,
+      "weights": {
+        "prose": 0.10,
+        "wiki": 0.15,
+        "code": 0.30,
+        "math": 0.35,
+        "vietnamese": 0.10
+      }
+    }
+  ]
+}

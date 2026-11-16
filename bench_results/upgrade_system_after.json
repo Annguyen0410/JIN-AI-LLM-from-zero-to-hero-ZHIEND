@@ -1,0 +1,86 @@
+{
+  "benchmark": "frozen_system_controls_v1",
+  "kind": "deterministic infrastructure; no learned-intelligence claim",
+  "suite_sha256": "967440d8d9a0330f64027f4f95ce1acc75a7a82ce59fdb5cd35c44309ee3b292",
+  "cases": [
+    {
+      "name": "Vietnamese top-1 retrieval",
+      "category": "retrieval",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.079
+    },
+    {
+      "name": "TTL applies before compaction",
+      "category": "memory",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.102
+    },
+    {
+      "name": "Duplicate cannot erase dispute",
+      "category": "memory",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.054
+    },
+    {
+      "name": "Malformed arguments fail safely",
+      "category": "tools",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.022
+    },
+    {
+      "name": "Agent memory writes require permission",
+      "category": "security",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.012
+    },
+    {
+      "name": "Python cannot read host files",
+      "category": "security",
+      "passed": true,
+      "error": null,
+      "latency_ms": 138.621
+    },
+    {
+      "name": "Role-token injection neutralized",
+      "category": "security",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.035
+    },
+    {
+      "name": "Nonfinite learning gate rejects",
+      "category": "learning_safety",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.017
+    },
+    {
+      "name": "Memory citation IDs are unique",
+      "category": "grounding",
+      "passed": true,
+      "error": null,
+      "latency_ms": 1.149
+    },
+    {
+      "name": "Web and memory evidence coexist",
+      "category": "grounding",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.69
+    },
+    {
+      "name": "Deterministic arithmetic correctness",
+      "category": "math_tool",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.047
+    }
+  ],
+  "passed": 11,
+  "total": 11
+}

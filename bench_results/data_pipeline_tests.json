@@ -1,0 +1,10 @@
+{
+  "tests_run": 257,
+  "failures": 0,
+  "errors": 0,
+  "skips": [],
+  "elapsed_s": 37.438,
+  "syntax_files": 62,
+  "typecheck": "NOT RUN: no static checker configured/installed; syntax plus executable tests",
+  "passed": true
+}

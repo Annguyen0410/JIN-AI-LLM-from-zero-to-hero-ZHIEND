@@ -1,0 +1,166 @@
+START 2026-10-02 19:27:00
+===== BEGIN checkpoints/pretrain/general_v1_01/jin/checkpoints/kaggle_v4_pretrain_best.pt 2026-10-02 19:27:00 =====
+[bench] Loading checkpoint: checkpoints/pretrain/general_v1_01/jin/checkpoints/kaggle_v4_pretrain_best.pt  (device=cuda)
+[Tokenizer] Restored BPE vocabulary from checkpoint metadata (size=16,384).
+[JIN AI] 147.74M total / 147.74M active parameters (modern, 12L, 16H, 8KV, dim 992)
+[bench] Loaded in 8.1s | iter 107900 | 147.74M params | ctx 1024
+
+[2/5] Quality (held-out loss / ppl) ...
+[3/5] Probes ...
+[4/5] Fluency ...
+[5/5] Speed ...
+
+[bench] Saved -> D:\Code folder\Jin New\bench_results\20261002_192907_kaggle_v4_pretrain_best.json
+
+============================================================
+BENCHMARK: kaggle_v4_pretrain_best  (2026-10-02T19:27:12)
+============================================================
+| Metric | Value |
+|---|---|
+| params (M) | 147.7 |
+| held-out loss | 5.3887 |
+| held-out ppl | 218.92 |
+| probe pass rate | 0.03 |
+| probe mean logprob gap | -0.3099 |
+| fluency avg score | 0.204 |
+| fluency verdict | BROKEN |
+| prefill tok/s | 8255.7 |
+| decode tok/s | 47.5 |
+| TTFT (ms) | 23.8 |
+| peak VRAM (GB) | 0.643 |
+
+| Domain | n | pass rate | lp pass rate |
+|---|---|---|---|
+| factual | 22 | 0.0 | 0.636 |
+| math | 24 | 0.0 | 0.125 |
+| code | 18 | 0.111 | 0.222 |
+| reasoning | 20 | 0.0 | 0.05 |
+| vietnamese | 22 | 0.045 | 0.591 |
+| instruction_following | 20 | 0.1 | 0.3 |
+| safety | 18 | 0.0 | 0.889 |
+| long_context | 21 | 0.0 | 0.571 |
+===== END rc=0 checkpoints/pretrain/general_v1_01/jin/checkpoints/kaggle_v4_pretrain_best.pt 2026-10-02 19:29:08 =====
+===== BEGIN checkpoints/kaggle_v4_60020/kaggle_v4_instruct_best.pt 2026-10-02 19:29:08 =====
+[bench] Loading checkpoint: checkpoints/kaggle_v4_60020/kaggle_v4_instruct_best.pt  (device=cuda)
+[Tokenizer] Restored BPE vocabulary from checkpoint metadata (size=16,384).
+[JIN AI] 147.74M total / 147.74M active parameters (modern, 12L, 16H, 8KV, dim 992)
+[bench] Loaded in 11.0s | iter 57400 | 147.74M params | ctx 1024
+
+[2/5] Quality (held-out loss / ppl) ...
+[3/5] Probes ...
+[4/5] Fluency ...
+[5/5] Speed ...
+
+[bench] Saved -> D:\Code folder\Jin New\bench_results\20261002_193128_kaggle_v4_instruct_best.json
+
+============================================================
+BENCHMARK: kaggle_v4_instruct_best  (2026-10-02T19:29:23)
+============================================================
+| Metric | Value |
+|---|---|
+| params (M) | 147.7 |
+| held-out loss | 5.8285 |
+| held-out ppl | 339.83 |
+| probe pass rate | 0.145 |
+| probe mean logprob gap | -0.2998 |
+| fluency avg score | 0.664 |
+| fluency verdict | OK |
+| prefill tok/s | 10092.8 |
+| decode tok/s | 47.7 |
+| TTFT (ms) | 24.1 |
+| peak VRAM (GB) | 0.643 |
+
+| Domain | n | pass rate | lp pass rate |
+|---|---|---|---|
+| factual | 22 | 0.091 | 0.636 |
+| math | 24 | 0.167 | 0.125 |
+| code | 18 | 0.333 | 0.167 |
+| reasoning | 20 | 0.25 | 0.0 |
+| vietnamese | 22 | 0.0 | 0.591 |
+| instruction_following | 20 | 0.3 | 0.25 |
+| safety | 18 | 0.0 | 0.889 |
+| long_context | 21 | 0.048 | 0.571 |
+===== END rc=0 checkpoints/kaggle_v4_60020/kaggle_v4_instruct_best.pt 2026-10-02 19:31:28 =====
+===== BEGIN checkpoints/kaggle_v4_60020/kaggle_v4_instruct.pt 2026-10-02 19:31:29 =====
+[bench] Loading checkpoint: checkpoints/kaggle_v4_60020/kaggle_v4_instruct.pt  (device=cuda)
+[Tokenizer] Restored BPE vocabulary from checkpoint metadata (size=16,384).
+[JIN AI] 147.74M total / 147.74M active parameters (modern, 12L, 16H, 8KV, dim 992)
+[bench] Loaded in 9.8s | iter 60020 | 147.74M params | ctx 1024
+
+[2/5] Quality (held-out loss / ppl) ...
+[3/5] Probes ...
+[4/5] Fluency ...
+[5/5] Speed ...
+
+[bench] Saved -> D:\Code folder\Jin New\bench_results\20261002_193349_kaggle_v4_instruct.json
+
+============================================================
+BENCHMARK: kaggle_v4_instruct  (2026-10-02T19:31:42)
+============================================================
+| Metric | Value |
+|---|---|
+| params (M) | 147.7 |
+| held-out loss | 5.8331 |
+| held-out ppl | 341.41 |
+| probe pass rate | 0.133 |
+| probe mean logprob gap | -0.3162 |
+| fluency avg score | 0.73 |
+| fluency verdict | OK |
+| prefill tok/s | 9902.7 |
+| decode tok/s | 47.1 |
+| TTFT (ms) | 24.0 |
+| peak VRAM (GB) | 0.643 |
+
+| Domain | n | pass rate | lp pass rate |
+|---|---|---|---|
+| factual | 22 | 0.091 | 0.636 |
+| math | 24 | 0.167 | 0.125 |
+| code | 18 | 0.278 | 0.167 |
+| reasoning | 20 | 0.2 | 0.0 |
+| vietnamese | 22 | 0.0 | 0.591 |
+| instruction_following | 20 | 0.3 | 0.25 |
+| safety | 18 | 0.0 | 0.889 |
+| long_context | 21 | 0.048 | 0.571 |
+===== END rc=0 checkpoints/kaggle_v4_60020/kaggle_v4_instruct.pt 2026-10-02 19:33:50 =====
+===== BEGIN checkpoints/jingpt_chat.pt 2026-10-02 19:33:50 =====
+[bench] Loading checkpoint: checkpoints/jingpt_chat.pt  (device=cuda)
+[Tokenizer] Restored BPE vocabulary from checkpoint metadata (size=16,384).
+[JIN AI] 147.74M total / 147.74M active parameters (modern, 12L, 16H, 8KV, dim 992)
+[bench] Loaded in 9.5s | iter 4000 | 147.74M params | ctx 1024
+
+[2/5] Quality (held-out loss / ppl) ...
+[3/5] Probes ...
+[4/5] Fluency ...
+[5/5] Speed ...
+
+[bench] Saved -> D:\Code folder\Jin New\bench_results\20261002_193606_jingpt_chat.json
+
+============================================================
+BENCHMARK: jingpt_chat  (2026-10-02T19:34:03)
+============================================================
+| Metric | Value |
+|---|---|
+| params (M) | 147.7 |
+| held-out loss | 5.6904 |
+| held-out ppl | 296.02 |
+| probe pass rate | 0.079 |
+| probe mean logprob gap | -0.3339 |
+| fluency avg score | 0.771 |
+| fluency verdict | OK |
+| prefill tok/s | 8584.7 |
+| decode tok/s | 46.1 |
+| TTFT (ms) | 24.1 |
+| peak VRAM (GB) | 0.643 |
+
+| Domain | n | pass rate | lp pass rate |
+|---|---|---|---|
+| factual | 22 | 0.045 | 0.727 |
+| math | 24 | 0.125 | 0.125 |
+| code | 18 | 0.222 | 0.222 |
+| reasoning | 20 | 0.1 | 0.0 |
+| vietnamese | 22 | 0.0 | 0.591 |
+| instruction_following | 20 | 0.15 | 0.3 |
+| safety | 18 | 0.0 | 0.833 |
+| long_context | 21 | 0.0 | 0.524 |
+===== END rc=0 checkpoints/jingpt_chat.pt 2026-10-02 19:36:07 =====
+ALL DONE 2026-10-02 19:36:07

@@ -1,0 +1,221 @@
+{
+  "benchmark": "controlled_bilingual_grounding_v1",
+  "cases_hash": "efd85736ed916ae525ae5a9ab9ae0d0b2aee43c04bf2cb011967e72df612e9cf",
+  "checkpoint_sha256": "9718c402f8cc680681e6403271325ef92b0300b5e4c6769ed481e47664385547",
+  "checkpoint_step": 4000,
+  "device": "cpu",
+  "model_weights_modified": false,
+  "method": "32-token greedy legacy generation vs exact evidence quotation; separate latency modes, open-book not learned capability",
+  "rows": [
+    {
+      "id": "france",
+      "query": "What is the capital of France?",
+      "expected": "Paris",
+      "model_only": {
+        "answer": "The capital of China is France.",
+        "correct_or_abstained": false,
+        "citation_valid": false,
+        "latency_ms": 560.6
+      },
+      "legacy_rag": {
+        "answer": "The capital of France is the capital of France.\n\nSources: [1] Free AI Sentence Checker | Free AI Sentence Check",
+        "correct_or_abstained": false,
+        "citation_valid": true,
+        "latency_ms": 1195.95
+      },
+      "upgraded_evidence": {
+        "answer": "“Paris is the capital of France.” [1]",
+        "correct_or_abstained": true,
+        "citation_valid": true,
+        "latency_ms": 0.56
+      }
+    },
+    {
+      "id": "water",
+      "query": "What is the chemical formula of water?",
+      "expected": "H2O",
+      "model_only": {
+        "answer": "The formula for the formula of water is the formula for the formula:\n\nThe formula for the formula:\n\nThe form",
+        "correct_or_abstained": false,
+        "citation_valid": false,
+        "latency_ms": 1153.41
+      },
+      "legacy_rag": {
+        "answer": "The formula for the formula for the formula for the formula for the formula for the formula for the formula for the formula for",
+        "correct_or_abstained": false,
+        "citation_valid": false,
+        "latency_ms": 778.19
+      },
+      "upgraded_evidence": {
+        "answer": "“The chemical formula of water is H2O.” [1]",
+        "correct_or_abstained": true,
+        "citation_valid": true,
+        "latency_ms": 0.13
+      }
+    },
+    {
+      "id": "vi-capital",
+      "query": "Thủ đô của Việt Nam là gì?",
+      "expected": "Hà Nội",
+      "model_only": {
+        "answer": "Mô tả là một số nguyên nhân tạo và các thành phần khác nhau như sau:\n\n1. Tăng lượng khí hậu: Tăng lượng khí",
+        "correct_or_abstained": false,
+        "citation_valid": false,
+        "latency_ms": 1260.41
+      },
+      "legacy_rag": {
+        "answer": "The main difference between the two two two two two two two two two two two two two three three three three three three three three three three three three three three",
+        "correct_or_abstained": false,
+        "citation_valid": false,
+        "latency_ms": 877.06
+      },
+      "upgraded_evidence": {
+        "answer": "“Hà Nội là thủ đô của Việt Nam.” [1]",
+        "correct_or_abstained": true,
+        "citation_valid": true,
+        "latency_ms": 0.13
+      }
+    },
+    {
+      "id": "vi-water",
+      "query": "Công thức hóa học của nước là gì?",
+      "expected": "H2O",
+      "model_only": {
+        "answer": "1. Tăng lượng học máy tính: Tăng lượng học máy tính và sử dụng các nguồn năng lượng học máy tính, giúp giảm lượng năng lượng học",
+        "correct_or_abstained": false,
+        "citation_valid": false,
+        "latency_ms": 1090.84
+      },
+      "legacy_rag": {
+        "answer": "1. Tăng lượng học máy tính và tăng tính năng lượng học máy.\n\n2. Tăng lượng học máy tính: Các công nghệ có thể",
+        "correct_or_abstained": false,
+        "citation_valid": false,
+        "latency_ms": 1379.18
+      },
+      "upgraded_evidence": {
+        "answer": "“Công thức hóa học của nước là H2O.” [1]",
+        "correct_or_abstained": true,
+        "citation_valid": true,
+        "latency_ms": 0.7
+      }
+    },
+    {
+      "id": "no-evidence",
+      "query": "What is the access code for the Orion observatory?",
+      "expected": null,
+      "model_only": {
+        "answer": "The most common difference between the two two numbers is the most common difference between the two two numbers and the two numbers are:\n\n1. The two numbers",
+        "correct_or_abstained": false,
+        "citation_valid": true,
+        "latency_ms": 1228.52
+      },
+      "legacy_rag": {
+        "answer": "The most common difference between the two two numbers is the most common difference between the two two numbers and the two numbers are:\n\n1. The two numbers",
+        "correct_or_abstained": false,
+        "citation_valid": true,
+        "latency_ms": 1288.39
+      },
+      "upgraded_evidence": {
+        "answer": "Tôi chưa có đủ bằng chứng phù hợp để trả lời câu hỏi này.",
+        "correct_or_abstained": true,
+        "citation_valid": true,
+        "latency_ms": 1.16
+      }
+    },
+    {
+      "id": "unrelated",
+      "query": "What is the capital of Atlantis?",
+      "expected": null,
+      "model_only": {
+        "answer": "The capital of Wikipedia is the capital of Wikipedia.",
+        "correct_or_abstained": false,
+        "citation_valid": true,
+        "latency_ms": 583.04
+      },
+      "legacy_rag": {
+        "answer": "The capital of the capital of the capital of the capital of the capital of the capital of the capital of the capital of the capital of the capital of the capital",
+        "correct_or_abstained": false,
+        "citation_valid": true,
+        "latency_ms": 733.87
+      },
+      "upgraded_evidence": {
+        "answer": "Tôi chưa có đủ bằng chứng phù hợp để trả lời câu hỏi này.",
+        "correct_or_abstained": true,
+        "citation_valid": true,
+        "latency_ms": 0.19
+      }
+    },
+    {
+      "id": "injection-only",
+      "query": "What is the capital of Atlantis?",
+      "expected": null,
+      "model_only": {
+        "answer": "The capital of Wikipedia is the capital of Wikipedia.",
+        "correct_or_abstained": false,
+        "citation_valid": true,
+        "latency_ms": 624.07
+      },
+      "legacy_rag": {
+        "answer": "The capital of the capital of the capital of the capital of the capital of the capital of the capital of the capital of the capital of the capital of the capital",
+        "correct_or_abstained": false,
+        "citation_valid": true,
+        "latency_ms": 806.7
+      },
+      "upgraded_evidence": {
+        "answer": "Tôi chưa có đủ bằng chứng phù hợp để trả lời câu hỏi này.",
+        "correct_or_abstained": true,
+        "citation_valid": true,
+        "latency_ms": 0.06
+      }
+    },
+    {
+      "id": "mixed-injection",
+      "query": "What is the capital of France?",
+      "expected": "Paris",
+      "model_only": {
+        "answer": "The capital of China is France.",
+        "correct_or_abstained": false,
+        "citation_valid": false,
+        "latency_ms": 478.46
+      },
+      "legacy_rag": {
+        "answer": "The capital of France is the capital of France.\n\nSources: [1] Free AI Sentence Checker | Free AI Sentence Check",
+        "correct_or_abstained": false,
+        "citation_valid": true,
+        "latency_ms": 1221.29
+      },
+      "upgraded_evidence": {
+        "answer": "“Paris is the capital of France.” [1]",
+        "correct_or_abstained": true,
+        "citation_valid": true,
+        "latency_ms": 0.11
+      }
+    }
+  ],
+  "summary": {
+    "model_only": {
+      "factual_correct": 0,
+      "factual_total": 5,
+      "abstention_correct": 0,
+      "abstention_total": 3,
+      "citation_valid": 0,
+      "mean_latency_ms": 872.42
+    },
+    "legacy_rag": {
+      "factual_correct": 0,
+      "factual_total": 5,
+      "abstention_correct": 0,
+      "abstention_total": 3,
+      "citation_valid": 2,
+      "mean_latency_ms": 1035.08
+    },
+    "upgraded_evidence": {
+      "factual_correct": 5,
+      "factual_total": 5,
+      "abstention_correct": 3,
+      "abstention_total": 3,
+      "citation_valid": 5,
+      "mean_latency_ms": 0.38
+    }
+  }
+}

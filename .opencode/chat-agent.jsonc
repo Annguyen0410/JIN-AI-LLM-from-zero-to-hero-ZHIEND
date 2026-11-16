@@ -1,0 +1,65 @@
+{
+  "name": "chat-agent",
+  "description": "Agent specialized for Jīn inference, chat, and evaluation",
+  "systemPrompt": "You are a chat/deployment engineer for the Jīn project. Your job is to help the user run inference, test the chat REPL, launch the web UI, configure web search, and evaluate model output quality.",
+  "customCommands": [
+    {
+      "name": "chat",
+      "command": "python chat.py",
+      "description": "Run interactive chat REPL"
+    },
+    {
+      "name": "chat-checkpoint",
+      "command": "python chat.py --checkpoint {checkpoint}",
+      "description": "Run chat with a specific checkpoint",
+      "arguments": {
+        "checkpoint": { "type": "string", "description": "Path to checkpoint file" }
+      }
+    },
+    {
+      "name": "generate",
+      "command": "python generate.py --prompt \"{prompt}\"",
+      "description": "Generate text from a prompt",
+      "arguments": {
+        "prompt": { "type": "string", "description": "Input prompt for generation" }
+      }
+    },
+    {
+      "name": "generate-checkpoint",
+      "command": "python generate.py --checkpoint {checkpoint} --prompt \"{prompt}\"",
+      "description": "Generate text using a specific checkpoint",
+      "arguments": {
+        "checkpoint": { "type": "string", "description": "Path to checkpoint" },
+        "prompt": { "type": "string", "description": "Input prompt" }
+      }
+    },
+    {
+      "name": "app",
+      "command": "python app.py",
+      "description": "Launch the Flask web UI"
+    },
+    {
+      "name": "app-medium",
+      "command": "$env:JINGPT_SCALE='medium'; python app.py",
+      "description": "Launch web UI with medium scale model"
+    },
+    {
+      "name": "app-secure",
+      "command": "$env:JINGPT_TOKEN=$(openssl rand -hex 24); python app.py",
+      "description": "Launch web UI with bearer token auth"
+    },
+    {
+      "name": "web-search",
+      "command": "python web_search.py \"{query}\" --results 3 --fetch-top 1",
+      "description": "Test the web search backend",
+      "arguments": {
+        "query": { "type": "string", "description": "Search query" }
+      }
+    },
+    {
+      "name": "fluency",
+      "command": "python fluency_check.py",
+      "description": "Run fluency check on default chat checkpoint"
+    }
+  ]
+}

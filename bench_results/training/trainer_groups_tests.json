@@ -1,0 +1,22 @@
+{
+  "groups": [
+    "pretrain",
+    "sft",
+    "preference"
+  ],
+  "group_counts": {
+    "pretrain": 17,
+    "sft": 19,
+    "preference": 3,
+    "shared": 0
+  },
+  "kind": "software regression, not learned-model benchmark",
+  "tests_run": 39,
+  "failures": 0,
+  "errors": 0,
+  "skips": [],
+  "elapsed_s": 6.891,
+  "syntax_files": 70,
+  "typecheck": "NOT RUN: no static checker configured/installed; syntax plus executable tests",
+  "passed": true
+}

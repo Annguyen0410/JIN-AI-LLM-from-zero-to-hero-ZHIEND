@@ -1,0 +1,86 @@
+{
+  "benchmark": "frozen_system_controls_v1",
+  "kind": "deterministic infrastructure; no learned-intelligence claim",
+  "suite_sha256": "967440d8d9a0330f64027f4f95ce1acc75a7a82ce59fdb5cd35c44309ee3b292",
+  "cases": [
+    {
+      "name": "Vietnamese top-1 retrieval",
+      "category": "retrieval",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.064
+    },
+    {
+      "name": "TTL applies before compaction",
+      "category": "memory",
+      "passed": false,
+      "error": null,
+      "latency_ms": 0.085
+    },
+    {
+      "name": "Duplicate cannot erase dispute",
+      "category": "memory",
+      "passed": false,
+      "error": null,
+      "latency_ms": 0.042
+    },
+    {
+      "name": "Malformed arguments fail safely",
+      "category": "tools",
+      "passed": false,
+      "error": "TypeError: int() argument must be a string, a bytes-like object or a real number, not 'list'",
+      "latency_ms": 0.016
+    },
+    {
+      "name": "Agent memory writes require permission",
+      "category": "security",
+      "passed": false,
+      "error": null,
+      "latency_ms": 0.035
+    },
+    {
+      "name": "Python cannot read host files",
+      "category": "security",
+      "passed": false,
+      "error": null,
+      "latency_ms": 68.112
+    },
+    {
+      "name": "Role-token injection neutralized",
+      "category": "security",
+      "passed": false,
+      "error": null,
+      "latency_ms": 0.014
+    },
+    {
+      "name": "Nonfinite learning gate rejects",
+      "category": "learning_safety",
+      "passed": false,
+      "error": null,
+      "latency_ms": 0.01
+    },
+    {
+      "name": "Memory citation IDs are unique",
+      "category": "grounding",
+      "passed": false,
+      "error": null,
+      "latency_ms": 1.235
+    },
+    {
+      "name": "Web and memory evidence coexist",
+      "category": "grounding",
+      "passed": false,
+      "error": null,
+      "latency_ms": 0.003
+    },
+    {
+      "name": "Deterministic arithmetic correctness",
+      "category": "math_tool",
+      "passed": true,
+      "error": null,
+      "latency_ms": 0.044
+    }
+  ],
+  "passed": 2,
+  "total": 11
+}

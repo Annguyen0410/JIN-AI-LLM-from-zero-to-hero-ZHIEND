@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "inputs": {
+    "data": {"path": "/kaggle/input/jin-corpus/train.txt", "sha256": "REPLACE_WITH_VERIFIED_DATA_SHA256"},
+    "tokenizer": {"path": "bpe.json", "sha256": "REPLACE_WITH_VERIFIED_TOKENIZER_SHA256"},
+    "parent": {"path": "/kaggle/input/jin-checkpoint/jingpt_latest.pt", "sha256": "REPLACE_WITH_VERIFIED_PARENT_SHA256"}
+  },
+  "training": {
+    "mode": "pretrain",
+    "device": "cuda",
+    "optimizer": "muon",
+    "batch-size": 1,
+    "grad-accum": 8,
+    "block-size": 512,
+    "run-iters": 1000,
+    "lr": 0.0002,
+    "seed": 1337,
+    "eval-interval": 200,
+    "eval-iters": 20,
+    "checkpoint-interval": 200,
+    "low-vram": true
+  },
+  "output_checkpoint": "checkpoints/candidate_continued_pretrain.pt"
+}

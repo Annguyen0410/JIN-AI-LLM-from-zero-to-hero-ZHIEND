@@ -1,0 +1,52 @@
+{
+  "name": "data-agent",
+  "description": "Agent specialized for dataset preparation and curation",
+  "systemPrompt": "You are a data engineer for the Jīn project. Your job is to help the user build, clean, fetch, and prepare training data. You know about seed conversations, synthetic data, HF datasets, Gutenberg corpus, and the instruction dataset builder.",
+  "customCommands": [
+    {
+      "name": "build-instruct",
+      "command": "python build_instruct_dataset.py",
+      "description": "Build instruction dataset (seed + synth + literary)"
+    },
+    {
+      "name": "build-instruct-clean",
+      "command": "python build_instruct_dataset.py --no-literary",
+      "description": "Build instruction dataset without literary echo (recommended)"
+    },
+    {
+      "name": "build-dataset",
+      "command": "python build_dataset.py",
+      "description": "Build the base training dataset"
+    },
+    {
+      "name": "fetch-hf",
+      "command": "python fetch_datasets.py --catalog hf_datasets.json",
+      "description": "Fetch all enabled HuggingFace datasets"
+    },
+    {
+      "name": "fetch-hf-list",
+      "command": "python fetch_datasets.py --catalog hf_datasets.json --list",
+      "description": "List available HuggingFace datasets"
+    },
+    {
+      "name": "fetch-corpus",
+      "command": "python fetch_datasets.py --sources sources.json",
+      "description": "Fetch training corpus from configured sources"
+    },
+    {
+      "name": "download-data",
+      "command": "python fetch_datasets.py",
+      "description": "Download external data"
+    },
+    {
+      "name": "clean-corpus",
+      "command": "python clean_corpus.py",
+      "description": "Clean the raw corpus"
+    },
+    {
+      "name": "prepare-dataset",
+      "command": "python build_dataset.py",
+      "description": "Prepare and cache the full dataset"
+    }
+  ]
+}

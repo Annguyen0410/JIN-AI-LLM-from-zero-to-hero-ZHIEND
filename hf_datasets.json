@@ -1,0 +1,297 @@
+{
+  "_readme": "Curated list of open datasets for training a from-scratch SLM in the class of SmolLM / TinyLlama / Phi. Every entry is downloaded over plain HTTPS with no API key. Use fetch_datasets.py --plan/--only to resolve pinned shards; enabled entries remain legacy defaults. Licenses and upstream content rights must be reviewed before redistribution or commercial use.",
+  "datasets": [
+    {
+      "id": "fineweb2-vi",
+      "name": "FineWeb2 Vietnamese (bounded train shards)",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "enabled": false,
+      "license": "ODC-BY-1.0",
+      "dataset_card": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2",
+      "domain": "vietnamese",
+      "languages": ["vi"],
+      "hf_repo": "HuggingFaceFW/fineweb-2",
+      "server_config": "vie_Latn",
+      "file_pattern": "data/vie_Latn/train/.*\\.parquet",
+      "max_shards": 1,
+      "max_output_mb": 128,
+      "requires": ["pyarrow"],
+      "text_columns": ["text"],
+      "description": "Vietnamese web pretrain supplement; retain attribution, filter PII/noise and keep below Wikipedia/educational quality weighting."
+    },
+    {
+      "id": "fineweb-edu-dedup",
+      "name": "SmolLM FineWeb-Edu deduplicated (bounded train shards)",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "enabled": false,
+      "license": "ODC-BY-1.0",
+      "dataset_card": "https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus",
+      "domain": "educational",
+      "languages": ["en"],
+      "hf_repo": "HuggingFaceTB/smollm-corpus",
+      "server_config": "fineweb-edu-dedup",
+      "file_pattern": "fineweb-edu-dedup/.*\\.parquet",
+      "max_shards": 1,
+      "max_output_mb": 128,
+      "requires": ["pyarrow"],
+      "text_columns": ["text"],
+      "description": "Educational English breadth for a small LM; do not download the whole corpus."
+    },
+    {
+      "id": "smol-smoltalk",
+      "name": "Smol-SmolTalk short small-model conversations",
+      "kind": "instruction_parquet",
+      "format": "parquet_messages",
+      "enabled": false,
+      "license": "Apache-2.0 (review constituent dataset licenses)",
+      "dataset_card": "https://huggingface.co/datasets/HuggingFaceTB/smol-smoltalk",
+      "domain": "conversation",
+      "languages": ["en"],
+      "hf_repo": "HuggingFaceTB/smol-smoltalk",
+      "file_pattern": "(?:data/)?train-.*\\.parquet",
+      "max_shards": 1,
+      "requires": ["pyarrow"],
+      "text_columns": ["messages"],
+      "description": "Shorter instruction/chat data for small models; use TRAIN only, never test split."
+    },
+    {
+      "id": "opencodeinstruct",
+      "name": "NVIDIA OpenCodeInstruct (tested samples, train shard)",
+      "kind": "instruction_parquet",
+      "format": "parquet_qa",
+      "enabled": false,
+      "license": "CC-BY-4.0",
+      "dataset_card": "https://huggingface.co/datasets/nvidia/OpenCodeInstruct",
+      "domain": "code",
+      "languages": ["en"],
+      "hf_repo": "nvidia/OpenCodeInstruct",
+      "file_pattern": "data/train-.*\\.parquet",
+      "max_shards": 1,
+      "requires": ["pyarrow"],
+      "question_column": "input",
+      "answer_column": "output",
+      "quality_column": "average_test_score",
+      "min_quality": 1.0,
+      "description": "Filter to upstream full test score; metadata is upstream evidence, not locally re-executed code."
+    },
+    {
+      "id": "tinystories-v2",
+      "name": "TinyStories v2 (GPT-4 generated)",
+      "kind": "pretrain_text",
+      "format": "text",
+      "enabled": true,
+      "license": "CDLA-Sharing-1.0",
+      "files": [
+        "https://huggingface.co/datasets/roneneldan/TinyStories/resolve/main/TinyStoriesV2-GPT4-train.txt"
+      ],
+      "description": "Synthetic simple English stories. Useful early fluency data; keep low weight in continued training to avoid crowding out knowledge/VI/code."
+    },
+    {
+      "id": "tinystories-v2-valid",
+      "name": "TinyStories v2 validation",
+      "kind": "pretrain_text",
+      "format": "text",
+      "enabled": false,
+      "license": "CDLA-Sharing-1.0",
+      "files": [
+        "https://huggingface.co/datasets/roneneldan/TinyStories/resolve/main/TinyStoriesV2-GPT4-valid.txt"
+      ],
+      "description": "Small held-out slice of TinyStories v2."
+    },
+    {
+      "id": "dolly-15k",
+      "name": "Databricks Dolly 15k",
+      "kind": "instruction_jsonl",
+      "format": "dolly_jsonl",
+      "enabled": true,
+      "license": "CC-BY-SA-3.0 (verify upstream revision/terms)",
+      "files": [
+        "https://huggingface.co/datasets/databricks/databricks-dolly-15k/resolve/main/databricks-dolly-15k.jsonl"
+      ],
+      "description": "15k human-written instruction/response pairs across 7 categories."
+    },
+    {
+      "id": "alpaca",
+      "name": "Stanford Alpaca 52k",
+      "kind": "instruction_json",
+      "format": "alpaca_json",
+      "enabled": true,
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        "https://raw.githubusercontent.com/tatsu-lab/stanford_alpaca/main/alpaca_data.json"
+      ],
+      "description": "52k instruction/input/output triples. Non-commercial license: fine for personal research."
+    },
+    {
+      "id": "gsm8k-train",
+      "name": "GSM8K grade-school math (train)",
+      "kind": "math_jsonl",
+      "format": "gsm8k_jsonl",
+      "enabled": true,
+      "license": "MIT",
+      "files": [
+        "https://raw.githubusercontent.com/openai/grade-school-math/master/grade_school_math/data/train.jsonl"
+      ],
+      "description": "7.5k grade-school word problems with step-by-step solutions. Gold standard for SLM math."
+    },
+    {
+      "id": "code-alpaca-20k",
+      "name": "CodeAlpaca 20k",
+      "kind": "instruction_json",
+      "format": "alpaca_json",
+      "enabled": true,
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        "https://raw.githubusercontent.com/sahil280114/codealpaca/master/data/code_alpaca_20k.json"
+      ],
+      "description": "20k instruction/response pairs for coding tasks."
+    },
+    {
+      "id": "oasst2",
+      "name": "OpenAssistant OASST2",
+      "kind": "chat_jsonl_gz",
+      "format": "oasst_trees_jsonl_gz",
+      "enabled": true,
+      "license": "Apache-2.0",
+      "files": [
+        "https://huggingface.co/datasets/OpenAssistant/oasst2/resolve/main/2023-11-05_oasst2_ready.trees.jsonl.gz"
+      ],
+      "description": "Tens of thousands of human-written multi-turn assistant conversations in 30+ languages (including Vietnamese)."
+    },
+    {
+      "id": "metamathqa",
+      "name": "MetaMathQA 395k",
+      "kind": "math_json",
+      "format": "metamath_json",
+      "enabled": true,
+      "license": "MIT",
+      "files": [
+        "https://huggingface.co/datasets/meta-math/MetaMathQA/resolve/main/MetaMathQA-395K.json"
+      ],
+      "description": "395k augmented math word problems. Big improvement in reasoning; ~250 MB file."
+    },
+    {
+      "id": "bactrian-x-vi",
+      "name": "Bactrian-X Vietnamese instructions",
+      "kind": "instruction_json",
+      "format": "bactrian_json",
+      "enabled": true,
+      "license": "CC-BY-NC-4.0",
+      "files": [
+        "https://huggingface.co/datasets/MBZUAI/Bactrian-X/resolve/main/data/vi.json.gz"
+      ],
+      "description": "67k Vietnamese instruction/input/output triples translated & natively collected. Best small VN instruction set."
+    },
+    {
+      "id": "lima",
+      "name": "LIMA (handcrafted 1k)",
+      "kind": "instruction_jsonl",
+      "format": "lima_jsonl",
+      "enabled": false,
+      "license": "CC-BY-NC-SA-4.0 (auth required)",
+      "files": [
+        "https://huggingface.co/datasets/GAIR/lima/resolve/main/train.jsonl"
+      ],
+      "description": "Only 1000 examples but famously high quality. Download may require you to be logged in and accept terms."
+    },
+    {
+      "id": "cosmopedia-v2-sample",
+      "name": "Cosmopedia v2 (first shard, SmolLM corpus)",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "enabled": true,
+      "license": "ODC-BY-1.0",
+      "requires": ["pyarrow"],
+      "text_columns": ["text"],
+      "files": [
+        "https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus/resolve/main/cosmopedia-v2/train-00000-of-00104.parquet"
+      ],
+      "description": "Synthetic educational text in the spirit of Phi's 'Textbooks are all you need'. Repo moved to HuggingFaceTB/smollm-corpus (104 shards). Set enabled:true and install pyarrow to use."
+    },
+    {
+      "id": "openhermes-2_5-sample",
+      "name": "OpenHermes 2.5 (first shard)",
+      "kind": "instruction_parquet",
+      "format": "json_messages",
+      "enabled": true,
+      "license": "Various (per-source)",
+      "requires": ["pyarrow"],
+      "text_columns": ["conversations"],
+      "files": [
+        "https://huggingface.co/datasets/teknium/OpenHermes-2.5/resolve/main/openhermes2_5.json"
+      ],
+      "description": "1M curated instruction/chat examples. Enable and install pyarrow to use."
+    },
+    {
+      "id": "simple-wikipedia",
+      "name": "Simple English Wikipedia (HuggingFace cached)",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "enabled": true,
+      "license": "CC-BY-SA-3.0 (verify upstream revision/terms)",
+      "requires": ["pyarrow"],
+      "text_columns": ["text"],
+      "files": [
+        "https://huggingface.co/datasets/wikimedia/wikipedia/resolve/main/20231101.simple/train-00000-of-00001.parquet"
+      ],
+      "description": "Simple English Wikipedia, ~270k articles. Needs pyarrow."
+    },    {
+      "id": "wikipedia-vi-sample",
+      "name": "Vietnamese Wikipedia (first shard)",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "enabled": true,
+      "license": "CC-BY-SA-3.0 (verify upstream revision/terms)",
+      "requires": ["pyarrow"],
+      "text_columns": ["text"],
+      "files": [
+        "https://huggingface.co/datasets/wikimedia/wikipedia/resolve/main/20231101.vi/train-00000-of-00004.parquet"
+      ],
+      "description": "Vietnamese Wikipedia shard 1/4, ~291 MB. Needs pyarrow."
+    },
+    {
+      "id": "wikipedia-vi-shard2",
+      "name": "Vietnamese Wikipedia (second shard)",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "enabled": true,
+      "license": "CC-BY-SA-3.0 (verify upstream revision/terms)",
+      "requires": ["pyarrow"],
+      "text_columns": ["text"],
+      "files": [
+        "https://huggingface.co/datasets/wikimedia/wikipedia/resolve/main/20231101.vi/train-00001-of-00004.parquet"
+      ],
+      "description": "Vietnamese Wikipedia shard 2/4, ~71 MB. Needs pyarrow."
+    },
+    {
+      "id": "wikipedia-vi-shard3",
+      "name": "Vietnamese Wikipedia (third shard)",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "enabled": true,
+      "license": "CC-BY-SA-3.0 (verify upstream revision/terms)",
+      "requires": ["pyarrow"],
+      "text_columns": ["text"],
+      "files": [
+        "https://huggingface.co/datasets/wikimedia/wikipedia/resolve/main/20231101.vi/train-00002-of-00004.parquet"
+      ],
+      "description": "Vietnamese Wikipedia shard 3/4, ~51 MB. Needs pyarrow."
+    },
+    {
+      "id": "wikipedia-vi-shard4",
+      "name": "Vietnamese Wikipedia (fourth shard)",
+      "kind": "pretrain_parquet",
+      "format": "parquet",
+      "enabled": true,
+      "license": "CC-BY-SA-3.0 (verify upstream revision/terms)",
+      "requires": ["pyarrow"],
+      "text_columns": ["text"],
+      "files": [
+        "https://huggingface.co/datasets/wikimedia/wikipedia/resolve/main/20231101.vi/train-00003-of-00004.parquet"
+      ],
+      "description": "Vietnamese Wikipedia shard 4/4, ~316 MB. Needs pyarrow. Full Vietnamese Wikipedia (~1.1M articles)."
+    }
+  ]
+}

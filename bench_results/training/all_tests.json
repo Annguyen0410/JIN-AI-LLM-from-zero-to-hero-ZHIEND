@@ -1,0 +1,25 @@
+{
+  "groups": [
+    "all"
+  ],
+  "group_counts": {
+    "pretrain": 17,
+    "sft": 19,
+    "preference": 3,
+    "shared": 246
+  },
+  "kind": "software regression, not learned-model benchmark",
+  "tests_run": 285,
+  "failures": 0,
+  "errors": 0,
+  "skips": [
+    {
+      "test": "test_presets_forward_and_generate (test_model_shapes.TestPresetShapes.test_presets_forward_and_generate)",
+      "reason": "Explicit --skip-preset-shapes: local host allocation pressure; not verified in this run"
+    }
+  ],
+  "elapsed_s": 64.484,
+  "syntax_files": 70,
+  "typecheck": "NOT RUN: no static checker configured/installed; syntax plus executable tests",
+  "passed": true
+}

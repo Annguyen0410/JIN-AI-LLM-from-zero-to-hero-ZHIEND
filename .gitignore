@@ -1,0 +1,50 @@
+# .gitignore — JIN AI
+# Nguyên tắc: repo này là CODE + DOCS + TEST. Mọi thứ sinh ra từ train
+# (checkpoint, token cache, corpus) KHÔNG thuộc về git.
+# GitHub chặn cứng file >100MB; một checkpoint small đã 1,7GB.
+
+# ── Môi trường & rác Python ────────────────────────────────────────────
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# ── Artifact huấn luyện (nặng) ─────────────────────────────────────────
+cache/
+runs/
+kaggle_upload/
+checkpoints/
+*.pt
+*.u16
+*.bin
+
+# ── Dữ liệu ────────────────────────────────────────────────────────────
+# data/ chứa corpus 5,3GB + snapshot + token cache — không commit.
+# Ngoại lệ: file nhỏ do tác giả tự viết, cần cho tái lập benchmark.
+data/*
+!data/mixture.json
+!data/seed/
+data/seed/hf/
+
+# ── Bí mật — TUYỆT ĐỐI không commit ────────────────────────────────────
+kaggle.json
+access_token*
+.env
+*.env
+*.pem
+
+# ── Công cụ / editor ───────────────────────────────────────────────────
+.opencode/node_modules/
+.opencode/package-lock.json
+.freebuff/
+.qodo/
+.idea/
+.vscode/
+
+# ── Archive & file cài đặt ─────────────────────────────────────────────
+_archive/
+*.zip
+*.7z
+*.exe
+*.msi
+*.stackdump

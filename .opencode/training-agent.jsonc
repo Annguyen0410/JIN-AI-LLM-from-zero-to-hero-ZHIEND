@@ -1,0 +1,59 @@
+{
+  "name": "training-agent",
+  "description": "Agent specialized in Jīn model training workflows",
+  "systemPrompt": "You are a training engineer for the Jīn project. Your job is to help the user train, resume, debug, and optimize the Jīn language model. You know the full pipeline: BPE tokenizer training, pretraining, instruction tuning with loss masking, and fluency evaluation.",
+  "customCommands": [
+    {
+      "name": "train-full",
+      "command": "python pipeline.py raw --train",
+      "description": "Run the full end-to-end pipeline (build data \u2192 BPE \u2192 train)"
+    },
+    {
+      "name": "train-resume",
+      "command": "python train.py --resume",
+      "description": "Resume training from the latest checkpoint"
+    },
+    {
+      "name": "train-base",
+      "command": "python train.py",
+      "description": "Run base model pretraining"
+    },
+    {
+      "name": "train-instruct",
+      "command": "python train.py --mode instruct",
+      "description": "Run instruction tuning (chat model)"
+    },
+    {
+      "name": "train-instruct-custom",
+      "command": "python train.py --mode instruct --steps {steps} --init-from {checkpoint}",
+      "description": "Instruction tuning with custom steps and init checkpoint",
+      "arguments": {
+        "steps": { "type": "number", "default": 5000, "description": "Number of training steps" },
+        "checkpoint": { "type": "string", "default": "", "description": "Path to init checkpoint" }
+      }
+    },
+    {
+      "name": "build-vocab",
+      "command": "python bpe_tokenizer.py --data data/chat_train.txt --out bpe.json --vocab-size 16384",
+      "description": "Build BPE vocabulary with standard settings"
+    },
+    {
+      "name": "build-vocab-custom",
+      "command": "python bpe_tokenizer.py --data {data} --out {output} --vocab-size {vocab_size}",
+      "description": "Build BPE vocabulary with custom settings",
+      "arguments": {
+        "data": { "type": "string", "description": "Path to training data text file" },
+        "output": { "type": "string", "default": "bpe.json", "description": "Output path for BPE vocab" },
+        "vocab_size": { "type": "number", "default": 16384, "description": "Vocabulary size" }
+      }
+    },
+    {
+      "name": "fluency",
+      "command": "python fluency_check.py --checkpoint {checkpoint}",
+      "description": "Check fluency of a trained checkpoint",
+      "arguments": {
+        "checkpoint": { "type": "string", "description": "Path to checkpoint file" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+flask>=3.0.0
+numpy>=2.0
+torch>=2.0.0
+
+# web_search.py uses ONLY the Python stdlib (urllib + html.parser),
+# so there is nothing else to install for live search.
+
+# Needed by the parquet-backed datasets now enabled in hf_datasets.json
+# (Cosmopedia, Wikipedia vi/en shards).
+pyarrow>=15.0.0

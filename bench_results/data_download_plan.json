@@ -1,0 +1,45 @@
+{
+  "datasets": [
+    {
+      "domain": "vietnamese",
+      "files": [
+        "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2/resolve/af9c13333eb981300149d5ca60a8e9d659b276b9/data/vie_Latn/train/000_00000.parquet"
+      ],
+      "id": "fineweb2-vi",
+      "known_bytes": 4840313001,
+      "license": "ODC-BY-1.0",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9"
+    },
+    {
+      "domain": "educational",
+      "files": [
+        "https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus/resolve/3ba9d605774198c5868892d7a8deda78031a781f/fineweb-edu-dedup/train-00000-of-00234.parquet"
+      ],
+      "id": "fineweb-edu-dedup",
+      "known_bytes": 2395121191,
+      "license": "ODC-BY-1.0",
+      "revision": "3ba9d605774198c5868892d7a8deda78031a781f"
+    },
+    {
+      "domain": "conversation",
+      "files": [
+        "https://huggingface.co/datasets/HuggingFaceTB/smol-smoltalk/resolve/f73fe857d519ff6ac5af2ea67c4d3834da7b8bcc/data/train-00000-of-00004.parquet"
+      ],
+      "id": "smol-smoltalk",
+      "known_bytes": 229710350,
+      "license": "Apache-2.0 (review constituent dataset licenses)",
+      "revision": "f73fe857d519ff6ac5af2ea67c4d3834da7b8bcc"
+    },
+    {
+      "domain": "code",
+      "files": [
+        "https://huggingface.co/datasets/nvidia/OpenCodeInstruct/resolve/8f3ba5bafe4d6e8db46082cf7ae6741bc370604d/data/train-00000-of-00050.parquet"
+      ],
+      "id": "opencodeinstruct",
+      "known_bytes": 133476478,
+      "license": "CC-BY-4.0",
+      "revision": "8f3ba5bafe4d6e8db46082cf7ae6741bc370604d"
+    }
+  ],
+  "failures": []
+}

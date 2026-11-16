@@ -1,0 +1,27 @@
+==================================================================
+COMPARE: jingpt_chat  ->  kaggle_v4_pretrain_best
+==================================================================
+| Metric | A | B | diff | diff% |
+|---|---|---|---|---|
+| held-out loss | 5.6904 | 5.3887 | -0.302 | -5.3% |
+| held-out ppl | 296.02 | 218.92 | -77.1 | -26.0% |
+| probe pass rate | 0.079 | 0.03 | -0.049 | -62.0% |
+| fluency avg score | 0.77 | 0.204 | -0.566 | -73.5% |
+| prefill tok/s | 10035.4 | 8255.7 | -1.78e+03 | -17.7% |
+| decode tok/s | 41.8 | 47.5 | +5.7 | +13.6% |
+| TTFT (ms) | 25.2 | 23.8 | -1.4 | -5.6% |
+| peak VRAM (GB) | 0.643 | 0.643 | +0 | +0.0% |
+
+| Domain | A pass | B pass | diff |
+|---|---|---|---|
+| factual | 0.045 | 0.000 | -0.045 |
+| math | 0.125 | 0.000 | -0.125 |
+| code | 0.222 | 0.111 | -0.111 |
+| reasoning | 0.100 | 0.000 | -0.100 |
+| vietnamese | 0.000 | 0.045 | +0.045 |
+| instruction_following | 0.150 | 0.100 | -0.050 |
+| safety | 0.000 | 0.000 | +0.000 |
+| long_context | 0.000 | 0.000 | +0.000 |
+
+forgetting_score (mean probe pass-rate drop on old domains): 0.0539
+(>=0; 0 = the new checkpoint lost nothing on the old probe set)

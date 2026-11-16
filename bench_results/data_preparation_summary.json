@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "prepared_and_verified_not_trained",
+  "recommended_dataset": "data/prepared_v4",
+  "existing_train_bytes": 5305760075,
+  "inventory_total_listed_bytes_including_cache_copies": 14860603909,
+  "new_downloads": {
+    "complete_parquet_bytes": 363186828,
+    "smol_smoltalk_converted_conversations": 10000,
+    "opencodeinstruct_converted_pairs": 10000,
+    "fineweb2_vi_sample_documents": 100,
+    "fineweb_edu_sample_documents": 300,
+    "full_web_shards_downloaded": false,
+    "full_parquet_revisions_pinned": true,
+    "viewer_sample_revisions_pinned": false
+  },
+  "prepared": {
+    "pretrain_bytes_including_combined_validation": 38238712,
+    "pretrain_unique_content_hashes_train": 46143,
+    "pretrain_unique_content_hashes_val": 1245,
+    "sft_train_conversations": 17086,
+    "sft_val_conversations": 914,
+    "exact_content_split_overlap": 0,
+    "verification_report": "data/prepared_v4/verification.json",
+    "manifest": "data/prepared_v4/manifest.json",
+    "mixture": "data/prepared_v4/mixture.json",
+    "weights": {
+      "vietnamese": 0.35,
+      "educational": 0.30,
+      "knowledge": 0.15,
+      "code": 0.10,
+      "math": 0.08,
+      "stories": 0.02
+    }
+  },
+  "tests": {
+    "report": "bench_results/data_pipeline_tests.json",
+    "tests_run": 257,
+    "failures": 0,
+    "errors": 0,
+    "syntax_files": 62,
+    "static_typecheck": "not configured; syntax compilation and executable tests instead"
+  },
+  "license_policy": "exclude NC and uncertain mixed-source licenses by default; not commercial legal clearance",
+  "limitations": [
+    "Only bounded samples/prefixes prepared, not the complete existing multi-GB inventory",
+    "Exact content/conversation dedupe; semantic or problem-family leakage not proven absent",
+    "Heuristic privacy and injection filters are not comprehensive",
+    "SFT default profile is not specifically Vietnamese-balanced; Bactrian-X VI remains opt-in NC research data",
+    "Math/code pretrain reuses prepared SFT TRAIN answers, not independent new content",
+    "No local execution of downloaded code or proof of upstream answer correctness",
+    "Legacy source revisions unknown; viewer row samples are current and not revision-pinned",
+    "Mixture absolute paths must be regenerated or safely repinned when moving workspace",
+    "prepared_v1 and prepared_v3 superseded; prepared_v2 incomplete; use prepared_v4",
+    "No new training run or learned-capability improvement claim"
+  ],
+  "guide": "docs/DATA_TRAINING_VI.md"
+}

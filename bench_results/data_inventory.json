@@ -1,0 +1,638 @@
+{
+  "disk_free_bytes": 666595278848,
+  "generated_at": "2026-10-01T01:40:56Z",
+  "groups": [
+    {
+      "bytes": 823471,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-a-tale-of-two-cities"
+    },
+    {
+      "bytes": 761622,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-aeneid"
+    },
+    {
+      "bytes": 248078,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-aesop"
+    },
+    {
+      "bytes": 178064,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-alice"
+    },
+    {
+      "bytes": 2108172,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-anna-karenina"
+    },
+    {
+      "bytes": 412015,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-around-the-world-80-days"
+    },
+    {
+      "bytes": 349237,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-art-of-war"
+    },
+    {
+      "bytes": 339655,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-black-beauty"
+    },
+    {
+      "bytes": 2085017,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-bleak-house"
+    },
+    {
+      "bytes": 2076789,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-brothers-karamazov"
+    },
+    {
+      "bytes": 203200,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-call-of-the-wild"
+    },
+    {
+      "bytes": 2848795,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-count-of-monte-cristo"
+    },
+    {
+      "bytes": 1224164,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-crime-punishment"
+    },
+    {
+      "bytes": 2071965,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-david-copperfield"
+    },
+    {
+      "bytes": 1511812,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-demons"
+    },
+    {
+      "bytes": 672719,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-divine-comedy"
+    },
+    {
+      "bytes": 2434958,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-don-quixote"
+    },
+    {
+      "bytes": 906192,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-dracula"
+    },
+    {
+      "bytes": 950575,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-emma"
+    },
+    {
+      "bytes": 456617,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-frankenstein"
+    },
+    {
+      "bytes": 1078975,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-great-expectations"
+    },
+    {
+      "bytes": 569775,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-grimm"
+    },
+    {
+      "bytes": 240797,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-heart-of-darkness"
+    },
+    {
+      "bytes": 395770,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-hound-of-baskervilles"
+    },
+    {
+      "bytes": 634801,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-huckleberry-finn"
+    },
+    {
+      "bytes": 1455379,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-idiot"
+    },
+    {
+      "bytes": 1187424,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-iliad"
+    },
+    {
+      "bytes": 1168440,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-innocents-abroad"
+    },
+    {
+      "bytes": 312520,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-invisible-man"
+    },
+    {
+      "bytes": 274633,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-island-of-doctor-moreau"
+    },
+    {
+      "bytes": 1106179,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-jane-eyre"
+    },
+    {
+      "bytes": 529136,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-journey-to-the-center"
+    },
+    {
+      "bytes": 468754,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-kidnapped"
+    },
+    {
+      "bytes": 489384,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-king-solomons-mines"
+    },
+    {
+      "bytes": 906793,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-last-of-the-mohicans"
+    },
+    {
+      "bytes": 798724,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-leaves-of-grass"
+    },
+    {
+      "bytes": 3442788,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-les-miserables"
+    },
+    {
+      "bytes": 1092586,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-little-women"
+    },
+    {
+      "bytes": 1088363,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-man-in-the-iron-mask"
+    },
+    {
+      "bytes": 945194,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-mansfield-park"
+    },
+    {
+      "bytes": 1899336,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-middlemarch"
+    },
+    {
+      "bytes": 1298572,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-moby-dick"
+    },
+    {
+      "bytes": 476403,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-northanger-abbey"
+    },
+    {
+      "bytes": 730021,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-odyssey"
+    },
+    {
+      "bytes": 975038,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-oliver-twist"
+    },
+    {
+      "bytes": 505020,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-paradise-lost"
+    },
+    {
+      "bytes": 506286,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-persuasion"
+    },
+    {
+      "bytes": 295406,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-peter-pan"
+    },
+    {
+      "bytes": 1892236,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-pickwick-papers"
+    },
+    {
+      "bytes": 616423,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-poe"
+    },
+    {
+      "bytes": 787292,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-pride-prejudice"
+    },
+    {
+      "bytes": 1269077,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-republic"
+    },
+    {
+      "bytes": 733473,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-return-of-sherlock"
+    },
+    {
+      "bytes": 634140,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-sea-wolf"
+    },
+    {
+      "bytes": 471922,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-secret-garden"
+    },
+    {
+      "bytes": 725889,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-sense-sensibility"
+    },
+    {
+      "bytes": 619907,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-sherlock"
+    },
+    {
+      "bytes": 266078,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-sign-of-four"
+    },
+    {
+      "bytes": 1420319,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-three-musketeers"
+    },
+    {
+      "bytes": 207933,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-time-machine"
+    },
+    {
+      "bytes": 443620,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-tom-sawyer"
+    },
+    {
+      "bytes": 407727,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-treasure-island"
+    },
+    {
+      "bytes": 651310,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-twenty-thousand-leagues"
+    },
+    {
+      "bytes": 1619553,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-ulysses"
+    },
+    {
+      "bytes": 373366,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-war-of-the-worlds"
+    },
+    {
+      "bytes": 3425642,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-war-peace"
+    },
+    {
+      "bytes": 436770,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-white-fang"
+    },
+    {
+      "bytes": 706538,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "gutenberg-wuthering-heights"
+    },
+    {
+      "bytes": 1422130617,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-cosmopedia-v2-sample"
+    },
+    {
+      "bytes": 1500476,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-fineweb-edu-dedup"
+    },
+    {
+      "bytes": 773069,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-fineweb2-vi"
+    },
+    {
+      "bytes": 274513740,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-simple-wikipedia"
+    },
+    {
+      "bytes": 2205885134,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-tinystories-v2"
+    },
+    {
+      "bytes": 597292725,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-wikipedia-vi-sample"
+    },
+    {
+      "bytes": 163463648,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-wikipedia-vi-shard2"
+    },
+    {
+      "bytes": 131789680,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-wikipedia-vi-shard3"
+    },
+    {
+      "bytes": 623858789,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "hf-wikipedia-vi-shard4"
+    },
+    {
+      "bytes": 1155392,
+      "directory": "data\\raw",
+      "files": 1,
+      "group": "tiny-shakespeare"
+    },
+    {
+      "bytes": 23076761,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "alpaca-alpaca-data-json"
+    },
+    {
+      "bytes": 67642553,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "bactrian-x-vi-vi-json-gz"
+    },
+    {
+      "bytes": 7871113,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "code-alpaca-20k-code-alpaca-20k-json"
+    },
+    {
+      "bytes": 13158875,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "dolly-15k-databricks-dolly-15k-jsonl"
+    },
+    {
+      "bytes": 4602844,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "gsm8k-train-train-jsonl"
+    },
+    {
+      "bytes": 320540404,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "metamathqa-metamathqa-395k-json"
+    },
+    {
+      "bytes": 95068349,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "oasst2-2023-11-05-oasst2-ready-trees-jsonl-gz"
+    },
+    {
+      "bytes": 17639546,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "opencodeinstruct-train-00000-of-00050-parquet"
+    },
+    {
+      "bytes": 1675134617,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "openhermes-2_5-sample-openhermes2-5-json"
+    },
+    {
+      "bytes": 41158627,
+      "directory": "data\\seed\\hf",
+      "files": 1,
+      "group": "smol-smoltalk-train-00000-of-00004-parquet"
+    },
+    {
+      "bytes": 22773992,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-alpaca"
+    },
+    {
+      "bytes": 20938423,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-bactrian-x-vi"
+    },
+    {
+      "bytes": 8057896,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-code-alpaca-20k"
+    },
+    {
+      "bytes": 1174424341,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-cosmopedia-v2-sample"
+    },
+    {
+      "bytes": 13085339,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-dolly-15k"
+    },
+    {
+      "bytes": 4166206,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-gsm8k-train"
+    },
+    {
+      "bytes": 395626321,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-metamathqa"
+    },
+    {
+      "bytes": 54370156,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-oasst2"
+    },
+    {
+      "bytes": 133476478,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-opencodeinstruct"
+    },
+    {
+      "bytes": 1936276651,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-openhermes-2_5-sample"
+    },
+    {
+      "bytes": 156885218,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-simple-wikipedia"
+    },
+    {
+      "bytes": 229710350,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-smol-smoltalk"
+    },
+    {
+      "bytes": 2227753162,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-tinystories-v2"
+    },
+    {
+      "bytes": 291484901,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-wikipedia-vi-sample"
+    },
+    {
+      "bytes": 70991827,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-wikipedia-vi-shard2"
+    },
+    {
+      "bytes": 50874653,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-wikipedia-vi-shard3"
+    },
+    {
+      "bytes": 316206207,
+      "directory": "cache\\hf",
+      "files": 1,
+      "group": "hf-wikipedia-vi-shard4"
+    }
+  ],
+  "total_listed_bytes": 14860603909,
+  "train_bytes": 5305760075
+}

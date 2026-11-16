@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JinAI</title>
+    <meta name="description" content="JinAI — small language model tự train từ số 0 bằng PyTorch.">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0a0607">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23e11d48'/%3E%3Ctext x='16' y='22' font-size='17' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3EJ%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app" id="app">
+
+        <!-- ══ Sidebar (kéo được bề rộng) ═════════════════════════ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <span class="brand">JinAI</span>
+                <div class="sidebar-top-actions">
+                    <button class="icon-btn has-i" id="newChatBtn" data-tip-key="tip.newchat" title="">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </button>
+                    <button class="icon-btn has-i" id="collapseBtn" data-tip-key="tip.collapse" title="">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-body">
+                <div class="sidebar-label">
+                    <span data-i18n="sidebar.conversations">Hội thoại</span>
+                    <span class="info" data-tip-key="tip.convolist"></span>
+                </div>
+                <div class="convo-list" id="convoList"></div>
+                <div class="convo-actions">
+                    <button class="ghost-btn has-i" id="convoExportMd" data-tip-key="tip.exportmd" data-i18n="sidebar.export_md">Xuất .md</button>
+                    <button class="ghost-btn has-i" id="convoExportJson" data-tip-key="tip.exportjson" data-i18n="sidebar.export_json">Xuất .json</button>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="model-line">
+                    <span class="status-dot" id="statusDot"></span>
+                    <div class="model-info" id="modelInfo">
+                        <span data-i18n="status.loading">Đang tải…</span>
+                    </div>
+                </div>
+                <div class="model-meta" id="modelMeta"></div>
+                <div class="sidebar-bottom-actions">
+                    <button class="ghost-btn has-i" id="settingsBtn" data-tip-key="tip.settings">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3 15a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 2.9-1.2V4a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.6 1z"/></svg>
+                        <span data-i18n="sidebar.settings">Cài đặt</span>
+                    </button>
+                    <button class="ghost-btn has-i" id="growthBtn" data-tip-key="tip.growth" data-i18n="sidebar.growth">Growth</button>
+                </div>
+            </div>
+        </aside>
+
+        <div class="resizer" id="sidebarResizer" data-tip-key="tip.resize" title=""></div>
+
+        <!-- ══ Main ══════════════════════════════════════════════ -->
+        <main class="main">
+            <header class="topbar">
+                <button class="icon-btn only-mobile" id="menuBtn" aria-label="menu">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                </button>
+                <div class="model-bar" id="modelBar">
+                    <button class="model-bar-btn has-i" id="modelBarBtn" data-tip-key="tip.modelbar"
+                            aria-haspopup="listbox" aria-expanded="false">
+                        <span class="model-bar-dot" id="modelBarDot"></span>
+                        <span class="topbar-title" id="topModel">JinAI</span>
+                        <svg class="model-bar-caret" viewBox="0 0 24 24" width="13" height="13" fill="none"
+                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="model-bar-menu" id="modelBarMenu" role="listbox" hidden aria-label="model">
+                        <div class="model-bar-head">
+                            <span class="model-bar-title" data-i18n="modelbar.title">Model đang phục vụ</span>
+                            <span class="model-bar-note" data-i18n="modelbar.note">Bấm để đổi checkpoint</span>
+                        </div>
+                        <div class="model-bar-list" id="modelBarList"></div>
+                        <div class="model-bar-foot">
+                            <span class="model-bar-hint" id="modelBarHint"></span>
+                            <button class="ghost-btn has-i" id="modelBarLab" data-tip-key="tip.lab"
+                                    data-i18n="modelbar.open_lab">Model Lab</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="icon-btn only-mobile" id="topSettingsBtn" aria-label="settings">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M4 12h2m12 0h2M12 4v2m0 12v2"/></svg>
+                </button>
+            </header>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome" id="welcomeScreen">
+                    <div class="welcome-badge" aria-hidden="true">J</div>
+                    <h1 class="welcome-title">JinAI</h1>
+                    <p class="welcome-sub" data-i18n="welcome.sub">Small LM tự train từ số 0.</p>
+                    <div class="suggestions" id="suggestions">
+                        <button class="suggestion-card" data-prompt="Hi Jin, can you introduce yourself?">
+                            <span class="suggestion-title" data-i18n="welcome.c1.title">Chào hỏi</span>
+                            <span class="suggestion-desc" data-i18n="welcome.c1.desc">Để Jin tự giới thiệu</span>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Explain how a transformer language model works in simple terms.">
+                            <span class="suggestion-title" data-i18n="welcome.c2.title">Giải thích khái niệm</span>
+                            <span class="suggestion-desc" data-i18n="welcome.c2.desc">Hỏi cho dễ hiểu</span>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Write a short Python function that returns the n-th Fibonacci number.">
+                            <span class="suggestion-title" data-i18n="welcome.c3.title">Viết code</span>
+                            <span class="suggestion-desc" data-i18n="welcome.c3.desc">Xin một đoạn snippet</span>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Tell me a short, original story about a curious robot.">
+                            <span class="suggestion-title" data-i18n="welcome.c4.title">Kể chuyện</span>
+                            <span class="suggestion-desc" data-i18n="welcome.c4.desc">Cho model sáng tạo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="composer-wrap">
+                <div class="composer">
+                    <textarea class="chat-input" id="chatInput" rows="1" maxlength="4000"
+                              data-i18n-ph="composer.placeholder" placeholder="Nhắn cho JinAI…"></textarea>
+                    <button class="stop-btn has-i" id="stopBtn" hidden data-tip-key="tip.stop">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                    </button>
+                    <button class="send-btn has-i" id="sendBtn" disabled data-tip-key="tip.send">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+                    </button>
+                </div>
+                <div class="composer-hint" id="footerStatus" data-i18n="composer.hint">JinAI chạy hoàn toàn trên máy bạn.</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ══ Settings sheet ═══════════════════════════════════════ -->
+    <div class="scrim" id="scrim" hidden></div>
+    <section class="sheet" id="settingsSheet" hidden aria-label="settings">
+        <div class="sheet-head">
+            <span data-i18n="sheet.title">Cài đặt</span>
+            <button class="icon-btn" id="settingsClose" data-tip-key="tip.close">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+        </div>
+        <div class="sheet-body">
+
+            <details class="sheet-section" open>
+                <summary><span data-i18n="sheet.sampling">Sampling</span></summary>
+                <div class="sheet-inner">
+                    <div class="center-row">
+                        <span class="row-label" data-i18n="row.preset">Preset</span>
+                        <span class="info" data-tip-key="tip.presets"></span>
+                    </div>
+                    <div class="preset-row" id="presetRow">
+                        <button class="preset-chip" data-preset="precise" data-i18n="preset.precise">Chuẩn xác</button>
+                        <button class="preset-chip active" data-preset="balanced" data-i18n="preset.balanced">Cân bằng</button>
+                        <button class="preset-chip" data-preset="creative" data-i18n="preset.creative">Sáng tạo</button>
+                    </div>
+                    <div class="hint" id="presetHint"></div>
+
+                    <div class="row">
+                        <label class="row-label" for="temperature">Temperature <span class="info" data-tip-key="tip.temperature"></span></label>
+                        <span class="row-value" id="tempValue">0.70</span>
+                    </div>
+                    <input type="range" class="slider" id="temperature" min="0" max="2" step="0.05" value="0.7">
+
+                    <div class="row">
+                        <label class="row-label" for="topK">Top-K <span class="info" data-tip-key="tip.topk"></span></label>
+                        <span class="row-value" id="topkValue">40</span>
+                    </div>
+                    <input type="range" class="slider" id="topK" min="0" max="200" step="5" value="40">
+
+                    <div class="row">
+                        <label class="row-label" for="topP">Top-P <span class="info" data-tip-key="tip.topp"></span></label>
+                        <span class="row-value" id="toppValue">0.90</span>
+                    </div>
+                    <input type="range" class="slider" id="topP" min="0.1" max="1" step="0.05" value="0.9">
+
+                    <div class="row">
+                        <label class="row-label" for="repPenalty"><span data-i18n="row.rep">Repetition penalty</span> <span class="info" data-tip-key="tip.rep"></span></label>
+                        <span class="row-value" id="repValue">1.15</span>
+                    </div>
+                    <input type="range" class="slider" id="repPenalty" min="1" max="2" step="0.05" value="1.15">
+
+                    <div class="row">
+                        <label class="row-label" for="maxTokens"><span data-i18n="row.maxtokens">Max tokens</span> <span class="info" data-tip-key="tip.maxtokens"></span></label>
+                        <span class="row-value" id="tokensValue">256</span>
+                    </div>
+                    <input type="range" class="slider" id="maxTokens" min="32" max="1024" step="32" value="256">
+                </div>
+            </details>
+
+            <details class="sheet-section">
+                <summary><span data-i18n="sheet.antirepeat">Chống lặp</span></summary>
+                <div class="sheet-inner">
+                    <div class="row">
+                        <label class="row-label" for="ngramSelect"><span data-i18n="row.ngram">Chặn lặp cụm từ</span> <span class="info" data-tip-key="tip.ngram"></span></label>
+                        <select class="select" id="ngramSelect">
+                            <option value="0" data-i18n="opt.off">Tắt</option>
+                            <option value="2" data-i18n="opt.ngram2">2 token</option>
+                            <option value="3" selected data-i18n="opt.ngram3">3 token</option>
+                            <option value="4" data-i18n="opt.ngram4">4 token</option>
+                        </select>
+                    </div>
+                    <label class="switch-row">
+                        <span><span data-i18n="row.stoprepeat">Tự dừng khi lặp</span> <span class="info" data-tip-key="tip.stoprepeat"></span></span>
+                        <input type="checkbox" class="switch" id="stopRepeatToggle" checked>
+                    </label>
+                </div>
+            </details>
+
+            <details class="sheet-section">
+                <summary><span data-i18n="sheet.behavior">Hành vi</span></summary>
+                <div class="sheet-inner">
+                    <label class="switch-row">
+                        <span><span data-i18n="row.stream">Stream token</span> <span class="info" data-tip-key="tip.stream"></span></span>
+                        <input type="checkbox" class="switch" id="streamToggle" checked>
+                    </label>
+                    <div class="row">
+                        <label class="row-label" for="searchMode"><span data-i18n="row.websearch">Web search</span> <span class="info" data-tip-key="tip.websearch"></span></label>
+                        <select class="select" id="searchMode">
+                            <option value="auto" selected data-i18n="opt.auto">Tự quyết</option>
+                            <option value="on" data-i18n="opt.on">Luôn bật</option>
+                            <option value="off" data-i18n="opt.off2">Tắt</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="row-label" for="memoryMode"><span data-i18n="row.memory">Bộ nhớ dài hạn</span> <span class="info" data-tip-key="tip.memory"></span></label>
+                        <select class="select" id="memoryMode">
+                            <option value="auto" selected data-i18n="opt.auto">Tự quyết</option>
+                            <option value="on" data-i18n="opt.on">Luôn bật</option>
+                            <option value="off" data-i18n="opt.off2">Tắt</option>
+                        </select>
+                    </div>
+                    <div class="center-row">
+                        <label class="row-label" for="systemPrompt"><span data-i18n="row.sysprompt">System prompt</span></label>
+                        <span class="info" data-tip-key="tip.sysprompt"></span>
+                    </div>
+                    <textarea class="textarea" id="systemPrompt" rows="3"
+                              data-i18n-ph="row.sysprompt_ph" placeholder="(Tùy chọn) Jin là ai / cư xử thế nào"></textarea>
+                </div>
+            </details>
+
+            <details class="sheet-section" id="labSection">
+                <summary><span data-i18n="sheet.lab">Model Lab</span></summary>
+                <div class="sheet-inner">
+                    <div class="kv-list" id="labGrid"></div>
+                    <div class="center-row">
+                        <span class="row-label" data-i18n="row.checkpoint">Checkpoint đang phục vụ</span>
+                        <span class="info" data-tip-key="tip.checkpoint"></span>
+                    </div>
+                    <div class="hint" id="labAuto"></div>
+                    <select class="select wide" id="labCheckpoint" data-i18n-title="tip.checkpoint"></select>
+                    <div class="center-row">
+                        <span class="row-label" data-i18n="row.labtoken">Admin token</span>
+                        <span class="info" data-tip-key="tip.labtoken"></span>
+                    </div>
+                    <input class="text-input" id="labToken" type="password" placeholder="JINGPT_TOKEN">
+                    <button class="solid-btn has-i" id="labReload" data-tip-key="tip.reload" data-i18n="btn.reload">Đổi checkpoint</button>
+                    <div class="hint" id="labHint"></div>
+                    <div class="chart" id="labChart"></div>
+                </div>
+            </details>
+
+            <details class="sheet-section">
+                <summary><span data-i18n="sheet.memory">Bộ nhớ</span></summary>
+                <div class="sheet-inner">
+                    <div class="kv-list" id="memStats"></div>
+                    <div class="inline-row">
+                        <input class="text-input" id="memSearchInput" data-i18n-ph="mem.placeholder" placeholder="Tìm trong bộ nhớ…">
+                        <button class="ghost-btn has-i" id="memSearchBtn" data-tip-key="tip.memsearch" data-i18n="btn.search">Tìm</button>
+                    </div>
+                    <div class="mem-results" id="memResults"></div>
+                </div>
+            </details>
+
+            <details class="sheet-section">
+                <summary><span data-i18n="sheet.appearance">Giao diện</span></summary>
+                <div class="sheet-inner">
+                    <div class="row">
+                        <label class="row-label" for="langSelect"><span data-i18n="row.lang">Ngôn ngữ</span> <span class="info" data-tip-key="tip.lang"></span></label>
+                        <select class="select" id="langSelect">
+                            <option value="vi">Tiếng Việt</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="row-label" for="sidebarWidth"><span data-i18n="row.sidebarw">Bề rộng thanh bên</span> <span class="info" data-tip-key="tip.resize"></span></label>
+                        <span class="row-value" id="sidebarWidthValue">260px</span>
+                    </div>
+                    <input type="range" class="slider" id="sidebarWidth" min="200" max="460" step="10" value="260">
+                    <button class="ghost-btn wide has-i" id="resetLayoutBtn" data-tip-key="tip.resetlayout" data-i18n="btn.resetlayout">Về mặc định</button>
+                </div>
+            </details>
+
+        </div>
+    </section>
+
+    <!-- ══ Growth Dashboard (admin) ═════════════════════════════ -->
+    <div class="growth-panel" id="growthPanel" hidden>
+        <div class="growth-head">
+            <h2>Growth Dashboard</h2>
+            <div class="growth-actions">
+                <input class="text-input" id="growthToken" type="password" placeholder="JINGPT_TOKEN">
+                <button class="ghost-btn" id="growthRefresh">Refresh</button>
+                <button class="ghost-btn" id="growthClose" data-i18n="btn.close">Đóng</button>
+            </div>
+        </div>
+        <div class="growth-error" id="growthError" hidden></div>
+        <div class="growth-cards" id="growthCards"></div>
+        <div class="growth-charts" id="growthCharts"></div>
+        <div class="growth-tables">
+            <div class="growth-col" id="growthFrontier"></div>
+            <div class="growth-col" id="growthRegistry"></div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

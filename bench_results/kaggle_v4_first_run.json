@@ -1,0 +1,111 @@
+{
+ "schema_version": 1,
+ "source": "Log Kaggle do nguoi dung dan (lan chay v4 dau tien) + manifest/checkpoint da tai ve D va hash xac minh cuc bo ngay 2026-10-01",
+ "status": "long_run_completed_60020_steps_download_verified",
+ "hardware": {
+  "gpu": "2x Tesla T4 14.56 GiB",
+  "trainer_device": "cuda:0 (trainer khong dung DDP)",
+  "torch": "2.10.0+cu128",
+  "cuda": "12.8"
+ },
+ "inputs": {
+  "dataset": "/kaggle/input/datasets/annguyen0410/jin-v4-training",
+  "auto_unzip_layout": {
+   "jin-code.zip": "/kaggle/input/datasets/annguyen0410/jin-v4-training/jin-code",
+   "jin-data.zip": "/kaggle/input/datasets/annguyen0410/jin-v4-training/jin-data"
+  },
+  "parent_checkpoint": "jingpt_chat.pt (cung dataset), iteration 4000",
+  "tokenizer_match_parent": true,
+  "verify_prepared": "verified",
+  "sft_conversations": {
+   "train": 17440,
+   "val": 914
+  }
+ },
+ "smoke": {
+  "steps": 20,
+  "train_loss": 2.4349,
+  "val_loss": 2.8838,
+  "checkpoint_saved": true,
+  "sample": "you: Hello! / jin: Sure. What's up?"
+ },
+ "long_run": {
+  "mode": "instruct",
+  "batch": "1x4",
+  "block_size": 256,
+  "resume_from_step": 20,
+  "target_step": 4020,
+  "steps_requested": 4000,
+  "it_s": {
+   "min": 2.4,
+   "max": 2.8
+  },
+  "eta_min_reported": 24,
+  "eval_step_100": {
+   "train": 4.1043,
+   "val": 2.7856
+  },
+  "note": "So lieu cua doan dau log (truoc khi run dai hoan tat); giu lai lam moc lich su"
+ },
+ "long_run_end": {
+  "total_steps": 60020,
+  "steps_after_smoke": 60000,
+  "clock_seconds_notebook": 31359.6,
+  "clock_human": "8h42m40s",
+  "it_s_cumulative_end": 1.9,
+  "it_s_early": "2.4-2.8 (khoang 125 buoc dau); toc do giam dan theo phien, so cuoi run la tich luy lam tron",
+  "last_points": {
+   "step_59900": {
+    "train": 0.6602,
+    "val": 1.5873
+   },
+   "step_60000": {
+    "train": 3.1508,
+    "val": 1.5864
+   },
+   "step_60020": {
+    "train": 3.5994,
+    "val": 1.5870
+   }
+  },
+  "best_val_loss": 1.5842,
+  "best_val_step_from_manifest": 57400,
+  "caution": "Cuoi run val gan nhu phang (1.5864-1.5870 so voi best 1.5842); chua du de ket luan overfit nang, nhung cung khong chung minh tong quat hoa tot hon"
+ },
+ "download_verified_locally": {
+  "when": "2026-10-01",
+  "dir": "checkpoints/kaggle_v4_60020",
+  "files": [
+   {
+    "name": "kaggle_v4_instruct.pt",
+    "bytes": 1774134089,
+    "sha256": "fe9fb2b9554fab0a398e71642f1633f463094244db2490cc708afcc0efb060b7",
+    "role": "latest, iteration 60020, artifact_kind training_checkpoint, optimizer adamw"
+   },
+   {
+    "name": "kaggle_v4_instruct_best.pt",
+    "bytes": 1774134089,
+    "sha256": "1e91a9283ec835bf6049afbf95269ce95d07c2073e3cb47a7ebb3c3dcd9b1e99",
+    "role": "best, iteration 57400, val 1.584157275207459"
+   }
+  ],
+  "tokenizer_state_matches_bpe_json": "4c24e70c8ddb8f5167bf0530f68718d63992230cccf3714559ed3a8cbdcac4af",
+  "model_config": "vocab 16384 | dim 992 | 12L/16H/8KV | block 1024 | modern + qk_norm | ~147.74M",
+  "verified": "sha256 khop log Kaggle; chua benchmark nang luc doc lap"
+ },
+ "sft_epoch_math": {
+  "method": "build_dataset() cục bộ trên prepared_v4, block 256, grad-accum 4, batch 1",
+  "train_blocks_local": 34563,
+  "val_blocks_local": 1783,
+  "steps_per_epoch_local": 8640.75,
+  "steps_per_epoch_kaggle_est": "≈8.450 (17.440 hội thoại trên Kaggle)",
+  "implication": "1 vòng ≈ 8,4–8,7k bước; 5.000 bước ≈ 0,6 vòng; 60.000 bước ≈ 7 vòng"
+ },
+ "notes": [
+  "it/s do tren ~125 buoc dau; toc do giam dan theo phien; so cuoi run 1.9 it/s la tich luy lam tron",
+  "val 2.8838 (buoc 20) -> 2.7856 (buoc 100) -> 1.5842 (best): validation giam manh trong run nay",
+  "Kaggle tu giai nen vao thu muc con; o 1 tu do da xu ly dung",
+  "fatal: not a git repository tren Kaggle la vo hai (lineage thu lay git provenance)",
+  "Best step 57400 xac dinh tu manifest cua _best.pt da tai, khong phai tu doan log cuoi"
+ ]
+}
