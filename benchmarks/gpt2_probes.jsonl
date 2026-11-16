@@ -1,0 +1,37 @@
+{"id": "fact_capital_fr", "category": "factual", "prompt": "Question: What is the capital of France?\nAnswer:", "accept": ["paris"]}
+{"id": "fact_capital_jp", "category": "factual", "prompt": "Question: What is the capital of Japan?\nAnswer:", "accept": ["tokyo"]}
+{"id": "fact_water", "category": "factual", "prompt": "Question: What gas do plants absorb from the air for photosynthesis?\nAnswer:", "accept": ["carbon dioxide", "co2"]}
+{"id": "fact_planet", "category": "factual", "prompt": "Question: Which planet is closest to the Sun?\nAnswer:", "accept": ["mercury"]}
+{"id": "fact_author", "category": "factual", "prompt": "Question: Who wrote the play Romeo and Juliet?\nAnswer:", "accept": ["shakespeare"]}
+{"id": "fact_h2o", "category": "factual", "prompt": "Question: What is the chemical formula of water?\nAnswer:", "accept": ["h2o"]}
+{"id": "fact_speed", "category": "factual", "prompt": "Question: What is the largest ocean on Earth?\nAnswer:", "accept": ["pacific"]}
+{"id": "math_add", "category": "math", "prompt": "Question: What is 17 + 25?\nAnswer:", "accept": ["42"]}
+{"id": "math_mul", "category": "math", "prompt": "Question: What is 12 times 9?\nAnswer:", "accept": ["108"]}
+{"id": "math_sub", "category": "math", "prompt": "Question: What is 100 - 37?\nAnswer:", "accept": ["63"]}
+{"id": "math_div", "category": "math", "prompt": "Question: What is 144 divided by 12?\nAnswer:", "accept": ["12"]}
+{"id": "math_percent", "category": "math", "prompt": "Question: What is 25% of 80?\nAnswer:", "accept": ["20"]}
+{"id": "math_seq", "category": "math", "prompt": "Question: What number comes next: 2, 4, 8, 16, ?\nAnswer:", "accept": ["32"]}
+{"id": "reason_syllogism", "category": "reasoning", "prompt": "All cats are mammals. All mammals are animals. Therefore all cats are\nAnswer:", "accept": ["animals"]}
+{"id": "reason_cmp", "category": "reasoning", "prompt": "Question: If A is taller than B and B is taller than C, who is the tallest?\nAnswer:", "accept": ["a"]}
+{"id": "reason_odd", "category": "reasoning", "prompt": "Question: Which word does not belong: apple, banana, carrot, orange?\nAnswer:", "accept": ["carrot"]}
+{"id": "reason_order", "category": "reasoning", "prompt": "Question: If today is Monday, what day is it after 3 days?\nAnswer:", "accept": ["thursday"]}
+{"id": "code_python_sum", "category": "coding", "prompt": "def add(a, b):\n    return", "accept": ["a + b", "a+b"]}
+{"id": "code_python_print", "category": "coding", "prompt": "print(\"Hello,", "accept": ["world"]}
+{"id": "code_loop", "category": "coding", "prompt": "for i in range(5):\n    print(", "accept": ["i"]}
+{"id": "code_import", "category": "coding", "prompt": "import math\nprint(math.sqrt(", "accept": ["16", "9", "4", "25", "2"]}
+{"id": "instr_list", "category": "instruction", "prompt": "List three primary colors:", "accept": ["red"]}
+{"id": "instr_ja", "category": "instruction", "prompt": "Translate 'hello' into Spanish:", "accept": ["hola"]}
+{"id": "instr_vi", "category": "instruction", "prompt": "Dịch sang tiếng Anh: \"Xin chào\"\nAnswer:", "accept": ["hello", "hi", "greetings"]}
+{"id": "instr_summary", "category": "instruction", "prompt": "Summarise in one word: The cat sat on the mat and slept.\nAnswer:", "accept": ["cat", "sleep", "rest"]}
+{"id": "vi_capital", "category": "vietnamese", "prompt": "Hỏi: Thủ đô của Việt Nam là gì?\nĐáp:", "accept": ["hà nội", "ha noi"]}
+{"id": "vi_math", "category": "vietnamese", "prompt": "Hỏi: 5 cộng 7 bằng mấy?\nĐáp:", "accept": ["12"]}
+{"id": "vi_color", "category": "vietnamese", "prompt": "Hỏi: Bầu trời màu gì?\nĐáp:", "accept": ["xanh"]}
+{"id": "vi_translate", "category": "vietnamese", "prompt": "Hỏi: \"Good morning\" trong tiếng Việt là gì?\nĐáp:", "accept": ["chào buổi sáng", "chao buoi sang"]}
+{"id": "en_grammar", "category": "english", "prompt": "She ___ to school every day. The correct verb is", "accept": ["goes"]}
+{"id": "en_plural", "category": "english", "prompt": "The plural of 'child' is", "accept": ["children"]}
+{"id": "en_past", "category": "english", "prompt": "The past tense of 'run' is", "accept": ["ran"]}
+{"id": "en_antonym", "category": "english", "prompt": "The opposite of 'hot' is", "accept": ["cold"]}
+{"id": "cont_repeat", "category": "continuation", "prompt": "The morning sun rose over the hills and", "accept": [], "score": "fluency"}
+{"id": "cont_story", "category": "continuation", "prompt": "Once upon a time there was a small robot who", "accept": [], "score": "fluency"}
+{"id": "cont_explain", "category": "continuation", "prompt": "Photosynthesis is the process by which", "accept": [], "score": "fluency"}
+{"id": "cont_vi", "category": "continuation", "prompt": "Buổi sáng hôm ấy, trên cánh đồng lúa,", "accept": [], "score": "fluency"}

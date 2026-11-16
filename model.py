@@ -439,13 +439,18 @@ class CausalSelfAttention(nn.Module):
 # ----------------------------------------------------------------------
 
 class FeedForward(nn.Module):
-    """Classic 4x GELU MLP (modern=False variant)."""
+    """Classic 4x GELU MLP (modern=False variant).
+
+    ``gelu_tanh=True`` selects GPT-2's "GELU New" (tanh approximation).
+    Exact GELU (the default) reproduces every pre-upgrade checkpoint.
+    """
 
     def __init__(
         self,
         embed_dim: int,
         dropout: float,
         *,
+        gelu_tanh: bool = False,
         device: str | torch.device | None = None,
         dtype: torch.dtype | None = None,
     ):
@@ -453,7 +458,7 @@ class FeedForward(nn.Module):
         factory_kwargs = {"device": device, "dtype": dtype}
         self.net = nn.Sequential(
             nn.Linear(embed_dim, 4 * embed_dim, **factory_kwargs),
-            nn.GELU(),
+            nn.GELU(approximate="tanh") if gelu_tanh else nn.GELU(),
             nn.Linear(4 * embed_dim, embed_dim, **factory_kwargs),
             nn.Dropout(dropout),
         )
@@ -605,6 +610,7 @@ class TransformerBlock(nn.Module):
         expert_offload: bool = False,
         compute_device: str | torch.device | None = None,
         attn_checkpoint: bool = False,
+        gelu_tanh: bool = False,
         device: str | torch.device | None = None,
         dtype: torch.dtype | None = None,
     ):
@@ -632,7 +638,8 @@ class TransformerBlock(nn.Module):
         elif modern:
             self.ffn = SwiGLU(embed_dim, dropout, device=device, dtype=dtype)
         else:
-            self.ffn = FeedForward(embed_dim, dropout, device=device, dtype=dtype)
+            self.ffn = FeedForward(embed_dim, dropout, gelu_tanh=gelu_tanh,
+                                   device=device, dtype=dtype)
 
         self.attn = CausalSelfAttention(
             embed_dim,
@@ -704,12 +711,18 @@ class JinAI(nn.Module):
         expert_offload: bool = False,
         static_kv_cache: bool = False,
         kv_cache_int8: bool = False,
+        gelu_tanh: bool = False,
+        resid_scaled_init: bool = False,
+        arch_id: str = "jin_modern",
         device: str | torch.device | None = None,
         dtype: torch.dtype | None = None,
     ):
         super().__init__()
         factory_kwargs = {"device": device, "dtype": dtype}
 
+        self.arch_id = arch_id
+        self.gelu_tanh = bool(gelu_tanh)
+        self.resid_scaled_init = bool(resid_scaled_init)
         self.vocab_size = vocab_size
         self.embed_dim = embed_dim
         self.block_size = block_size
@@ -768,6 +781,7 @@ class JinAI(nn.Module):
                     expert_offload=self.expert_offload,
                     compute_device=device,
                     attn_checkpoint=(self.gc_mode == "attn"),
+                    gelu_tanh=self.gelu_tanh,
                     device=device,
                     dtype=dtype,
                 )
@@ -797,6 +811,19 @@ class JinAI(nn.Module):
             self.rope_sin = None
 
         self.apply(self._init_weights)
+        if self.resid_scaled_init:
+            # GPT-2 scales the residual-writing projections (attention c_proj
+            # and MLP c_proj) by 1/sqrt(2*n_layer) so the residual stream does
+            # not blow up with depth. Only the projections that WRITE into the
+            # residual stream are scaled — qkv/up/gate stay at std 0.02.
+            scale = 1.0 / math.sqrt(2 * n_layers)
+            with torch.no_grad():
+                for block in self.blocks:
+                    block.attn.out_proj.weight.mul_(scale)
+                    if isinstance(block.ffn, FeedForward):
+                        block.ffn.net[2].weight.mul_(scale)
+                    elif isinstance(block.ffn, SwiGLU):
+                        block.ffn.w_down.weight.mul_(scale)
         print(
             f"[JIN AI] {self.num_parameters() / 1e6:.2f}M total / "
             f"{self.active_parameters() / 1e6:.2f}M active parameters"
@@ -819,6 +846,9 @@ class JinAI(nn.Module):
             "dropout": self.dropout,
             "gradient_checkpointing": self.gradient_checkpointing,
             "modern": self.modern,
+            "arch_id": self.arch_id,
+            "gelu_tanh": self.gelu_tanh,
+            "resid_scaled_init": self.resid_scaled_init,
             "qk_norm": self.qk_norm,
             "rope_theta": self.rope_theta,
             "rope_scaling": self.rope_scaling,
@@ -890,6 +920,10 @@ class JinAI(nn.Module):
                 allowed, torch.zeros((), device=idx.device),
                 torch.full((), float("-inf"), device=idx.device),
             )
+            # SDPA wants (B, H, T, T) or a broadcastable (B, 1, T, T). A raw
+            # (B, T, T) mask only broadcasts at batch size 1, so packed
+            # training silently crashed for batch > 1. Add the head axis.
+            attn_mask = attn_mask.unsqueeze(1)
 
         if self.modern:
             x = self.tok_emb(idx)

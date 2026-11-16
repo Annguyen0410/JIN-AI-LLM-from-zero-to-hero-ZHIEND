@@ -3,6 +3,8 @@ JIN AI configuration (v3).
 
 The active architecture is selected by ``MODEL_SCALE``. Shipped presets:
 
+    "gpt2_small_reference" ~124M parameters (GPT-2 Small-compatible, from scratch)
+    "jin_small_modern"     ~143M parameters (JIN modern architecture)
     "tiny"     ~ 35M   parameters  (laptop / smoke test)
     "small"    ~143M   parameters  (the existing v2.5 checkpoint)
     "medium"   ~360M   parameters  (GQA + QK-norm, grad-checkpointing)
@@ -209,6 +211,37 @@ BPE_VOCAB_SIZE = 16_384
 # Every preset carries the v3 knobs; defaults reproduce the v2.5 behaviour,
 # and old checkpoints load unchanged because they carry their own config.
 SCALE_PRESETS: dict[str, dict] = {
+    # ── GPT-2 Small reference (Phase 1) ────────────────────────────────
+    # Exact GPT-2 Small shape: 12L / 12H / 768d / 3072 FFN / 1024 ctx /
+    # 50257 vocab / learned absolute positions / pre-LN / GELU(tanh) /
+    # tied token embedding + LM head.  Measured count with vocab 50257:
+    # 124,439,808 parameters (see tests/test_gpt2_reference.py).
+    # ``modern=False`` selects the classic block; ``gelu_tanh`` and
+    # ``resid_scaled_init`` are the two GPT-2 init/activation details the
+    # classic path was missing.
+    "gpt2_small_reference": {
+        "arch_id": "gpt2_small",
+        "modern": False,
+        "embed_dim": 768,
+        "n_layers": 12,
+        "n_heads": 12,
+        "n_kv_heads": 12,          # full MHA, no GQA — GPT-2 has 12 KV heads
+        "block_size": 1024,
+        "target_params": 124_439_808,
+        "ffn_multiplier": 4.0,     # 768 -> 3072 (not SwiGLU's 8/3)
+        "gelu_tanh": True,         # GPT-2 "GELU New" = tanh approximation
+        "resid_scaled_init": True, # c_proj init scaled by 1/sqrt(2*n_layer)
+        "qk_norm": False,
+        "rope_theta": 10_000.0,
+        "rope_scaling": None,
+        "sliding_window": None,
+        "local_layer_every": None,
+        "moe": None,
+        "expert_offload": False,
+        "gradient_checkpointing": False,
+        "static_kv_cache": False,
+        "kv_cache_int8": False,
+    },
     "tiny": {
         "embed_dim": 384,
         "n_layers": 6,
@@ -308,6 +341,17 @@ SCALE_PRESETS: dict[str, dict] = {
     },
 }
 
+# ``jin_small_modern`` is the explicit name for the JIN modern profile that
+# ``small`` has always described (RMSNorm + RoPE + GQA + QK-norm + SwiGLU).
+# Both keys exist so downstream tooling can name the profile it means.
+SCALE_PRESETS["jin_small_modern"] = {**SCALE_PRESETS["small"],
+                                     "arch_id": "jin_modern"}
+for _name, _preset in SCALE_PRESETS.items():
+    _preset.setdefault("arch_id", _name)
+    _preset.setdefault("modern", True)
+    _preset.setdefault("gelu_tanh", False)
+    _preset.setdefault("resid_scaled_init", False)
+
 MODEL_SCALE = os.environ.get("JINGPT_SCALE", "small").lower()
 if MODEL_SCALE not in SCALE_PRESETS:
     raise ValueError(
@@ -316,7 +360,13 @@ if MODEL_SCALE not in SCALE_PRESETS:
     )
 _PRESET = SCALE_PRESETS[MODEL_SCALE]
 
-MODERN_ARCHITECTURE = True
+# Architecture identity + GPT-2 fidelity switches (backward compatible:
+# absent keys in an old checkpoint resolve to the pre-upgrade behaviour).
+ARCH_ID = _PRESET["arch_id"]
+GELU_TANH = bool(_PRESET["gelu_tanh"])
+RESID_SCALED_INIT = bool(_PRESET["resid_scaled_init"])
+
+MODERN_ARCHITECTURE = bool(_PRESET["modern"])
 TARGET_PARAMETERS = _PRESET["target_params"]
 N_LAYERS = _PRESET["n_layers"]
 N_HEADS = _PRESET["n_heads"]
@@ -606,6 +656,9 @@ def get_model_config(vocab_size: int) -> dict:
         "dropout": DROPOUT,
         "gradient_checkpointing": GRADIENT_CHECKPOINTING,
         "modern": MODERN_ARCHITECTURE,
+        "arch_id": ARCH_ID,
+        "gelu_tanh": GELU_TANH,
+        "resid_scaled_init": RESID_SCALED_INIT,
         "qk_norm": QK_NORM,
         "rope_theta": ROPE_THETA,
         "rope_scaling": ROPE_SCALING,
@@ -743,7 +796,8 @@ def _estimate_preset_stats(preset: dict, vocab_size: int) -> dict:
     heads = preset["n_heads"]
     kv = preset["n_kv_heads"]
     head_dim = embed // heads
-    ffn_hidden = int(embed * 8 / 3)
+    ffn_mult = float(preset.get("ffn_multiplier", 8.0 / 3.0))
+    ffn_hidden = int(embed * ffn_mult)
     ffn_hidden = ((ffn_hidden + 63) // 64) * 64
     moe = preset.get("moe")
     n_experts = (moe or {}).get("n_experts", 0)

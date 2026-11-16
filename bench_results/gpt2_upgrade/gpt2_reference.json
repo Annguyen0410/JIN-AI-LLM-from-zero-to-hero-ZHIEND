@@ -1,0 +1,679 @@
+{
+  "eval_version": "gpt2_upgrade.v1",
+  "prompt_set": {
+    "path": "benchmarks\\gpt2_probes.jsonl",
+    "sha256": "c002b84cbe329e70dadbb993b37419e1d9012f7a5cc447ea8a3e507d8a1e0da8"
+  },
+  "model": {
+    "family": "gpt2-reference",
+    "checkpoint": "gpt2",
+    "architecture_id": "gpt2_small",
+    "vocab_size": 50257,
+    "tokenizer": {
+      "kind": "GPT2TokenizerFast",
+      "vocab_size": 50257
+    },
+    "params": 124439808
+  },
+  "decoding": {
+    "strategy": "greedy",
+    "max_new_tokens": 24
+  },
+  "language_modeling": {
+    "heldout_file": "data/eval/heldout.txt",
+    "heldout_sha256": "23d074c55859382e184b0e807139b286e9cbccd114d3956311b33403bf9f0b5b",
+    "tokenizer": "GPT2TokenizerFast",
+    "per_language": {
+      "english": {
+        "chars": 1094766,
+        "tokens_scored": 8192,
+        "loss": 3.9158,
+        "perplexity": 50.187
+      }
+    },
+    "tokens_scored": 24576,
+    "loss": 3.8772,
+    "perplexity": 48.286
+  },
+  "categories": {
+    "coding": {
+      "passed": 3,
+      "total": 4,
+      "score": 0.75
+    },
+    "continuation": {
+      "passed": 3,
+      "total": 4,
+      "score": 0.75
+    },
+    "english": {
+      "passed": 1,
+      "total": 4,
+      "score": 0.25
+    },
+    "factual": {
+      "passed": 0,
+      "total": 7,
+      "score": 0.0
+    },
+    "instruction": {
+      "passed": 2,
+      "total": 4,
+      "score": 0.5
+    },
+    "math": {
+      "passed": 1,
+      "total": 6,
+      "score": 0.1667
+    },
+    "reasoning": {
+      "passed": 1,
+      "total": 4,
+      "score": 0.25
+    },
+    "vietnamese": {
+      "passed": 0,
+      "total": 4,
+      "score": 0.0
+    }
+  },
+  "aggregate_task_score": 0.2424,
+  "probes": [
+    {
+      "id": "fact_capital_fr",
+      "category": "factual",
+      "prompt": "Question: What is the capital of France?\nAnswer:",
+      "output": " The capital of France is the capital of France.\nThe capital of France is the capital of France.\nThe capital",
+      "repetition": {
+        "distinct_1": 0.3,
+        "distinct_2": 0.3684,
+        "max_word_repeat": 5,
+        "words": 20
+      },
+      "passed": false,
+      "accepted": [
+        "paris"
+      ]
+    },
+    {
+      "id": "fact_capital_jp",
+      "category": "factual",
+      "prompt": "Question: What is the capital of Japan?\nAnswer:",
+      "output": " The capital of Japan is the capital of Japan.\nThe capital of Japan is the capital of Japan.\nThe capital",
+      "repetition": {
+        "distinct_1": 0.3,
+        "distinct_2": 0.3684,
+        "max_word_repeat": 5,
+        "words": 20
+      },
+      "passed": false,
+      "accepted": [
+        "tokyo"
+      ]
+    },
+    {
+      "id": "fact_water",
+      "category": "factual",
+      "prompt": "Question: What gas do plants absorb from the air for photosynthesis?\nAnswer:",
+      "output": " The plants absorb the air from the air, and the plants absorb the air from the air.\nThe plants absorb the",
+      "repetition": {
+        "distinct_1": 0.381,
+        "distinct_2": 0.55,
+        "max_word_repeat": 8,
+        "words": 21
+      },
+      "passed": false,
+      "accepted": [
+        "carbon dioxide",
+        "co2"
+      ]
+    },
+    {
+      "id": "fact_planet",
+      "category": "factual",
+      "prompt": "Question: Which planet is closest to the Sun?\nAnswer:",
+      "output": " The Sun is closest to the Sun.\nAnswer: The Sun is closest to the Sun.\nAnswer: The Sun",
+      "repetition": {
+        "distinct_1": 0.3889,
+        "distinct_2": 0.4706,
+        "max_word_repeat": 5,
+        "words": 18
+      },
+      "passed": false,
+      "accepted": [
+        "mercury"
+      ]
+    },
+    {
+      "id": "fact_author",
+      "category": "factual",
+      "prompt": "Question: Who wrote the play Romeo and Juliet?\nAnswer:",
+      "output": " The play was written by the French playwright, Jean-Jacques Rousseau.\nThe play was written by the",
+      "repetition": {
+        "distinct_1": 0.5625,
+        "distinct_2": 0.6667,
+        "max_word_repeat": 4,
+        "words": 16
+      },
+      "passed": false,
+      "accepted": [
+        "shakespeare"
+      ]
+    },
+    {
+      "id": "fact_h2o",
+      "category": "factual",
+      "prompt": "Question: What is the chemical formula of water?\nAnswer:",
+      "output": " The chemical formula of water is the ratio of the water in a given water solution to the water in a given water solution",
+      "repetition": {
+        "distinct_1": 0.5,
+        "distinct_2": 0.7391,
+        "max_word_repeat": 5,
+        "words": 24
+      },
+      "passed": false,
+      "accepted": [
+        "h2o"
+      ]
+    },
+    {
+      "id": "fact_speed",
+      "category": "factual",
+      "prompt": "Question: What is the largest ocean on Earth?\nAnswer:",
+      "output": " The largest ocean on Earth is about 1.5 million square kilometers (1.5 million square miles).\nThe largest",
+      "repetition": {
+        "distinct_1": 0.7647,
+        "distinct_2": 0.875,
+        "max_word_repeat": 2,
+        "words": 17
+      },
+      "passed": false,
+      "accepted": [
+        "pacific"
+      ]
+    },
+    {
+      "id": "math_add",
+      "category": "math",
+      "prompt": "Question: What is 17 + 25?\nAnswer:",
+      "output": " 17 + 25 is the number of years that a person has been in the military.\nAnswer: 17 + 25 is",
+      "repetition": {
+        "distinct_1": 0.7619,
+        "distinct_2": 0.85,
+        "max_word_repeat": 2,
+        "words": 21
+      },
+      "passed": false,
+      "accepted": [
+        "42"
+      ]
+    },
+    {
+      "id": "math_mul",
+      "category": "math",
+      "prompt": "Question: What is 12 times 9?\nAnswer:",
+      "output": " The 12 times 9 is the number of times 9 is the number of times 9 is the number of times 9 is the",
+      "repetition": {
+        "distinct_1": 0.2917,
+        "distinct_2": 0.3478,
+        "max_word_repeat": 5,
+        "words": 24
+      },
+      "passed": false,
+      "accepted": [
+        "108"
+      ]
+    },
+    {
+      "id": "math_sub",
+      "category": "math",
+      "prompt": "Question: What is 100 - 37?\nAnswer:",
+      "output": " The number of people who are in the 100 - 37 range.\nThe number of people who are in the 100 -",
+      "repetition": {
+        "distinct_1": 0.5,
+        "distinct_2": 0.5714,
+        "max_word_repeat": 4,
+        "words": 22
+      },
+      "passed": false,
+      "accepted": [
+        "63"
+      ]
+    },
+    {
+      "id": "math_div",
+      "category": "math",
+      "prompt": "Question: What is 144 divided by 12?\nAnswer:",
+      "output": " 144 is divided by 12.\nAnswer: The number of days in a year is divided by 12.\nAnswer:",
+      "repetition": {
+        "distinct_1": 0.7222,
+        "distinct_2": 0.7647,
+        "max_word_repeat": 2,
+        "words": 18
+      },
+      "passed": true,
+      "accepted": [
+        "12"
+      ]
+    },
+    {
+      "id": "math_percent",
+      "category": "math",
+      "prompt": "Question: What is 25% of 80?\nAnswer:",
+      "output": " The answer is 25%.\nThe answer is 25%.\nThe answer is 25%.\nThe answer is 25%.\n",
+      "repetition": {
+        "distinct_1": 0.25,
+        "distinct_2": 0.2667,
+        "max_word_repeat": 4,
+        "words": 16
+      },
+      "passed": false,
+      "accepted": [
+        "20"
+      ]
+    },
+    {
+      "id": "math_seq",
+      "category": "math",
+      "prompt": "Question: What number comes next: 2, 4, 8, 16, ?\nAnswer:",
+      "output": " The number of the number of the number of the number of the number of the number of the number of the number of",
+      "repetition": {
+        "distinct_1": 0.125,
+        "distinct_2": 0.1304,
+        "max_word_repeat": 8,
+        "words": 24
+      },
+      "passed": false,
+      "accepted": [
+        "32"
+      ]
+    },
+    {
+      "id": "reason_syllogism",
+      "category": "reasoning",
+      "prompt": "All cats are mammals. All mammals are animals. Therefore all cats are\nAnswer:",
+      "output": "\nAnswer:\nAnswer:\nAnswer:\nAnswer:\nAnswer:\nAnswer:\nAnswer:\nAnswer:",
+      "repetition": {
+        "distinct_1": 0.125,
+        "distinct_2": 0.1429,
+        "max_word_repeat": 8,
+        "words": 8
+      },
+      "passed": false,
+      "accepted": [
+        "animals"
+      ]
+    },
+    {
+      "id": "reason_cmp",
+      "category": "reasoning",
+      "prompt": "Question: If A is taller than B and B is taller than C, who is the tallest?\nAnswer:",
+      "output": " The tallest person in the world.\nAnswer: The tallest person in the world.\nAnswer: The tallest person in",
+      "repetition": {
+        "distinct_1": 0.3333,
+        "distinct_2": 0.4118,
+        "max_word_repeat": 5,
+        "words": 18
+      },
+      "passed": true,
+      "accepted": [
+        "a"
+      ]
+    },
+    {
+      "id": "reason_odd",
+      "category": "reasoning",
+      "prompt": "Question: Which word does not belong: apple, banana, carrot, orange?\nAnswer:",
+      "output": " The word \"apple\" is a combination of the two words \"apple\" and \"banana\".\nThe word \"",
+      "repetition": {
+        "distinct_1": 0.75,
+        "distinct_2": 0.9333,
+        "max_word_repeat": 3,
+        "words": 16
+      },
+      "passed": false,
+      "accepted": [
+        "carrot"
+      ]
+    },
+    {
+      "id": "reason_order",
+      "category": "reasoning",
+      "prompt": "Question: If today is Monday, what day is it after 3 days?\nAnswer:",
+      "output": " Monday, March 31, 2017.\nQuestion: What is the date of the first day of the month?\nAnswer",
+      "repetition": {
+        "distinct_1": 0.8235,
+        "distinct_2": 0.9375,
+        "max_word_repeat": 3,
+        "words": 17
+      },
+      "passed": false,
+      "accepted": [
+        "thursday"
+      ]
+    },
+    {
+      "id": "code_python_sum",
+      "category": "coding",
+      "prompt": "def add(a, b):\n    return",
+      "output": " a + b\n\ndef add(a, b):\n\nif a == b:\n\nreturn a +",
+      "repetition": {
+        "distinct_1": 0.7692,
+        "distinct_2": 0.9167,
+        "max_word_repeat": 3,
+        "words": 13
+      },
+      "passed": true,
+      "accepted": [
+        "a + b",
+        "a+b"
+      ]
+    },
+    {
+      "id": "code_python_print",
+      "category": "coding",
+      "prompt": "print(\"Hello,",
+      "output": " world!\");\n\n}\n\n}\n\n}\n\n}\n\n}\n\n}\n\n}",
+      "repetition": {
+        "distinct_1": 0.25,
+        "distinct_2": 0.2857,
+        "max_word_repeat": 7,
+        "words": 8
+      },
+      "passed": true,
+      "accepted": [
+        "world"
+      ]
+    },
+    {
+      "id": "code_loop",
+      "category": "coding",
+      "prompt": "for i in range(5):\n    print(",
+      "output": "i)\n\nprint(i)\n\nprint(i)\n\nprint(i)\n\nprint(",
+      "repetition": {
+        "distinct_1": 0.6,
+        "distinct_2": 0.75,
+        "max_word_repeat": 3,
+        "words": 5
+      },
+      "passed": true,
+      "accepted": [
+        "i"
+      ]
+    },
+    {
+      "id": "code_import",
+      "category": "coding",
+      "prompt": "import math\nprint(math.sqrt(",
+      "output": "math.sqrt(math.sqrt(math.sqrt(math.sqrt(math.sqrt",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "16",
+        "9",
+        "4",
+        "25",
+        "2"
+      ]
+    },
+    {
+      "id": "instr_list",
+      "category": "instruction",
+      "prompt": "List three primary colors:",
+      "output": " red, green, and blue.\n\nThe first two colors are the same as the first two colors, but the",
+      "repetition": {
+        "distinct_1": 0.7222,
+        "distinct_2": 0.8824,
+        "max_word_repeat": 4,
+        "words": 18
+      },
+      "passed": true,
+      "accepted": [
+        "red"
+      ]
+    },
+    {
+      "id": "instr_ja",
+      "category": "instruction",
+      "prompt": "Translate 'hello' into Spanish:",
+      "output": "\n\n'hello' = 'hello'\n\nThis is a simple example of how to translate a string into Spanish",
+      "repetition": {
+        "distinct_1": 0.875,
+        "distinct_2": 1.0,
+        "max_word_repeat": 2,
+        "words": 16
+      },
+      "passed": false,
+      "accepted": [
+        "hola"
+      ]
+    },
+    {
+      "id": "instr_vi",
+      "category": "instruction",
+      "prompt": "Dịch sang tiếng Anh: \"Xin chào\"\nAnswer:",
+      "output": " \"Xin chào\"\nAnswer: \"Xin chào\"\nAnswer: \"Xin ch",
+      "repetition": {
+        "distinct_1": 0.5,
+        "distinct_2": 0.5714,
+        "max_word_repeat": 3,
+        "words": 8
+      },
+      "passed": false,
+      "accepted": [
+        "hello",
+        "hi",
+        "greetings"
+      ]
+    },
+    {
+      "id": "instr_summary",
+      "category": "instruction",
+      "prompt": "Summarise in one word: The cat sat on the mat and slept.\nAnswer:",
+      "output": " The cat sat on the mat and slept.\nAnswer: The cat sat on the mat and slept.\nAnswer:",
+      "repetition": {
+        "distinct_1": 0.4444,
+        "distinct_2": 0.5294,
+        "max_word_repeat": 4,
+        "words": 18
+      },
+      "passed": true,
+      "accepted": [
+        "cat",
+        "sleep",
+        "rest"
+      ]
+    },
+    {
+      "id": "vi_capital",
+      "category": "vietnamese",
+      "prompt": "Hỏi: Thủ đô của Việt Nam là gì?\nĐáp:",
+      "output": " Đáp đô của Việt Nam là gì?",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "max_word_repeat": 1,
+        "words": 7
+      },
+      "passed": false,
+      "accepted": [
+        "hà nội",
+        "ha noi"
+      ]
+    },
+    {
+      "id": "vi_math",
+      "category": "vietnamese",
+      "prompt": "Hỏi: 5 cộng 7 bằng mấy?\nĐáp:",
+      "output": " 5 cộng 7 bằng mấy?\nĐáp:",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "max_word_repeat": 1,
+        "words": 6
+      },
+      "passed": false,
+      "accepted": [
+        "12"
+      ]
+    },
+    {
+      "id": "vi_color",
+      "category": "vietnamese",
+      "prompt": "Hỏi: Bầu trời màu gì?\nĐáp:",
+      "output": " Đỏi: Bầu trời màu gì?",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "max_word_repeat": 1,
+        "words": 5
+      },
+      "passed": false,
+      "accepted": [
+        "xanh"
+      ]
+    },
+    {
+      "id": "vi_translate",
+      "category": "vietnamese",
+      "prompt": "Hỏi: \"Good morning\" trong tiếng Việt là gì?\nĐáp:",
+      "output": " \"Good morning\" trong tiếng Việt là gì?\n�",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "max_word_repeat": 1,
+        "words": 8
+      },
+      "passed": false,
+      "accepted": [
+        "chào buổi sáng",
+        "chao buoi sang"
+      ]
+    },
+    {
+      "id": "en_grammar",
+      "category": "english",
+      "prompt": "She ___ to school every day. The correct verb is",
+      "output": " to go to school every day.\n\nThe correct verb is to go to school every day. The correct verb is",
+      "repetition": {
+        "distinct_1": 0.45,
+        "distinct_2": 0.5263,
+        "max_word_repeat": 4,
+        "words": 20
+      },
+      "passed": false,
+      "accepted": [
+        "goes"
+      ]
+    },
+    {
+      "id": "en_plural",
+      "category": "english",
+      "prompt": "The plural of 'child' is",
+      "output": " 'child' in the English language.\n\nThe plural of 'child' is 'child' in the English language",
+      "repetition": {
+        "distinct_1": 0.6,
+        "distinct_2": 0.7857,
+        "max_word_repeat": 3,
+        "words": 15
+      },
+      "passed": false,
+      "accepted": [
+        "children"
+      ]
+    },
+    {
+      "id": "en_past",
+      "category": "english",
+      "prompt": "The past tense of 'run' is",
+      "output": " used to describe the way in which a person is run. The word 'run' is used to describe the way in",
+      "repetition": {
+        "distinct_1": 0.619,
+        "distinct_2": 0.75,
+        "max_word_repeat": 3,
+        "words": 21
+      },
+      "passed": false,
+      "accepted": [
+        "ran"
+      ]
+    },
+    {
+      "id": "en_antonym",
+      "category": "english",
+      "prompt": "The opposite of 'hot' is",
+      "output": " 'cold' - it's the opposite of 'cold' that's the most important.\n\nThe 'hot'",
+      "repetition": {
+        "distinct_1": 0.7692,
+        "distinct_2": 1.0,
+        "max_word_repeat": 3,
+        "words": 13
+      },
+      "passed": true,
+      "accepted": [
+        "cold"
+      ]
+    },
+    {
+      "id": "cont_repeat",
+      "category": "continuation",
+      "prompt": "The morning sun rose over the hills and",
+      "output": " the sky was filled with the sound of the wind. The sun was shining brightly, and the wind was blowing.\n",
+      "repetition": {
+        "distinct_1": 0.7,
+        "distinct_2": 1.0,
+        "max_word_repeat": 5,
+        "words": 20
+      },
+      "passed": true,
+      "scored_by": "fluency"
+    },
+    {
+      "id": "cont_story",
+      "category": "continuation",
+      "prompt": "Once upon a time there was a small robot who",
+      "output": " was able to do the job. It was a robot that was able to do the job. It was a robot that",
+      "repetition": {
+        "distinct_1": 0.4545,
+        "distinct_2": 0.5238,
+        "max_word_repeat": 4,
+        "words": 22
+      },
+      "passed": false,
+      "scored_by": "fluency"
+    },
+    {
+      "id": "cont_explain",
+      "category": "continuation",
+      "prompt": "Photosynthesis is the process by which",
+      "output": " the air molecules are converted into sugars. The sugars are then converted into energy, which is then used to make the food",
+      "repetition": {
+        "distinct_1": 0.7273,
+        "distinct_2": 0.9524,
+        "max_word_repeat": 3,
+        "words": 22
+      },
+      "passed": true,
+      "scored_by": "fluency"
+    },
+    {
+      "id": "cont_vi",
+      "category": "continuation",
+      "prompt": "Buổi sáng hôm ấy, trên cánh đồng lúa,",
+      "output": " trên cánh đồng lúa, trên cánh đ",
+      "repetition": {
+        "distinct_1": 0.7143,
+        "distinct_2": 0.8333,
+        "max_word_repeat": 2,
+        "words": 7
+      },
+      "passed": true,
+      "scored_by": "fluency"
+    }
+  ]
+}

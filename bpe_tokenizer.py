@@ -61,10 +61,21 @@ def default_special_tokens(extended: bool = False) -> list[str]:
 # It groups: english contractions, letter runs, digit runs, punctuation runs,
 # and whitespace runs. Leading-space capture keeps tokens like " the"
 # distinct from "the" which is important for fluent generation.
+#: Bumped when the pre-tokenizer changes the token stream. Token caches are
+#: keyed on this, so a splitter fix automatically rebuilds them instead of
+#: silently serving tokens produced by the old (buggy) rules.
+BPE_IMPL_VERSION = 2
+
+#: Pre-tokenizer. Every alternative must cover a slice of the input: `findall`
+#: DISCARDS unmatched characters, which is how the underscore used to vanish
+#: (`LAST_UPDATED` -> `LASTUPDATED`) and with it every snake_case identifier in
+#: the code corpus. `_` is a word character (\w) yet excluded from the letter
+#: class [^\W\d_], so it needs its own alternative.
 _PRETOKEN_PATTERN = re.compile(
     r"""'s|'t|'re|'ve|'m|'ll|'d|"""
     r""" ?[^\W\d_]+|"""
     r""" ?\d+|"""
+    r""" ?_+|"""
     r""" ?[^\s\w]+|"""
     r"""\s+(?!\S)|\s+""",
     re.UNICODE,

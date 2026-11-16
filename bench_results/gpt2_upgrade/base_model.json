@@ -1,0 +1,703 @@
+{
+  "eval_version": "gpt2_upgrade.v1",
+  "prompt_set": {
+    "path": "benchmarks\\gpt2_probes.jsonl",
+    "sha256": "c002b84cbe329e70dadbb993b37419e1d9012f7a5cc447ea8a3e507d8a1e0da8"
+  },
+  "model": {
+    "family": "jin",
+    "checkpoint": "checkpoints\\gpt2_small\\pilot\\best.pt",
+    "checkpoint_sha256": "bc44d10da2183857f78e5227a480aca1a20af68058e38c297d37dd0b8596ce29",
+    "architecture_id": "gpt2_small",
+    "model_config": {
+      "vocab_size": 50257,
+      "embed_dim": 768,
+      "block_size": 1024,
+      "n_layers": 12,
+      "n_heads": 12,
+      "n_kv_heads": 12,
+      "dropout": 0.0,
+      "gradient_checkpointing": true,
+      "modern": false,
+      "arch_id": "gpt2_small",
+      "gelu_tanh": true,
+      "resid_scaled_init": true,
+      "qk_norm": false,
+      "rope_theta": 10000.0,
+      "rope_scaling": null,
+      "sliding_window": null,
+      "local_layer_every": null,
+      "moe": null,
+      "expert_offload": false,
+      "static_kv_cache": false,
+      "kv_cache_int8": false
+    },
+    "tokenizer": {
+      "kind": "GPT2BPETokenizer",
+      "vocab_size": 50257
+    },
+    "iteration": 160,
+    "vocab_size": 50257
+  },
+  "decoding": {
+    "strategy": "greedy",
+    "max_new_tokens": 24
+  },
+  "language_modeling": {
+    "heldout_file": "data/eval/heldout.txt",
+    "heldout_sha256": "23d074c55859382e184b0e807139b286e9cbccd114d3956311b33403bf9f0b5b",
+    "tokenizer": "GPT2BPETokenizer",
+    "per_language": {
+      "english": {
+        "chars": 1094766,
+        "tokens_scored": 8192,
+        "loss": 7.1292,
+        "perplexity": 1247.866
+      }
+    },
+    "tokens_scored": 24576,
+    "loss": 7.1447,
+    "perplexity": 1267.376
+  },
+  "categories": {
+    "coding": {
+      "passed": 0,
+      "total": 4,
+      "score": 0.0
+    },
+    "continuation": {
+      "passed": 4,
+      "total": 4,
+      "score": 1.0
+    },
+    "english": {
+      "passed": 0,
+      "total": 4,
+      "score": 0.0
+    },
+    "factual": {
+      "passed": 0,
+      "total": 7,
+      "score": 0.0
+    },
+    "instruction": {
+      "passed": 0,
+      "total": 4,
+      "score": 0.0
+    },
+    "math": {
+      "passed": 0,
+      "total": 6,
+      "score": 0.0
+    },
+    "reasoning": {
+      "passed": 0,
+      "total": 4,
+      "score": 0.0
+    },
+    "vietnamese": {
+      "passed": 0,
+      "total": 4,
+      "score": 0.0
+    }
+  },
+  "aggregate_task_score": 0.0,
+  "probes": [
+    {
+      "id": "fact_capital_fr",
+      "category": "factual",
+      "prompt": "Question: What is the capital of France?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>    ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "paris"
+      ]
+    },
+    {
+      "id": "fact_capital_jp",
+      "category": "factual",
+      "prompt": "Question: What is the capital of Japan?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>    ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "tokyo"
+      ]
+    },
+    {
+      "id": "fact_water",
+      "category": "factual",
+      "prompt": "Question: What gas do plants absorb from the air for photosynthesis?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "carbon dioxide",
+        "co2"
+      ]
+    },
+    {
+      "id": "fact_planet",
+      "category": "factual",
+      "prompt": "Question: Which planet is closest to the Sun?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>     ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "mercury"
+      ]
+    },
+    {
+      "id": "fact_author",
+      "category": "factual",
+      "prompt": "Question: Who wrote the play Romeo and Juliet?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|> ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "shakespeare"
+      ]
+    },
+    {
+      "id": "fact_h2o",
+      "category": "factual",
+      "prompt": "Question: What is the chemical formula of water?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|> ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "h2o"
+      ]
+    },
+    {
+      "id": "fact_speed",
+      "category": "factual",
+      "prompt": "Question: What is the largest ocean on Earth?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>   ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "pacific"
+      ]
+    },
+    {
+      "id": "math_add",
+      "category": "math",
+      "prompt": "Question: What is 17 + 25?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|> ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "42"
+      ]
+    },
+    {
+      "id": "math_mul",
+      "category": "math",
+      "prompt": "Question: What is 12 times 9?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>     ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "108"
+      ]
+    },
+    {
+      "id": "math_sub",
+      "category": "math",
+      "prompt": "Question: What is 100 - 37?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>   ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "63"
+      ]
+    },
+    {
+      "id": "math_div",
+      "category": "math",
+      "prompt": "Question: What is 144 divided by 12?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>   ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "12"
+      ]
+    },
+    {
+      "id": "math_percent",
+      "category": "math",
+      "prompt": "Question: What is 25% of 80?\nAnswer:",
+      "output": " 3\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "max_word_repeat": 1,
+        "words": 2
+      },
+      "passed": false,
+      "accepted": [
+        "20"
+      ]
+    },
+    {
+      "id": "math_seq",
+      "category": "math",
+      "prompt": "Question: What number comes next: 2, 4, 8, 16, ?\nAnswer:",
+      "output": " 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,",
+      "repetition": {
+        "distinct_1": 0.0833,
+        "distinct_2": 0.0909,
+        "max_word_repeat": 12,
+        "words": 12
+      },
+      "passed": false,
+      "accepted": [
+        "32"
+      ]
+    },
+    {
+      "id": "reason_syllogism",
+      "category": "reasoning",
+      "prompt": "All cats are mammals. All mammals are animals. Therefore all cats are\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "animals"
+      ]
+    },
+    {
+      "id": "reason_cmp",
+      "category": "reasoning",
+      "prompt": "Question: If A is taller than B and B is taller than C, who is the tallest?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "a"
+      ]
+    },
+    {
+      "id": "reason_odd",
+      "category": "reasoning",
+      "prompt": "Question: Which word does not belong: apple, banana, carrot, orange?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "carrot"
+      ]
+    },
+    {
+      "id": "reason_order",
+      "category": "reasoning",
+      "prompt": "Question: If today is Monday, what day is it after 3 days?\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "thursday"
+      ]
+    },
+    {
+      "id": "code_python_sum",
+      "category": "coding",
+      "prompt": "def add(a, b):\n    return",
+      "output": " self.\n                     ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "a + b",
+        "a+b"
+      ]
+    },
+    {
+      "id": "code_python_print",
+      "category": "coding",
+      "prompt": "print(\"Hello,",
+      "output": " a new book.\n```\n<|endoftext|>\n              ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "max_word_repeat": 1,
+        "words": 5
+      },
+      "passed": false,
+      "accepted": [
+        "world"
+      ]
+    },
+    {
+      "id": "code_loop",
+      "category": "coding",
+      "prompt": "for i in range(5):\n    print(",
+      "output": "n):\n                     ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "i"
+      ]
+    },
+    {
+      "id": "code_import",
+      "category": "coding",
+      "prompt": "import math\nprint(math.sqrt(",
+      "output": "numbers)\n<|endoftext|>\n<|endoftext|>\n                ",
+      "repetition": {
+        "distinct_1": 0.6667,
+        "distinct_2": 1.0,
+        "max_word_repeat": 2,
+        "words": 3
+      },
+      "passed": false,
+      "accepted": [
+        "16",
+        "9",
+        "4",
+        "25",
+        "2"
+      ]
+    },
+    {
+      "id": "instr_list",
+      "category": "instruction",
+      "prompt": "List three primary colors:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>             ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "red"
+      ]
+    },
+    {
+      "id": "instr_ja",
+      "category": "instruction",
+      "prompt": "Translate 'hello' into Spanish:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>         ",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "hola"
+      ]
+    },
+    {
+      "id": "instr_vi",
+      "category": "instruction",
+      "prompt": "Dịch sang tiếng Anh: \"Xin chào\"\nAnswer:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "hello",
+        "hi",
+        "greetings"
+      ]
+    },
+    {
+      "id": "instr_summary",
+      "category": "instruction",
+      "prompt": "Summarise in one word: The cat sat on the mat and slept.\nAnswer:",
+      "output": " The little bird was very happy.\n<|endoftext|>\n<|endoftext|>\n<|endoftext|>\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 0.8,
+        "distinct_2": 0.8889,
+        "max_word_repeat": 3,
+        "words": 10
+      },
+      "passed": false,
+      "accepted": [
+        "cat",
+        "sleep",
+        "rest"
+      ]
+    },
+    {
+      "id": "vi_capital",
+      "category": "vietnamese",
+      "prompt": "Hỏi: Thủ đô của Việt Nam là gì?\nĐáp:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "hà nội",
+        "ha noi"
+      ]
+    },
+    {
+      "id": "vi_math",
+      "category": "vietnamese",
+      "prompt": "Hỏi: 5 cộng 7 bằng mấy?\nĐáp:",
+      "output": "\nThực vực vật được",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 1.0,
+        "max_word_repeat": 1,
+        "words": 4
+      },
+      "passed": false,
+      "accepted": [
+        "12"
+      ]
+    },
+    {
+      "id": "vi_color",
+      "category": "vietnamese",
+      "prompt": "Hỏi: Bầu trời màu gì?\nĐáp:",
+      "output": "\n \n                     ",
+      "repetition": {
+        "distinct_1": 0.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 0,
+        "words": 0
+      },
+      "passed": false,
+      "accepted": [
+        "xanh"
+      ]
+    },
+    {
+      "id": "vi_translate",
+      "category": "vietnamese",
+      "prompt": "Hỏi: \"Good morning\" trong tiếng Việt là gì?\nĐáp:",
+      "output": "\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 1.0,
+        "distinct_2": 0.0,
+        "max_word_repeat": 1,
+        "words": 1
+      },
+      "passed": false,
+      "accepted": [
+        "chào buổi sáng",
+        "chao buoi sang"
+      ]
+    },
+    {
+      "id": "en_grammar",
+      "category": "english",
+      "prompt": "She ___ to school every day. The correct verb is",
+      "output": " the first time, the first time, the first, the first, the first, the first, the first, the",
+      "repetition": {
+        "distinct_1": 0.2353,
+        "distinct_2": 0.3125,
+        "max_word_repeat": 8,
+        "words": 17
+      },
+      "passed": false,
+      "accepted": [
+        "goes"
+      ]
+    },
+    {
+      "id": "en_plural",
+      "category": "english",
+      "prompt": "The plural of 'child' is",
+      "output": " the \"The \"The \"The \"The \"The \"The \"The \"\"\"\"\"\" is a \"",
+      "repetition": {
+        "distinct_1": 0.5,
+        "distinct_2": 0.5455,
+        "max_word_repeat": 7,
+        "words": 12
+      },
+      "passed": false,
+      "accepted": [
+        "children"
+      ]
+    },
+    {
+      "id": "en_past",
+      "category": "english",
+      "prompt": "The past tense of 'run' is",
+      "output": " the first. The first time, the first, the first, the first, the first, the first, the first",
+      "repetition": {
+        "distinct_1": 0.2941,
+        "distinct_2": 0.4375,
+        "max_word_repeat": 8,
+        "words": 17
+      },
+      "passed": false,
+      "accepted": [
+        "ran"
+      ]
+    },
+    {
+      "id": "en_antonym",
+      "category": "english",
+      "prompt": "The opposite of 'hot' is",
+      "output": " the United States. The United States is the United States is the United States. The United States is the United States.",
+      "repetition": {
+        "distinct_1": 0.2381,
+        "distinct_2": 0.3,
+        "max_word_repeat": 6,
+        "words": 21
+      },
+      "passed": false,
+      "accepted": [
+        "cold"
+      ]
+    },
+    {
+      "id": "cont_repeat",
+      "category": "continuation",
+      "prompt": "The morning sun rose over the hills and",
+      "output": " the little girl. The little girl was very happy.\nThe little girl was very happy. She was very happy.",
+      "repetition": {
+        "distinct_1": 0.4211,
+        "distinct_2": 0.5556,
+        "max_word_repeat": 3,
+        "words": 19
+      },
+      "passed": true,
+      "scored_by": "fluency"
+    },
+    {
+      "id": "cont_story",
+      "category": "continuation",
+      "prompt": "Once upon a time there was a small robot who",
+      "output": " lived a little girl named Lily. She loved to play with her mom. She loved to play with her mom. She",
+      "repetition": {
+        "distinct_1": 0.619,
+        "distinct_2": 0.65,
+        "max_word_repeat": 3,
+        "words": 21
+      },
+      "passed": true,
+      "scored_by": "fluency"
+    },
+    {
+      "id": "cont_explain",
+      "category": "continuation",
+      "prompt": "Photosynthesis is the process by which",
+      "output": " is the most of the United States.\n<|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>",
+      "repetition": {
+        "distinct_1": 0.875,
+        "distinct_2": 1.0,
+        "max_word_repeat": 2,
+        "words": 8
+      },
+      "passed": true,
+      "scored_by": "fluency"
+    },
+    {
+      "id": "cont_vi",
+      "category": "continuation",
+      "prompt": "Buổi sáng hôm ấy, trên cánh đồng lúa,",
+      "output": " cột, vành phộng thộng vành",
+      "repetition": {
+        "distinct_1": 0.8,
+        "distinct_2": 1.0,
+        "max_word_repeat": 2,
+        "words": 5
+      },
+      "passed": true,
+      "scored_by": "fluency"
+    }
+  ]
+}

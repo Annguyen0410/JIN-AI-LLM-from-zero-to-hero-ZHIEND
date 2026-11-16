@@ -14,7 +14,7 @@ import torch
 from torch.utils.data import Dataset
 
 import config
-from bpe_tokenizer import BPETokenizer
+from bpe_tokenizer import BPETokenizer, BPE_IMPL_VERSION
 from model import JinAI
 from tokenizer import CharTokenizer
 
@@ -49,6 +49,13 @@ def tokenizer_from_state(state: dict | None) -> AnyTokenizer:
         tok = BPETokenizer()
         tok.load_state_dict(state)
         return tok
+    if isinstance(state, dict) and state.get("kind") == "gpt2_bpe":
+        # GPT-2 reference profile: the vocabulary is the fixed OpenAI BPE, so
+        # the state only identifies it (no merges are stored per checkpoint).
+        from tokenizer_gpt2 import GPT2BPETokenizer
+        tok = GPT2BPETokenizer()
+        tok.load_state_dict(state)
+        return tok
     tok = CharTokenizer()
     if state:
         tok.load_state_dict(state)
@@ -81,7 +88,10 @@ def load_training_text(path: str = config.DATA_PATH) -> str:
 def _tokenizer_fingerprint(tokenizer: AnyTokenizer) -> tuple:
     if isinstance(tokenizer, BPETokenizer):
         from lineage import object_hash
-        return ("bpe", object_hash(tokenizer.to_state_dict()))
+        # Include the pre-tokenizer implementation version: when the splitter
+        # changes, the same vocab produces a DIFFERENT token stream, so every
+        # cached token file built by the old implementation must be rebuilt.
+        return ("bpe", BPE_IMPL_VERSION, object_hash(tokenizer.to_state_dict()))
     if isinstance(tokenizer, CharTokenizer):
         return ("char", tuple(sorted(tokenizer.char_to_id.items())))
     return ("unknown",)
@@ -493,6 +503,17 @@ def _torch_load(
     """
 
     target_location = config.DEVICE if map_location is None else map_location
+    # ``torch.__version__`` is a TorchVersion instance; when it was serialised
+    # inside a checkpoint payload, weights_only loading refuses the whole file.
+    # Allowlisting exactly that class (and nothing else) keeps safe loading on
+    # while making checkpoints written before the str() fix loadable.
+    add_safe = getattr(torch.serialization, "add_safe_globals", None)
+    if add_safe is not None:
+        try:
+            from torch.torch_version import TorchVersion
+            add_safe([TorchVersion])
+        except Exception:
+            pass
     if target_location in ("cpu", None):
         try:
             return torch.load(path, map_location=target_location or "cpu",

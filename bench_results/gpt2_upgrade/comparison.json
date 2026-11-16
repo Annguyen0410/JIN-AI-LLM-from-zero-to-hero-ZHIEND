@@ -1,0 +1,110 @@
+{
+  "eval_version": "gpt2_upgrade.v1",
+  "note": "Task scores use identical prompts and greedy decoding. Perplexity is only directly comparable when both models use the same tokenizer; tokenizer ids are recorded per model.",
+  "task_score": {
+    "jin": 0.0,
+    "gpt2": 0.2424
+  },
+  "relative_to_gpt2": 0.0,
+  "per_category": {
+    "coding": {
+      "jin": 0.0,
+      "gpt2": 0.75
+    },
+    "continuation": {
+      "jin": 1.0,
+      "gpt2": 0.75
+    },
+    "english": {
+      "jin": 0.0,
+      "gpt2": 0.25
+    },
+    "factual": {
+      "jin": 0.0,
+      "gpt2": 0.0
+    },
+    "instruction": {
+      "jin": 0.0,
+      "gpt2": 0.5
+    },
+    "math": {
+      "jin": 0.0,
+      "gpt2": 0.1667
+    },
+    "reasoning": {
+      "jin": 0.0,
+      "gpt2": 0.25
+    },
+    "vietnamese": {
+      "jin": 0.0,
+      "gpt2": 0.0
+    }
+  },
+  "perplexity": {
+    "jin": {
+      "heldout_file": "data/eval/heldout.txt",
+      "heldout_sha256": "23d074c55859382e184b0e807139b286e9cbccd114d3956311b33403bf9f0b5b",
+      "tokenizer": "GPT2BPETokenizer",
+      "per_language": {
+        "english": {
+          "chars": 1094766,
+          "tokens_scored": 8192,
+          "loss": 7.1292,
+          "perplexity": 1247.866
+        }
+      },
+      "tokens_scored": 24576,
+      "loss": 7.1447,
+      "perplexity": 1267.376
+    },
+    "gpt2": {
+      "heldout_file": "data/eval/heldout.txt",
+      "heldout_sha256": "23d074c55859382e184b0e807139b286e9cbccd114d3956311b33403bf9f0b5b",
+      "tokenizer": "GPT2TokenizerFast",
+      "per_language": {
+        "english": {
+          "chars": 1094766,
+          "tokens_scored": 8192,
+          "loss": 3.9158,
+          "perplexity": 50.187
+        }
+      },
+      "tokens_scored": 24576,
+      "loss": 3.8772,
+      "perplexity": 48.286
+    },
+    "comparable": false
+  },
+  "gap_analysis": [
+    {
+      "category": "coding",
+      "jin": 0.0,
+      "gpt2": 0.75,
+      "gap_points": 0.75
+    },
+    {
+      "category": "english",
+      "jin": 0.0,
+      "gpt2": 0.25,
+      "gap_points": 0.25
+    },
+    {
+      "category": "instruction",
+      "jin": 0.0,
+      "gpt2": 0.5,
+      "gap_points": 0.5
+    },
+    {
+      "category": "math",
+      "jin": 0.0,
+      "gpt2": 0.1667,
+      "gap_points": 0.1667
+    },
+    {
+      "category": "reasoning",
+      "jin": 0.0,
+      "gpt2": 0.25,
+      "gap_points": 0.25
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "audit_date": "2026-11-15",
+  "repository_revision": "working tree (uncommitted) — see git status",
+  "hardware": {
+    "gpu": "RTX 2060",
+    "vram_gb": 6.0,
+    "ram_gb": 15.8,
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1"
+  },
+  "architecture": {
+    "gpt2_small_reference_params": 124439808,
+    "jin_small_modern_params": null,
+    "note": "param count measured by tests/test_gpt2_reference.py"
+  },
+  "checkpoints": {
+    "served_by_default": "checkpoints/jingpt_chat.pt",
+    "new_pilot": {
+      "path": "checkpoints\\gpt2_small\\pilot\\best.pt",
+      "sha256": "bc44d10da2183857f78e5227a480aca1a20af68058e38c297d37dd0b8596ce29",
+      "bytes": 1493464398,
+      "iteration": 160,
+      "tokens_seen": 11796480,
+      "best_val_loss": 3.2337
+    }
+  },
+  "corpus_used": {
+    "train_tokens": 11990607,
+    "val_tokens": 475032,
+    "train_documents": 142443,
+    "val_documents": 6140,
+    "chars_per_token": 2.982,
+    "train_sha256": "5aaf961a50dc78024cc100948463993cdb26dc4766523758fd5dd9e306f55685"
+  },
+  "baseline_before_upgrade": {
+    "historical_recorded": {
+      "probes_passed": "13/165",
+      "heldout_loss": 5.6904,
+      "perplexity": 296.02,
+      "source": "bench_results/ artifacts predating this pass — NOT re-run here"
+    },
+    "note": "The 13/165 figure is not comparable with the new benchmark: different probes, different scoring."
+  },
+  "measured_after_upgrade": {
+    "jin_pilot_checkpoint": "checkpoints\\gpt2_small\\pilot\\best.pt",
+    "jin_pilot_task_score": 0.0,
+    "jin_pilot_per_category": {
+      "coding": 0.0,
+      "continuation": 1.0,
+      "english": 0.0,
+      "factual": 0.0,
+      "instruction": 0.0,
+      "math": 0.0,
+      "reasoning": 0.0,
+      "vietnamese": 0.0
+    },
+    "jin_pilot_heldout_perplexity_en": 1247.866,
+    "gpt2_small_task_score": 0.2424,
+    "gpt2_small_per_category": {
+      "coding": 0.75,
+      "continuation": 0.75,
+      "english": 0.25,
+      "factual": 0.0,
+      "instruction": 0.5,
+      "math": 0.1667,
+      "reasoning": 0.25,
+      "vietnamese": 0.0
+    },
+    "gpt2_small_heldout_perplexity_en": 50.187,
+    "relative_task_score_vs_gpt2": 0.0,
+    "perplexity_ratio_jin_over_gpt2": 24.86
+  },
+  "tokenizer": {
+    "jin": {
+      "vocab_size": 16384,
+      "kind": "jin",
+      "backend": "project",
+      "special_tokens": {
+        "<|endoftext|>": 16378,
+        "<|user|>": 16379,
+        "<|assistant|>": 16380,
+        "<|system|>": 16381,
+        "<|end|>": 16382,
+        "<|pad|>": 16383
+      }
+    },
+    "gpt2": {
+      "vocab_size": 50257,
+      "kind": "gpt2_bpe",
+      "backend": "transformers",
+      "special_tokens": {
+        "<|endoftext|>": 50256
+      }
+    },
+    "vietnamese_chars_per_token": {
+      "jin": 3.618,
+      "gpt2": 1.141
+    },
+    "english_chars_per_token": {
+      "jin": 3.943,
+      "gpt2": 4.462
+    },
+    "roundtrip_before_fix": {
+      "jin_vietnamese": false,
+      "jin_code": false,
+      "gpt2_all": true
+    },
+    "roundtrip_after_fix": "fixed in bpe_tokenizer.py (BPE_IMPL_VERSION=2); tests/test_tokenizer_upgrade.py"
+  },
+  "data": {
+    "sources": [
+      {
+        "source": "prepared_v4_train",
+        "pattern": "data/prepared_v4/pretrain/*.txt",
+        "present": true,
+        "files": 11,
+        "bytes": 38785853,
+        "documents_scanned": 28430,
+        "scan_truncated": false,
+        "unique_documents": 21835,
+        "exact_duplicate_documents": 6595,
+        "exact_duplicate_rate": 0.232,
+        "empty_documents": 0,
+        "doc_len_chars_min": 2,
+        "doc_len_chars_max": 1208114,
+        "document_count_exact": true,
+        "languages_sampled": {
+          "en": 9723,
+          "other": 15,
+          "vi": 4
+        },
+        "pii_email_docs_sampled": 0,
+        "sample_chars": 2000011,
+        "sample_tokens": 485414,
+        "chars_per_token_sampled": 4.12,
+        "tokens_estimate": 9413546,
+        "tokens_estimate_method": "sampled chars/token ratio x total bytes"
+      },
+      {
+        "source": "prepared_v4_val",
+        "pattern": "data/prepared_v4/pretrain/*val*.txt",
+        "present": true,
+        "files": 5,
+        "bytes": 1544036,
+        "documents_scanned": 6133,
+        "scan_truncated": false,
+        "unique_documents": 2580,
+        "exact_duplicate_documents": 3553,
+        "exact_duplicate_rate": 0.5793,
+        "empty_documents": 0,
+        "doc_len_chars_min": 2,
+        "doc_len_chars_max": 168845,
+        "document_count_exact": true,
+        "languages_sampled": {
+          "en": 2949,
+          "vi": 3073,
+          "other": 111
+        },
+        "pii_email_docs_sampled": 0,
+        "sample_chars": 813251,
+        "sample_tokens": 217515,
+        "chars_per_token_sampled": 3.739,
+        "tokens_estimate": 412973,
+        "tokens_estimate_method": "sampled chars/token ratio x total bytes"
+      },
+      {
+        "source": "raw_gutenberg",
+        "pattern": "data/raw/*/*.txt",
+        "present": true,
+        "files": 78,
+        "bytes": 5487608099,
+        "documents_scanned": 58463,
+        "scan_truncated": false,
+        "unique_documents": 54593,
+        "exact_duplicate_documents": 3870,
+        "exact_duplicate_rate": 0.0662,
+        "empty_documents": 0,
+        "doc_len_chars_min": 2,
+        "doc_len_chars_max": 1487692,
+        "document_count_exact": true,
+        "languages_sampled": {
+          "en": 55442,
+          "other": 94,
+          "vi": 2927
+        },
+        "pii_email_docs_sampled": 3,
+        "sample_chars": 1465105,
+        "sample_tokens": 600171,
+        "chars_per_token_sampled": 2.441,
+        "tokens_estimate": 2247963961,
+        "tokens_estimate_method": "sampled chars/token ratio x total bytes"
+      },
+      {
+        "source": "downloads_general_v1",
+        "pattern": "data/downloads/general_v1/**/*.txt",
+        "present": false
+      }
+    ],
+    "leakage": {
+      "train_documents": 84067,
+      "val_documents": 6133,
+      "overlapping_documents": 2643,
+      "overlap_rate": 0.430947,
+      "val_documents_over_200_chars": 1375,
+      "overlapping_documents_over_200_chars": 17,
+      "long_document_overlap_rate": 0.012364,
+      "method": "exact SHA-256 of normalised (lowercase, whitespace-collapsed) documents",
+      "note": "Short boilerplate documents (single words, repeated answers) dominate the raw overlap rate; the long-document rate is the one that threatens validation quality."
+    }
+  },
+  "implemented_vs_verified": {
+    "implemented_and_verified": [
+      "gpt2_small_reference architecture (124,439,808 params)",
+      "GPT-2 BPE tokenizer profile",
+      "document-aware packed pretraining",
+      "reproducible trainer with manifest + resume",
+      "model-only benchmark harness",
+      "tokenizer evaluation harness",
+      "corpus audit"
+    ],
+    "implemented_not_run_at_scale": [
+      "500M / 2.5B-token pretraining",
+      "SFT on the new checkpoint",
+      "preference optimisation",
+      "new 32k multilingual tokenizer"
+    ],
+    "not_verified": [
+      "RAG/memory/web-search/tool layers (Layer B)",
+      "train_pref.py",
+      "MoE presets"
+    ]
+  }
+}
