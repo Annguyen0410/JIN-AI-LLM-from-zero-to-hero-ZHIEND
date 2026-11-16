@@ -1,0 +1,730 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-11-16T10:18:16",
+  "tokenizer": {
+    "kind": "gpt2_bpe",
+    "vocab_size": 50257
+  },
+  "conventions": {
+    "bytes": "UTF-8 encoded length (exact, from the filesystem or sample)",
+    "chars": "Unicode code points (len(str))",
+    "tokens": "GPT-2 BPE token count on the decoded sample",
+    "extrapolation": "same-unit ratio only"
+  },
+  "sources": [
+    {
+      "pattern": "data/prepared_v4/pretrain",
+      "patterns": [
+        "data/prepared_v4/pretrain"
+      ],
+      "present": true,
+      "files": 11,
+      "total_bytes": 38785853,
+      "sampled_documents": 132,
+      "sampled_bytes": 9436687,
+      "sampled_chars": 9415310,
+      "sampled_tokens": 2354235,
+      "tokens_per_byte": 0.24948,
+      "tokens_per_char": 0.25004,
+      "bytes_per_char": 1.0023,
+      "estimated_tokens": 9676172,
+      "estimated_tokens_ci_95": [
+        8224746,
+        11127597
+      ],
+      "estimate_method": "sampled_tokens/sampled_bytes x total_bytes (matching units)",
+      "estimate_reliable": true,
+      "estimate_unreliable": false,
+      "unreliable_reason": null,
+      "ratio_spread_across_files": 0.292,
+      "sample_coverage_bytes": 0.243302,
+      "sampling": {
+        "seed": 20261116,
+        "docs_per_file": 12,
+        "strategy": "evenly spaced byte slices per file, aligned to documents"
+      },
+      "sampled_files": [
+        {
+          "file": "data\\prepared_v4\\pretrain\\code.txt",
+          "bytes": 4542734,
+          "sampled_documents": 12,
+          "sampled_bytes": 1328,
+          "sampled_chars": 1324,
+          "sampled_tokens": 494,
+          "tokens_per_byte": 0.37199,
+          "bytes_per_char": 1.003
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\educational.txt",
+          "bytes": 5565083,
+          "sampled_documents": 12,
+          "sampled_bytes": 2377021,
+          "sampled_chars": 2368778,
+          "sampled_tokens": 513653,
+          "tokens_per_byte": 0.21609,
+          "bytes_per_char": 1.0035
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\educational_val.txt",
+          "bytes": 118542,
+          "sampled_documents": 12,
+          "sampled_bytes": 52484,
+          "sampled_chars": 52332,
+          "sampled_tokens": 12429,
+          "tokens_per_byte": 0.23682,
+          "bytes_per_char": 1.0029
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\knowledge.txt",
+          "bytes": 8233157,
+          "sampled_documents": 12,
+          "sampled_bytes": 3757,
+          "sampled_chars": 3750,
+          "sampled_tokens": 825,
+          "tokens_per_byte": 0.21959,
+          "bytes_per_char": 1.0019
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\knowledge_val.txt",
+          "bytes": 152968,
+          "sampled_documents": 12,
+          "sampled_bytes": 4777,
+          "sampled_chars": 4758,
+          "sampled_tokens": 1121,
+          "tokens_per_byte": 0.23467,
+          "bytes_per_char": 1.004
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\math.txt",
+          "bytes": 3609819,
+          "sampled_documents": 12,
+          "sampled_bytes": 2088081,
+          "sampled_chars": 2087058,
+          "sampled_tokens": 602259,
+          "tokens_per_byte": 0.28843,
+          "bytes_per_char": 1.0005
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\stories.txt",
+          "bytes": 8220969,
+          "sampled_documents": 12,
+          "sampled_bytes": 3551725,
+          "sampled_chars": 3550187,
+          "sampled_tokens": 873242,
+          "tokens_per_byte": 0.24586,
+          "bytes_per_char": 1.0004
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\stories_val.txt",
+          "bytes": 167109,
+          "sampled_documents": 12,
+          "sampled_bytes": 1046617,
+          "sampled_chars": 1046521,
+          "sampled_tokens": 255427,
+          "tokens_per_byte": 0.24405,
+          "bytes_per_char": 1.0001
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\validation.txt",
+          "bytes": 996895,
+          "sampled_documents": 12,
+          "sampled_bytes": 273545,
+          "sampled_chars": 271864,
+          "sampled_tokens": 70254,
+          "tokens_per_byte": 0.25683,
+          "bytes_per_char": 1.0062
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\vietnamese.txt",
+          "bytes": 7070055,
+          "sampled_documents": 12,
+          "sampled_bytes": 35420,
+          "sampled_chars": 26915,
+          "sampled_tokens": 23723,
+          "tokens_per_byte": 0.66976,
+          "bytes_per_char": 1.316
+        },
+        {
+          "file": "data\\prepared_v4\\pretrain\\vietnamese_val.txt",
+          "bytes": 108522,
+          "sampled_documents": 12,
+          "sampled_bytes": 1932,
+          "sampled_chars": 1823,
+          "sampled_tokens": 808,
+          "tokens_per_byte": 0.41822,
+          "bytes_per_char": 1.0598
+        }
+      ],
+      "elapsed_seconds": 7.5
+    },
+    {
+      "pattern": "data/raw",
+      "patterns": [
+        "data/raw"
+      ],
+      "present": true,
+      "files": 80,
+      "total_bytes": 5487610222,
+      "sampled_documents": 960,
+      "sampled_bytes": 10869217,
+      "sampled_chars": 10567356,
+      "sampled_tokens": 2907693,
+      "tokens_per_byte": 0.26752,
+      "tokens_per_char": 0.27516,
+      "bytes_per_char": 1.0286,
+      "estimated_tokens": 1468025325,
+      "estimated_tokens_ci_95": [
+        1247821526,
+        1688229123
+      ],
+      "estimate_method": "sampled_tokens/sampled_bytes x total_bytes (matching units)",
+      "estimate_reliable": true,
+      "estimate_unreliable": false,
+      "unreliable_reason": null,
+      "ratio_spread_across_files": 0.0,
+      "sample_coverage_bytes": 0.001981,
+      "sampling": {
+        "seed": 20261116,
+        "docs_per_file": 12,
+        "strategy": "evenly spaced byte slices per file, aligned to documents"
+      },
+      "sampled_files": [
+        {
+          "file": "data\\raw\\gutenberg-a-tale-of-two-cities\\a-tale-of-two-cities.txt",
+          "bytes": 823471,
+          "sampled_documents": 12,
+          "sampled_bytes": 3175,
+          "sampled_chars": 3159,
+          "sampled_tokens": 884,
+          "tokens_per_byte": 0.27843,
+          "bytes_per_char": 1.0051
+        },
+        {
+          "file": "data\\raw\\gutenberg-aeneid\\the-aeneid.txt",
+          "bytes": 761622,
+          "sampled_documents": 12,
+          "sampled_bytes": 12490,
+          "sampled_chars": 12230,
+          "sampled_tokens": 4707,
+          "tokens_per_byte": 0.37686,
+          "bytes_per_char": 1.0213
+        },
+        {
+          "file": "data\\raw\\gutenberg-aesop\\aesop-s-fables.txt",
+          "bytes": 248078,
+          "sampled_documents": 12,
+          "sampled_bytes": 3606,
+          "sampled_chars": 3606,
+          "sampled_tokens": 1020,
+          "tokens_per_byte": 0.28286,
+          "bytes_per_char": 1.0
+        },
+        {
+          "file": "data\\raw\\gutenberg-alice\\alice-in-wonderland.txt",
+          "bytes": 178064,
+          "sampled_documents": 12,
+          "sampled_bytes": 3668,
+          "sampled_chars": 3586,
+          "sampled_tokens": 1128,
+          "tokens_per_byte": 0.30752,
+          "bytes_per_char": 1.0229
+        },
+        {
+          "file": "data\\raw\\gutenberg-anna-karenina\\anna-karenina.txt",
+          "bytes": 2108172,
+          "sampled_documents": 12,
+          "sampled_bytes": 5714,
+          "sampled_chars": 5649,
+          "sampled_tokens": 1574,
+          "tokens_per_byte": 0.27546,
+          "bytes_per_char": 1.0115
+        },
+        {
+          "file": "data\\raw\\gutenberg-around-the-world-80-days\\around-the-world-in-eighty-days.txt",
+          "bytes": 412015,
+          "sampled_documents": 12,
+          "sampled_bytes": 4119,
+          "sampled_chars": 4092,
+          "sampled_tokens": 1113,
+          "tokens_per_byte": 0.27021,
+          "bytes_per_char": 1.0066
+        },
+        {
+          "file": "data\\raw\\gutenberg-art-of-war\\the-art-of-war.txt",
+          "bytes": 349237,
+          "sampled_documents": 12,
+          "sampled_bytes": 6747,
+          "sampled_chars": 6645,
+          "sampled_tokens": 1944,
+          "tokens_per_byte": 0.28813,
+          "bytes_per_char": 1.0153
+        },
+        {
+          "file": "data\\raw\\gutenberg-black-beauty\\black-beauty.txt",
+          "bytes": 339655,
+          "sampled_documents": 12,
+          "sampled_bytes": 3689,
+          "sampled_chars": 3661,
+          "sampled_tokens": 1123,
+          "tokens_per_byte": 0.30442,
+          "bytes_per_char": 1.0076
+        },
+        {
+          "file": "data\\raw\\gutenberg-bleak-house\\bleak-house.txt",
+          "bytes": 2085017,
+          "sampled_documents": 12,
+          "sampled_bytes": 4769,
+          "sampled_chars": 4727,
+          "sampled_tokens": 1342,
+          "tokens_per_byte": 0.2814,
+          "bytes_per_char": 1.0089
+        },
+        {
+          "file": "data\\raw\\gutenberg-brothers-karamazov\\the-brothers-karamazov.txt",
+          "bytes": 2076789,
+          "sampled_documents": 12,
+          "sampled_bytes": 5663,
+          "sampled_chars": 5583,
+          "sampled_tokens": 1601,
+          "tokens_per_byte": 0.28271,
+          "bytes_per_char": 1.0143
+        },
+        {
+          "file": "data\\raw\\gutenberg-call-of-the-wild\\the-call-of-the-wild.txt",
+          "bytes": 203200,
+          "sampled_documents": 12,
+          "sampled_bytes": 2526,
+          "sampled_chars": 2512,
+          "sampled_tokens": 679,
+          "tokens_per_byte": 0.2688,
+          "bytes_per_char": 1.0056
+        },
+        {
+          "file": "data\\raw\\gutenberg-count-of-monte-cristo\\the-count-of-monte-cristo.txt",
+          "bytes": 2848795,
+          "sampled_documents": 12,
+          "sampled_bytes": 1574,
+          "sampled_chars": 1552,
+          "sampled_tokens": 452,
+          "tokens_per_byte": 0.28717,
+          "bytes_per_char": 1.0142
+        },
+        {
+          "file": "data\\raw\\gutenberg-crime-punishment\\crime-and-punishment.txt",
+          "bytes": 1224164,
+          "sampled_documents": 12,
+          "sampled_bytes": 4352,
+          "sampled_chars": 4242,
+          "sampled_tokens": 1302,
+          "tokens_per_byte": 0.29917,
+          "bytes_per_char": 1.0259
+        },
+        {
+          "file": "data\\raw\\gutenberg-david-copperfield\\david-copperfield.txt",
+          "bytes": 2071965,
+          "sampled_documents": 12,
+          "sampled_bytes": 3441,
+          "sampled_chars": 3407,
+          "sampled_tokens": 989,
+          "tokens_per_byte": 0.28742,
+          "bytes_per_char": 1.01
+        },
+        {
+          "file": "data\\raw\\gutenberg-demons\\demons.txt",
+          "bytes": 1511812,
+          "sampled_documents": 12,
+          "sampled_bytes": 5683,
+          "sampled_chars": 5683,
+          "sampled_tokens": 1544,
+          "tokens_per_byte": 0.27169,
+          "bytes_per_char": 1.0
+        },
+        {
+          "file": "data\\raw\\gutenberg-divine-comedy\\the-divine-comedy.txt",
+          "bytes": 672719,
+          "sampled_documents": 12,
+          "sampled_bytes": 5018,
+          "sampled_chars": 4934,
+          "sampled_tokens": 1562,
+          "tokens_per_byte": 0.31128,
+          "bytes_per_char": 1.017
+        },
+        {
+          "file": "data\\raw\\gutenberg-don-quixote\\don-quixote.txt",
+          "bytes": 2434958,
+          "sampled_documents": 12,
+          "sampled_bytes": 7423,
+          "sampled_chars": 7381,
+          "sampled_tokens": 2041,
+          "tokens_per_byte": 0.27496,
+          "bytes_per_char": 1.0057
+        },
+        {
+          "file": "data\\raw\\gutenberg-dracula\\dracula.txt",
+          "bytes": 906192,
+          "sampled_documents": 12,
+          "sampled_bytes": 7041,
+          "sampled_chars": 6977,
+          "sampled_tokens": 1960,
+          "tokens_per_byte": 0.27837,
+          "bytes_per_char": 1.0092
+        },
+        {
+          "file": "data\\raw\\gutenberg-emma\\emma.txt",
+          "bytes": 950575,
+          "sampled_documents": 12,
+          "sampled_bytes": 3956,
+          "sampled_chars": 3918,
+          "sampled_tokens": 1058,
+          "tokens_per_byte": 0.26744,
+          "bytes_per_char": 1.0097
+        },
+        {
+          "file": "data\\raw\\gutenberg-frankenstein\\frankenstein.txt",
+          "bytes": 456617,
+          "sampled_documents": 12,
+          "sampled_bytes": 5664,
+          "sampled_chars": 5646,
+          "sampled_tokens": 1506,
+          "tokens_per_byte": 0.26589,
+          "bytes_per_char": 1.0032
+        },
+        {
+          "file": "data\\raw\\gutenberg-great-expectations\\great-expectations.txt",
+          "bytes": 1078975,
+          "sampled_documents": 12,
+          "sampled_bytes": 5566,
+          "sampled_chars": 5488,
+          "sampled_tokens": 1624,
+          "tokens_per_byte": 0.29177,
+          "bytes_per_char": 1.0142
+        },
+        {
+          "file": "data\\raw\\gutenberg-grimm\\grimm-fairy-tales.txt",
+          "bytes": 569775,
+          "sampled_documents": 12,
+          "sampled_bytes": 10045,
+          "sampled_chars": 9757,
+          "sampled_tokens": 3065,
+          "tokens_per_byte": 0.30513,
+          "bytes_per_char": 1.0295
+        },
+        {
+          "file": "data\\raw\\gutenberg-heart-of-darkness\\heart-of-darkness.txt",
+          "bytes": 240797,
+          "sampled_documents": 12,
+          "sampled_bytes": 5692,
+          "sampled_chars": 5584,
+          "sampled_tokens": 1579,
+          "tokens_per_byte": 0.27741,
+          "bytes_per_char": 1.0193
+        },
+        {
+          "file": "data\\raw\\gutenberg-hound-of-baskervilles\\the-hound-of-the-baskervilles.txt",
+          "bytes": 395770,
+          "sampled_documents": 12,
+          "sampled_bytes": 3561,
+          "sampled_chars": 3530,
+          "sampled_tokens": 1142,
+          "tokens_per_byte": 0.3207,
+          "bytes_per_char": 1.0088
+        },
+        {
+          "file": "data\\raw\\gutenberg-huckleberry-finn\\adventures-of-huckleberry-finn.txt",
+          "bytes": 634801,
+          "sampled_documents": 12,
+          "sampled_bytes": 4628,
+          "sampled_chars": 4564,
+          "sampled_tokens": 1373,
+          "tokens_per_byte": 0.29667,
+          "bytes_per_char": 1.014
+        },
+        {
+          "file": "data\\raw\\gutenberg-idiot\\the-idiot.txt",
+          "bytes": 1455379,
+          "sampled_documents": 12,
+          "sampled_bytes": 5475,
+          "sampled_chars": 5389,
+          "sampled_tokens": 1511,
+          "tokens_per_byte": 0.27598,
+          "bytes_per_char": 1.016
+        },
+        {
+          "file": "data\\raw\\gutenberg-iliad\\the-iliad.txt",
+          "bytes": 1187424,
+          "sampled_documents": 12,
+          "sampled_bytes": 6328,
+          "sampled_chars": 6240,
+          "sampled_tokens": 1929,
+          "tokens_per_byte": 0.30484,
+          "bytes_per_char": 1.0141
+        },
+        {
+          "file": "data\\raw\\gutenberg-innocents-abroad\\the-innocents-abroad.txt",
+          "bytes": 1168440,
+          "sampled_documents": 12,
+          "sampled_bytes": 5386,
+          "sampled_chars": 5374,
+          "sampled_tokens": 1499,
+          "tokens_per_byte": 0.27831,
+          "bytes_per_char": 1.0022
+        },
+        {
+          "file": "data\\raw\\gutenberg-invisible-man\\the-invisible-man.txt",
+          "bytes": 312520,
+          "sampled_documents": 12,
+          "sampled_bytes": 2840,
+          "sampled_chars": 2790,
+          "sampled_tokens": 824,
+          "tokens_per_byte": 0.29014,
+          "bytes_per_char": 1.0179
+        },
+        {
+          "file": "data\\raw\\gutenberg-island-of-doctor-moreau\\the-island-of-doctor-moreau.txt",
+          "bytes": 274633,
+          "sampled_documents": 12,
+          "sampled_bytes": 3213,
+          "sampled_chars": 3181,
+          "sampled_tokens": 888,
+          "tokens_per_byte": 0.27638,
+          "bytes_per_char": 1.0101
+        },
+        {
+          "file": "data\\raw\\gutenberg-jane-eyre\\jane-eyre.txt",
+          "bytes": 1106179,
+          "sampled_documents": 12,
+          "sampled_bytes": 2924,
+          "sampled_chars": 2903,
+          "sampled_tokens": 831,
+          "tokens_per_byte": 0.2842,
+          "bytes_per_char": 1.0072
+        },
+        {
+          "file": "data\\raw\\gutenberg-journey-to-the-center\\a-journey-to-the-center-of-the-earth.txt",
+          "bytes": 529136,
+          "sampled_documents": 12,
+          "sampled_bytes": 1750,
+          "sampled_chars": 1750,
+          "sampled_tokens": 477,
+          "tokens_per_byte": 0.27257,
+          "bytes_per_char": 1.0
+        },
+        {
+          "file": "data\\raw\\gutenberg-kidnapped\\kidnapped.txt",
+          "bytes": 468754,
+          "sampled_documents": 12,
+          "sampled_bytes": 2942,
+          "sampled_chars": 2880,
+          "sampled_tokens": 912,
+          "tokens_per_byte": 0.30999,
+          "bytes_per_char": 1.0215
+        },
+        {
+          "file": "data\\raw\\gutenberg-king-solomons-mines\\king-solomon-s-mines.txt",
+          "bytes": 489384,
+          "sampled_documents": 12,
+          "sampled_bytes": 3411,
+          "sampled_chars": 3391,
+          "sampled_tokens": 982,
+          "tokens_per_byte": 0.28789,
+          "bytes_per_char": 1.0059
+        },
+        {
+          "file": "data\\raw\\gutenberg-last-of-the-mohicans\\the-last-of-the-mohicans.txt",
+          "bytes": 906793,
+          "sampled_documents": 12,
+          "sampled_bytes": 3566,
+          "sampled_chars": 3544,
+          "sampled_tokens": 954,
+          "tokens_per_byte": 0.26753,
+          "bytes_per_char": 1.0062
+        },
+        {
+          "file": "data\\raw\\gutenberg-leaves-of-grass\\leaves-of-grass.txt",
+          "bytes": 798724,
+          "sampled_documents": 12,
+          "sampled_bytes": 5417,
+          "sampled_chars": 5377,
+          "sampled_tokens": 1692,
+          "tokens_per_byte": 0.31235,
+          "bytes_per_char": 1.0074
+        },
+        {
+          "file": "data\\raw\\gutenberg-les-miserables\\les-miserables.txt",
+          "bytes": 3442788,
+          "sampled_documents": 12,
+          "sampled_bytes": 6288,
+          "sampled_chars": 6259,
+          "sampled_tokens": 1682,
+          "tokens_per_byte": 0.26749,
+          "bytes_per_char": 1.0046
+        },
+        {
+          "file": "data\\raw\\gutenberg-little-women\\little-women.txt",
+          "bytes": 1092586,
+          "sampled_documents": 12,
+          "sampled_bytes": 3144,
+          "sampled_chars": 3102,
+          "sampled_tokens": 908,
+          "tokens_per_byte": 0.2888,
+          "bytes_per_char": 1.0135
+        },
+        {
+          "file": "data\\raw\\gutenberg-man-in-the-iron-mask\\the-man-in-the-iron-mask.txt",
+          "bytes": 1088363,
+          "sampled_documents": 12,
+          "sampled_bytes": 10456,
+          "sampled_chars": 10390,
+          "sampled_tokens": 2780,
+          "tokens_per_byte": 0.26588,
+          "bytes_per_char": 1.0064
+        },
+        {
+          "file": "data\\raw\\gutenberg-mansfield-park\\mansfield-park.txt",
+          "bytes": 945194,
+          "sampled_documents": 12,
+          "sampled_bytes": 4593,
+          "sampled_chars": 4561,
+          "sampled_tokens": 1247,
+          "tokens_per_byte": 0.2715,
+          "bytes_per_char": 1.007
+        },
+        {
+          "file": "data\\raw\\gutenberg-middlemarch\\middlemarch.txt",
+          "bytes": 1899336,
+          "sampled_documents": 12,
+          "sampled_bytes": 12321,
+          "sampled_chars": 12231,
+          "sampled_tokens": 3169,
+          "tokens_per_byte": 0.2572,
+          "bytes_per_char": 1.0074
+        },
+        {
+          "file": "data\\raw\\gutenberg-moby-dick\\moby-dick.txt",
+          "bytes": 1298572,
+          "sampled_documents": 12,
+          "sampled_bytes": 4454,
+          "sampled_chars": 4429,
+          "sampled_tokens": 1269,
+          "tokens_per_byte": 0.28491,
+          "bytes_per_char": 1.0056
+        },
+        {
+          "file": "data\\raw\\gutenberg-northanger-abbey\\northanger-abbey.txt",
+          "bytes": 476403,
+          "sampled_documents": 12,
+          "sampled_bytes": 10883,
+          "sampled_chars": 10809,
+          "sampled_tokens": 2890,
+          "tokens_per_byte": 0.26555,
+          "bytes_per_char": 1.0068
+        },
+        {
+          "file": "data\\raw\\gutenberg-odyssey\\the-odyssey.txt",
+          "bytes": 730021,
+          "sampled_documents": 12,
+          "sampled_bytes": 5981,
+          "sampled_chars": 5961,
+          "sampled_tokens": 1726,
+          "tokens_per_byte": 0.28858,
+          "bytes_per_char": 1.0034
+        },
+        {
+          "file": "data\\raw\\gutenberg-oliver-twist\\oliver-twist.txt",
+          "bytes": 975038,
+          "sampled_documents": 12,
+          "sampled_bytes": 4653,
+          "sampled_chars": 4603,
+          "sampled_tokens": 1276,
+          "tokens_per_byte": 0.27423,
+          "bytes_per_char": 1.0109
+        },
+        {
+          "file": "data\\raw\\gutenberg-paradise-lost\\paradise-lost.txt",
+          "bytes": 505020,
+          "sampled_documents": 12,
+          "sampled_bytes": 13063,
+          "sampled_chars": 12943,
+          "sampled_tokens": 4100,
+          "tokens_per_byte": 0.31386,
+          "bytes_per_char": 1.0093
+        },
+        {
+          "file": "data\\raw\\gutenberg-persuasion\\persuasion.txt",
+          "bytes": 506286,
+          "sampled_documents": 12,
+          "sampled_bytes": 2837,
+          "sampled_chars": 2825,
+          "sampled_tokens": 760,
+          "tokens_per_byte": 0.26789,
+          "bytes_per_char": 1.0042
+        },
+        {
+          "file": "data\\raw\\gutenberg-peter-pan\\peter-pan.txt",
+          "bytes": 295406,
+          "sampled_documents": 12,
+          "sampled_bytes": 1878,
+          "sampled_chars": 1824,
+          "sampled_tokens": 577,
+          "tokens_per_byte": 0.30724,
+          "bytes_per_char": 1.0296
+        },
+        {
+          "file": "data\\raw\\gutenberg-pickwick-papers\\the-pickwick-papers.txt",
+          "bytes": 1892236,
+          "sampled_documents": 12,
+          "sampled_bytes": 3133,
+          "sampled_chars": 3107,
+          "sampled_tokens": 887,
+          "tokens_per_byte": 0.28312,
+          "bytes_per_char": 1.0084
+        },
+        {
+          "file": "data\\raw\\gutenberg-poe\\the-works-of-edgar-allan-poe.txt",
+          "bytes": 616423,
+          "sampled_documents": 12,
+          "sampled_bytes": 15828,
+          "sampled_chars": 15770,
+          "sampled_tokens": 4850,
+          "tokens_per_byte": 0.30642,
+          "bytes_per_char": 1.0037
+        }
+      ],
+      "elapsed_seconds": 11.9
+    }
+  ],
+  "v1_correction": {
+    "available": true,
+    "artifact": "bench_results\\gpt2_upgrade\\data_audit.json",
+    "rows": [
+      {
+        "source": "prepared_v4_train",
+        "v1_tokens_estimate": 9413546,
+        "v1_method": "sampled chars/token ratio x total bytes",
+        "v1_defect": "multiplied tokens/CHAR by total BYTES",
+        "v1_bytes": 38785853,
+        "v1_sampled_chars": 2000011,
+        "v1_sampled_tokens": 485414
+      },
+      {
+        "source": "prepared_v4_val",
+        "v1_tokens_estimate": 412973,
+        "v1_method": "sampled chars/token ratio x total bytes",
+        "v1_defect": "multiplied tokens/CHAR by total BYTES",
+        "v1_bytes": 1544036,
+        "v1_sampled_chars": 813251,
+        "v1_sampled_tokens": 217515
+      },
+      {
+        "source": "raw_gutenberg",
+        "v1_tokens_estimate": 2247963961,
+        "v1_method": "sampled chars/token ratio x total bytes",
+        "v1_defect": "multiplied tokens/CHAR by total BYTES",
+        "v1_bytes": 5487608099,
+        "v1_sampled_chars": 1465105,
+        "v1_sampled_tokens": 600171
+      }
+    ],
+    "correction": "recomputed in this file with a matched denominator"
+  }
+}

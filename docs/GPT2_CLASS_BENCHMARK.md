@@ -1,5 +1,11 @@
 # Model-only benchmark: JIN pilot vs. GPT-2 Small (Phase 9)
 
+> **Status: historical (pre-Phase-14).** The pilot's 24.9× held-out perplexity
+> gap is a real measurement of that checkpoint, but the `comparable: false`
+> flag and the pilot's 12 M-token corpus no longer describe the current run.
+> Current measurements and a same-window comparison live in
+> `docs/PHASE14_RELEASE_REPORT.md` and `bench_results/phase14/`.
+
 Harness: `scripts/gpt2_bench.py` · Probes: `benchmarks/gpt2_probes.jsonl` (37 probes)
 Artifacts: `bench_results/gpt2_upgrade/{base_model,gpt2_reference,comparison}.json`
 

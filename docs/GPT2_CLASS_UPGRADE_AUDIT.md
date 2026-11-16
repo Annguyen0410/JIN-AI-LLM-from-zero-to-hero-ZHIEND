@@ -1,5 +1,11 @@
 # Phase 0 — Repository audit before the GPT-2-class upgrade
 
+> **Status: historical (pre-Phase-14).** This audit predates the Phase 14 data
+> and resume repair. Its token estimates came from a unit-mixed formula that
+> erred by −21.5 % on one corpus and +53 % on another
+> (`docs/PHASE14_DATA_REPORT.md` §1). Kept for history; current evidence is in
+> `docs/PHASE14_RELEASE_REPORT.md`.
+
 Date: 2026-11-15 (local) · Host: Windows, RTX 2060 6 GB, 15.8 GB RAM (2.5 GB free at audit time), 564 GB free disk
 Environment: Python 3.11 `.venv`, torch 2.5.1+cu121, CUDA 12.1
 

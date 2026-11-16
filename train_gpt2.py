@@ -165,6 +165,22 @@ class ShardBatcher:
         self.rng = np.random.default_rng(seed)
         self.tokens_served = 0
 
+    # Sample-position RNG is part of the training state: without it a resumed
+    # run draws different batches and "exact resume" is false.
+    def state_dict(self) -> dict:
+        raw = self.rng.bit_generator.state
+        return {"bit_generator": {"bit_generator": raw["bit_generator"],
+                                  "state": {k: int(v) for k, v in raw["state"].items()},
+                                  "has_uint32": int(raw.get("has_uint32", 0)),
+                                  "uinteger": int(raw.get("uinteger", 0))},
+                "tokens_served": int(self.tokens_served)}
+
+    def load_state_dict(self, state: dict) -> None:
+        if not state:
+            return
+        self.rng.bit_generator.state = state["bit_generator"]
+        self.tokens_served = int(state.get("tokens_served", 0))
+
     def __len__(self) -> int:
         return max(0, len(self.data) - self.seq_len - 1)
 
@@ -189,7 +205,7 @@ class ShardBatcher:
 # ── model / optimizer ──────────────────────────────────────────────────
 
 def build_model(preset: str, vocab_size: int, block_size: int, device: str,
-                grad_checkpoint: bool) -> JinAI:
+                grad_checkpoint: bool, dropout: float = 0.0) -> JinAI:
     p = config.SCALE_PRESETS[preset]
     cfg = {
         "vocab_size": vocab_size,
@@ -198,8 +214,11 @@ def build_model(preset: str, vocab_size: int, block_size: int, device: str,
         "n_layers": p["n_layers"],
         "n_heads": p["n_heads"],
         "n_kv_heads": p["n_kv_heads"],
-        "dropout": 0.0,                 # GPT-2 pretraining uses dropout 0.1,
-        "gradient_checkpointing": grad_checkpoint,  # but 0 keeps 6GB VRAM sane
+        # GPT-2 pretraining uses dropout 0.1; 0 was the pilot's default for VRAM
+        # reasons. --dropout makes the choice an experiment instead of an
+        # assumption (see docs/PHASE14_TRAINING_REPORT.md).
+        "dropout": dropout,
+        "gradient_checkpointing": grad_checkpoint,
         "modern": p["modern"],
         "arch_id": p["arch_id"],
         "gelu_tanh": p["gelu_tanh"],
@@ -228,22 +247,106 @@ def lr_at(step: int, total_steps: int, peak: float, warmup: int, min_ratio: floa
 
 @torch.no_grad()
 def evaluate(model, batcher: ShardBatcher, iters: int, amp_dtype, use_amp: bool) -> dict:
+    """Validation loss with FP32 cross-entropy on FP32 logits.
+
+    The model's own loss runs inside autocast; at vocab 50k an FP16 softmax is
+    not trustworthy (measured elsewhere in this repo: 11.67 fp16 vs 0.83 fp32
+    on identical logits). Validation must be correct even if it costs a cast.
+    The evaluation batcher is seeded deterministically, so every run scores the
+    same windows and the token count is reported.
+    """
     model.eval()
     losses = []
+    tokens = 0
     for _ in range(iters):
         x, y, m = batcher.batch()
         with torch.amp.autocast("cuda", dtype=amp_dtype, enabled=use_amp):
-            _, loss = model(x, y, doc_mask=m)
+            logits, _ = model(x, doc_mask=m)
+        logits = logits.float()
+        loss = torch.nn.functional.cross_entropy(
+            logits.view(-1, logits.size(-1)), y.reshape(-1))
         losses.append(float(loss.item()))
+        tokens += int(y.numel())
+        del logits
     model.train()
     mean = sum(losses) / max(1, len(losses))
-    return {"loss": round(mean, 4), "perplexity": round(math.exp(min(20.0, mean)), 2)}
+    return {"loss": round(mean, 4), "perplexity": round(math.exp(min(20.0, mean)), 2),
+            "iters": iters, "tokens_scored": tokens,
+            "loss_dtype": "fp32_cross_entropy"}
 
 
 # ── checkpointing ──────────────────────────────────────────────────────
 
+def _np_state_to_dict(state) -> dict:
+    """NumPy global RNG state as plain ints.
+
+    ``torch.load(weights_only=True)`` rejects the raw tuple because it holds an
+    ndarray, so the checkpoint must carry primitives only.
+    """
+    return {"kind": str(state[0]), "keys": [int(k) for k in state[1]],
+            "pos": int(state[2]), "has_gauss": int(state[3]),
+            "cached_gaussian": float(state[4])}
+
+
+def _np_state_from_dict(data):
+    if data is None:
+        return None
+    if isinstance(data, tuple):                       # legacy checkpoints
+        return data
+    return (data["kind"], np.array(data["keys"], dtype=np.uint32), data["pos"],
+            data["has_gauss"], data["cached_gaussian"])
+
+
+def verify_resume_compatibility(blob: dict, model, tokenizer, dataset_manifest: dict,
+                                total_steps: int, extend_budget: bool,
+                                log_fn=print) -> None:
+    """Refuse a resume that would silently change the experiment."""
+    old = blob.get("dataset_manifest", {})
+    if old.get("train", {}).get("sha256") != dataset_manifest["train"]["sha256"]:
+        raise SystemExit("[Fatal] Training corpus changed since this checkpoint — refusing to resume.")
+    if old.get("val", {}).get("sha256") != dataset_manifest["val"]["sha256"]:
+        raise SystemExit("[Fatal] Validation corpus changed since this checkpoint — refusing to resume.")
+    if blob.get("architecture_id") != model.arch_id:
+        raise SystemExit(f"[Fatal] Architecture changed: checkpoint={blob.get('architecture_id')} "
+                         f"now={model.arch_id}")
+    old_tok = blob.get("tokenizer") or {}
+    if old_tok.get("vocab_size") != tokenizer.vocab_size or old_tok.get("kind") != tokenizer.kind:
+        raise SystemExit("[Fatal] Tokenizer identity changed since this checkpoint.")
+    old_schedule = blob.get("schedule") or {}
+    old_total = int(old_schedule.get("total_steps", total_steps))
+    if old_total != total_steps and not extend_budget:
+        raise SystemExit(
+            f"[Fatal] Step budget changed ({old_total} -> {total_steps}). "
+            "This would silently reshape the LR schedule. Pass --extend-budget to "
+            "intentionally continue with the new budget.")
+    if old_total != total_steps:
+        log_fn(f"[Resume] extending budget {old_total} -> {total_steps} (--extend-budget)")
+
+
+def restore_training_state(blob: dict, model, optimizer, scaler=None,
+                           batcher=None, device: str = "cpu") -> None:
+    """Restore every piece of state the training loop depends on."""
+    import random as _random
+
+    model.load_state_dict(blob["model_state_dict"])
+    if optimizer is not None and blob.get("optimizer_state_dict"):
+        optimizer.load_state_dict(blob["optimizer_state_dict"])
+    if scaler is not None and blob.get("scaler_state_dict"):
+        scaler.load_state_dict(blob["scaler_state_dict"])
+    torch.set_rng_state(blob["rng_state"])
+    if device == "cuda" and blob.get("cuda_rng_state_all"):
+        torch.cuda.set_rng_state_all(blob["cuda_rng_state_all"])
+    if blob.get("numpy_rng_state") is not None:
+        np.random.set_state(_np_state_from_dict(blob["numpy_rng_state"]))
+    if blob.get("python_rng_state") is not None:
+        _random.setstate(blob["python_rng_state"])
+    if batcher is not None and blob.get("batcher_state"):
+        batcher.load_state_dict(blob["batcher_state"])
+
+
 def save_state(path: str, model, optimizer, scaler, step: int, tokens_seen: int,
-               best_val: float, history: list, meta: dict) -> None:
+               best_val: float, history: list, meta: dict,
+               batcher: "ShardBatcher | None" = None) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     payload = {
         "format_version": 3,
@@ -259,6 +362,15 @@ def save_state(path: str, model, optimizer, scaler, step: int, tokens_seen: int,
         "scaler_state_dict": scaler.state_dict() if scaler else None,
         "rng_state": torch.get_rng_state(),
         "cuda_rng_state_all": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+        "numpy_rng_state": _np_state_to_dict(np.random.get_state()),
+        "python_rng_state": __import__("random").getstate(),
+        "batcher_state": batcher.state_dict() if batcher is not None else None,
+        # meta.get: checkpoints written by other entry points (and the older
+        # resume test) do not carry a schedule; a missing schedule must not
+        # crash a save.
+        "schedule": meta.get("schedule"),
+        "effective_batch_tokens": meta.get("effective_batch_tokens"),
+        "training_revision": meta.get("revision"),
         "training_args": meta["training_args"],
         "dataset_manifest": meta["dataset_manifest"],
         "tokenizer": meta["tokenizer"],
@@ -295,6 +407,9 @@ def save_state(path: str, model, optimizer, scaler, step: int, tokens_seen: int,
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Reproducible GPT-2-class pretraining")
     p.add_argument("--preset", default="gpt2_small_reference")
+    p.add_argument("--data-dir", default=DATA_DIR,
+                   help="directory holding manifest.json + train.bin/val.bin "
+                        "(relative paths resolve against the repo root)")
     p.add_argument("--train-files", nargs="*", default=None,
                    help="Corpus files (default: data/prepared_v4/pretrain/*.txt minus *_val)")
     p.add_argument("--val-files", nargs="*", default=None,
@@ -316,12 +431,18 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--save-interval", type=int, default=250)
     p.add_argument("--out-dir", default=OUT_DIR)
     p.add_argument("--resume", action="store_true")
+    p.add_argument("--extend-budget", action="store_true",
+                   help="Resume into a DIFFERENT (larger) step budget. Without this "
+                        "flag a changed budget is refused, because silently "
+                        "reshaping the cosine schedule makes runs incomparable.")
     p.add_argument("--device", default=None, choices=config.DEVICE_CHOICES)
     p.add_argument("--no-amp", action="store_true")
     p.add_argument("--grad-checkpoint", action="store_true",
                    help="Activation checkpointing (needed below ~8GB VRAM)")
     p.add_argument("--smoke", action="store_true", help="20 steps, small budget")
     p.add_argument("--seed", type=int, default=1337)
+    p.add_argument("--dropout", type=float, default=0.0,
+                   help="residual/attention dropout (GPT-2 recipe uses 0.1)")
     return p.parse_args()
 
 
@@ -349,6 +470,9 @@ def main() -> None:
         except (AttributeError, ValueError):
             pass
     args = parse_args()
+    global DATA_DIR
+    DATA_DIR = args.data_dir if os.path.isabs(args.data_dir) else os.path.join(
+        ROOT, args.data_dir)
     config.set_device(args.device)
     device = config.DEVICE
     if args.smoke:
@@ -387,7 +511,7 @@ def main() -> None:
                                args.seed + 7, tokenizer.eot_id)
 
     model = build_model(args.preset, tokenizer.vocab_size, args.seq_len, device,
-                        args.grad_checkpoint)
+                        args.grad_checkpoint, dropout=args.dropout)
     n_params = model.num_parameters()
     tokens_budget = int(args.total_tokens or n_params * 20)
     tokens_per_step = args.batch_size * args.grad_accum * args.seq_len
@@ -411,6 +535,12 @@ def main() -> None:
         "dataset_manifest": dataset_manifest,
         "tokenizer": {"kind": tokenizer.kind, "vocab_size": tokenizer.vocab_size,
                       "backend": tokenizer.backend},
+        "schedule": {"kind": "cosine_with_warmup", "absolute_step_based": True,
+                     "total_steps": total_steps, "warmup": args.warmup,
+                     "peak_lr": args.lr, "min_lr_ratio": args.min_lr_ratio,
+                     "grad_clip": 1.0},
+        "effective_batch_tokens": args.batch_size * args.grad_accum * args.seq_len,
+        "revision": os.popen("git rev-parse HEAD").read().strip() or None,
         "hardware": {
             "device": device,
             "gpu": torch.cuda.get_device_name(0) if device == "cuda" else None,
@@ -441,21 +571,17 @@ def main() -> None:
         # mmap: a 1.5 GB checkpoint must not be read into a machine that has
         # ~2.5 GB free. Pages are faulted in on demand instead.
         blob = torch.load(ckpt_path, map_location="cpu", weights_only=True, mmap=True)
-        if blob["dataset_manifest"]["train"]["sha256"] != dataset_manifest["train"]["sha256"]:
-            raise SystemExit("[Fatal] Corpus changed since this checkpoint — refusing to resume.")
-        model.load_state_dict(blob["model_state_dict"])
-        if blob.get("optimizer_state_dict"):
-            optimizer.load_state_dict(blob["optimizer_state_dict"])
-        if scaler and blob.get("scaler_state_dict"):
-            scaler.load_state_dict(blob["scaler_state_dict"])
-        torch.set_rng_state(blob["rng_state"])
-        if device == "cuda" and blob.get("cuda_rng_state_all"):
-            torch.cuda.set_rng_state_all(blob["cuda_rng_state_all"])
+
+        # ── refuse unsafe partial restorations, then restore everything ──
+        verify_resume_compatibility(blob, model, tokenizer, dataset_manifest,
+                                    total_steps, args.extend_budget, log_fn=log)
+        restore_training_state(blob, model, optimizer, scaler, train_batcher, device)
         start_step = int(blob["iteration"])
         tokens_seen = int(blob["tokens_seen"])
         best_val = float(blob["best_val_loss"])
         history = list(blob.get("history", []))
-        log(f"[Resume] step {start_step:,} | tokens {tokens_seen:,} | best val {best_val:.4f}")
+        log(f"[Resume] step {start_step:,} | tokens {tokens_seen:,} | best val {best_val:.4f} "
+            f"| sampler+cpu+cuda RNG restored")
 
     log(f"[Train] device={device} amp={use_amp} gc={args.grad_checkpoint} "
         f"batch={args.batch_size}x{args.grad_accum} seq={args.seq_len}")
@@ -511,12 +637,12 @@ def main() -> None:
             if val["loss"] < best_val:
                 best_val = val["loss"]
                 save_state(os.path.join(args.out_dir, "best.pt"), model, optimizer, scaler,
-                           step, tokens_seen, best_val, history, meta)
+                           step, tokens_seen, best_val, history, meta, batcher=train_batcher)
                 log(f"  [save] best.pt (val {best_val:.4f})")
 
         if step % args.save_interval == 0 or step == total_steps:
             save_state(ckpt_path, model, optimizer, scaler, step, tokens_seen,
-                       best_val, history, meta)
+                       best_val, history, meta, batcher=train_batcher)
             log(f"  [save] latest.pt (sha256 in latest.pt.manifest.json)")
 
     log("\n[Done] Pretraining stopped at the configured budget.")

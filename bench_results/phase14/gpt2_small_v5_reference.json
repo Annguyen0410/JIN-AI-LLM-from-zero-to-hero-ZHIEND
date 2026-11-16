@@ -1,0 +1,12 @@
+{
+  "model": "openai-community/gpt2 (124,439,808 params)",
+  "checkpoint": "HF gpt2 (fp32)",
+  "data": "data/gpt2_corpus_v5/val.bin",
+  "windows": 64,
+  "seq_len": 1024,
+  "tokens_scored": 65536,
+  "loss": 3.2467,
+  "perplexity": 25.7,
+  "method": "fp32 cross-entropy on fp32 logits, identical windows and tokenizer (gpt2_bpe)",
+  "tokenizer_vocab": 50257
+}

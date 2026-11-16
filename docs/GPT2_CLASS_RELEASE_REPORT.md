@@ -1,5 +1,10 @@
 # GPT-2-class upgrade — release report
 
+> **Status: historical (pre-Phase-14).** Describes the pilot checkpoint and the
+> measurements available at that time. Superseded by
+> `docs/PHASE14_RELEASE_REPORT.md`; the pilot numbers themselves (val 3.2337 at
+> step 160, 16.96 M tokens seen) are still accurate and are re-verified there.
+
 Scope: the 13-phase directive "JIN AI GPT-2-CLASS UPGRADE".
 Verdict is stated first because it is the only claim that matters.
 

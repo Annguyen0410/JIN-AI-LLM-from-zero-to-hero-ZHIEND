@@ -1,5 +1,58 @@
 # JIN AI — Mô hình ngôn ngữ từ con số 0
 
+> ## Trạng thái Phase 14 — 2026-11-16 (số đo thật, không phải kế hoạch)
+>
+> **Kiến trúc ≠ năng lực.** `gpt2_small_reference` có đúng hình học GPT-2 Small
+> (124,44M tham số), nhưng năng lực học được **không** bằng GPT-2. Không có tuyên
+> bố tương đương GPT-2 ở bất kỳ đâu trong repo.
+>
+> **Checkpoint đo được hiện tại:** `checkpoints/gpt2_small/phase14_wiki/best.pt`
+> — bước 640, **47.185.920 token** huấn luyện, sha256 `069d9da650a81dc9e2c0…`.
+> Pilot cũ `checkpoints/gpt2_small/pilot/best.pt` **vẫn được giữ nguyên**, không
+> ghi đè, không thay checkpoint mặc định của app.
+>
+> **Cùng 64 cửa sổ × 1.024 token, cùng tokenizer GPT-2, cross-entropy FP32:**
+>
+> | Model | Loss | Perplexity |
+> |---|---|---|
+> | JIN pilot (bước 160) | 6,7888 | 887,85 |
+> | **JIN Phase 14 (bước 640)** | **4,9492** | **141,06** |
+> | GPT-2 Small (tham chiếu) | 3,2467 | 25,70 |
+>
+> Tức là **giảm 1,84 nats / ppl thấp hơn 6,3×** so với pilot, và còn **5,49×**
+> perplexity so với GPT-2 Small — chênh lệch dữ liệu/tính toán (50M token so với
+> ~40B token), không phải chênh lệch code.
+>
+> **Dữ liệu:** `data/curated_v5` (Wikipedia EN CC-BY-SA/GFDL + Cosmopedia ODC-BY
+> + prepared_v4 + seed) → `data/gpt2_corpus_v5`: **51.222.642 token train**,
+> 28,97M val, 7,40M test; trùng lặp train↔val/test = **0**; giấy phép từng nguồn
+> ghi trong `data/curated_v5/raw_manifest.json`. **Tiếng Việt chỉ chiếm 3%**
+> token huấn luyện — mọi nhận định về tiếng Việt phải đọc kèm con số này.
+>
+> **Resume chính xác:** `tests/test_exact_resume.py` chứng minh chạy liên tục và
+> dừng–resume cho ra cùng loss, cùng weights, cùng trạng thái AdamW. Resume với
+> corpus/tokenizer/kiến trúc/budget khác sẽ **bị từ chối** (`--extend-budget` để
+> chủ động đổi budget).
+>
+> **Lệnh:** dựng corpus → `scripts/ingest_corpus.py --all` → `scripts/verify_corpus.py`
+> → `scripts/build_tokenized_corpus.py`; đánh giá → `scripts/eval_phase14.py`;
+> dừng–chạy tiếp → `train_gpt2.py --resume`.
+>
+> **Hạn chế đã biết:** tiếng Việt 3% dữ liệu; 21% corpus là synthetic
+> (Cosmopedia); `data/raw` 5,49 GB sách có ~1,47B token nhưng **chưa ghi giấy
+> phép từng file nên bị loại**; chưa chạy SFT; một seed duy nhất.
+>
+> Chi tiết: [release report](docs/PHASE14_RELEASE_REPORT.md) ·
+> [data report](docs/PHASE14_DATA_REPORT.md) ·
+> [training report](docs/PHASE14_TRAINING_REPORT.md) ·
+> [evaluation](docs/PHASE14_EVALUATION.md) ·
+> [baseline](docs/PHASE14_BASELINE.md) ·
+> [chất lượng dữ liệu](docs/DATA_QUALITY_REPORT.md) ·
+> [ingestion](docs/DATA_INGESTION_V2.md).
+>
+> Các báo cáo `docs/GPT2_CLASS_*.md` là **lịch sử** (trước Phase 14) và đã được
+> đánh dấu tương ứng ở đầu mỗi file.
+
 **Training chia rõ 3 loại:** mở [trung tâm Pretrain / SFT / Preference](docs/training/README.md) để chọn đúng dữ liệu, checkpoint, test và lệnh tiếp tục. [Kế hoạch dữ liệu tổng quát 70/30](docs/training/DATA_GENERALIST.md) tải từ nguồn công bố, trần mới 20 GiB; xem báo cáo tiến độ, không coi kế hoạch là dữ liệu đã sẵn sàng train. V4 60k là SFT, hash checkpoint đã khớp log; chưa có benchmark năng lực v4 mới.
 
 > **Verified status — 2026-09-30:** See [upgrade report](docs/UPGRADE_2026.md)

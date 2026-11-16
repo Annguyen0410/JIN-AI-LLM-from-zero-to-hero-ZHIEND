@@ -1,0 +1,334 @@
+{
+  "profiles": {
+    "jin": {
+      "vocab_size": 16384,
+      "kind": "jin",
+      "backend": "project",
+      "special_tokens": {
+        "<|endoftext|>": 16378,
+        "<|user|>": 16379,
+        "<|assistant|>": 16380,
+        "<|system|>": 16381,
+        "<|end|>": 16382,
+        "<|pad|>": 16383
+      }
+    },
+    "gpt2": {
+      "vocab_size": 50257,
+      "kind": "gpt2_bpe",
+      "backend": "transformers",
+      "special_tokens": {
+        "<|endoftext|>": 50256
+      }
+    }
+  },
+  "samples": {
+    "vietnamese": {
+      "source": "data/prepared_v4/pretrain/vietnamese.txt",
+      "jin": {
+        "sample": "vietnamese",
+        "chars": 400000,
+        "words": 87896,
+        "tokens": 110575,
+        "tokens_per_char": 0.2764,
+        "chars_per_token": 3.617,
+        "tokens_per_word": 1.258,
+        "vietnamese_words": 44779,
+        "vietnamese_tokens_per_word": 1.1862,
+        "english_words": 13760,
+        "english_tokens_per_word": 1.4332,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 572319,
+        "vietnamese_diacritics_preserved": true
+      },
+      "gpt2": {
+        "sample": "vietnamese",
+        "chars": 400000,
+        "words": 87896,
+        "tokens": 350455,
+        "tokens_per_char": 0.8761,
+        "chars_per_token": 1.141,
+        "tokens_per_word": 3.9872,
+        "vietnamese_words": 44779,
+        "vietnamese_tokens_per_word": 5.1591,
+        "english_words": 13760,
+        "english_tokens_per_word": 1.7911,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 511128,
+        "vietnamese_diacritics_preserved": true
+      }
+    },
+    "english": {
+      "source": "data/prepared_v4/pretrain/knowledge.txt",
+      "jin": {
+        "sample": "english",
+        "chars": 400000,
+        "words": 65682,
+        "tokens": 101439,
+        "tokens_per_char": 0.2536,
+        "chars_per_token": 3.943,
+        "tokens_per_word": 1.5444,
+        "vietnamese_words": 73,
+        "vietnamese_tokens_per_word": 5.1233,
+        "english_words": 63528,
+        "english_tokens_per_word": 1.4373,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 696375,
+        "vietnamese_diacritics_preserved": true
+      },
+      "gpt2": {
+        "sample": "english",
+        "chars": 400000,
+        "words": 65682,
+        "tokens": 89640,
+        "tokens_per_char": 0.2241,
+        "chars_per_token": 4.462,
+        "tokens_per_word": 1.3648,
+        "vietnamese_words": 73,
+        "vietnamese_tokens_per_word": 4.9726,
+        "english_words": 63528,
+        "english_tokens_per_word": 1.2584,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 967879,
+        "vietnamese_diacritics_preserved": true
+      }
+    },
+    "stories": {
+      "source": "data/prepared_v4/pretrain/stories.txt",
+      "jin": {
+        "sample": "stories",
+        "chars": 300000,
+        "words": 59439,
+        "tokens": 73812,
+        "tokens_per_char": 0.246,
+        "chars_per_token": 4.064,
+        "tokens_per_word": 1.2418,
+        "vietnamese_words": 77,
+        "vietnamese_tokens_per_word": 2.4675,
+        "english_words": 59353,
+        "english_tokens_per_word": 1.2106,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 719698,
+        "vietnamese_diacritics_preserved": true
+      },
+      "gpt2": {
+        "sample": "stories",
+        "chars": 300000,
+        "words": 59439,
+        "tokens": 74021,
+        "tokens_per_char": 0.2467,
+        "chars_per_token": 4.053,
+        "tokens_per_word": 1.2453,
+        "vietnamese_words": 77,
+        "vietnamese_tokens_per_word": 3.9091,
+        "english_words": 59353,
+        "english_tokens_per_word": 1.2104,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 890270,
+        "vietnamese_diacritics_preserved": true
+      }
+    },
+    "code": {
+      "source": "data/prepared_v4/pretrain/code.txt",
+      "jin": {
+        "sample": "code",
+        "chars": 300000,
+        "words": 41635,
+        "tokens": 119808,
+        "tokens_per_char": 0.3994,
+        "chars_per_token": 2.504,
+        "tokens_per_word": 2.8776,
+        "vietnamese_words": 0,
+        "vietnamese_tokens_per_word": null,
+        "english_words": 34793,
+        "english_tokens_per_word": 2.1855,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 626935,
+        "vietnamese_diacritics_preserved": true
+      },
+      "gpt2": {
+        "sample": "code",
+        "chars": 300000,
+        "words": 41635,
+        "tokens": 105474,
+        "tokens_per_char": 0.3516,
+        "chars_per_token": 2.844,
+        "tokens_per_word": 2.5333,
+        "vietnamese_words": 0,
+        "vietnamese_tokens_per_word": null,
+        "english_words": 34793,
+        "english_tokens_per_word": 1.8233,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 871582,
+        "vietnamese_diacritics_preserved": true
+      }
+    },
+    "math": {
+      "source": "data/prepared_v4/pretrain/math.txt",
+      "jin": {
+        "sample": "math",
+        "chars": 300000,
+        "words": 54162,
+        "tokens": 98786,
+        "tokens_per_char": 0.3293,
+        "chars_per_token": 3.037,
+        "tokens_per_word": 1.8239,
+        "vietnamese_words": 70,
+        "vietnamese_tokens_per_word": 3.6429,
+        "english_words": 43745,
+        "english_tokens_per_word": 1.3747,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 649072,
+        "vietnamese_diacritics_preserved": true
+      },
+      "gpt2": {
+        "sample": "math",
+        "chars": 300000,
+        "words": 54162,
+        "tokens": 86234,
+        "tokens_per_char": 0.2874,
+        "chars_per_token": 3.479,
+        "tokens_per_word": 1.5921,
+        "vietnamese_words": 70,
+        "vietnamese_tokens_per_word": 4.1429,
+        "english_words": 43745,
+        "english_tokens_per_word": 1.2164,
+        "roundtrip_exact": true,
+        "replacement_chars": 0,
+        "chars_per_second": 821418,
+        "vietnamese_diacritics_preserved": true
+      }
+    }
+  },
+  "roundtrip_stress": {
+    "jin": {
+      "vietnamese_lower": {
+        "tokens": 17,
+        "roundtrip_exact": true,
+        "decoded_preview": "tiếng việt có dấu: ă â đ ê ô ơ ư"
+      },
+      "vietnamese_upper": {
+        "tokens": 25,
+        "roundtrip_exact": true,
+        "decoded_preview": "TIẾNG VIỆT HOA: Ă Â Đ Ê Ô Ơ Ư"
+      },
+      "combining_nfd": {
+        "tokens": 8,
+        "roundtrip_exact": true,
+        "decoded_preview": "Hòa bình"
+      },
+      "mixed_scripts": {
+        "tokens": 45,
+        "roundtrip_exact": true,
+        "decoded_preview": "日本語 中文 한국어 العربية русский"
+      },
+      "emoji": {
+        "tokens": 9,
+        "roundtrip_exact": true,
+        "decoded_preview": "hello 🌍🚀 world"
+      },
+      "code": {
+        "tokens": 27,
+        "roundtrip_exact": true,
+        "decoded_preview": "def f(x: int) -> list[int]: return [x**2 for x in range(10)]"
+      },
+      "whitespace": {
+        "tokens": 9,
+        "roundtrip_exact": true,
+        "decoded_preview": "a\tb\n\nc   d"
+      },
+      "numbers": {
+        "tokens": 18,
+        "roundtrip_exact": true,
+        "decoded_preview": "1,234.567 -0.0001 3.14e-9"
+      }
+    },
+    "gpt2": {
+      "vietnamese_lower": {
+        "tokens": 34,
+        "roundtrip_exact": true,
+        "decoded_preview": "tiếng việt có dấu: ă â đ ê ô ơ ư"
+      },
+      "vietnamese_upper": {
+        "tokens": 29,
+        "roundtrip_exact": true,
+        "decoded_preview": "TIẾNG VIỆT HOA: Ă Â Đ Ê Ô Ơ Ư"
+      },
+      "combining_nfd": {
+        "tokens": 9,
+        "roundtrip_exact": true,
+        "decoded_preview": "Hòa bình"
+      },
+      "mixed_scripts": {
+        "tokens": 34,
+        "roundtrip_exact": true,
+        "decoded_preview": "日本語 中文 한국어 العربية русский"
+      },
+      "emoji": {
+        "tokens": 8,
+        "roundtrip_exact": true,
+        "decoded_preview": "hello 🌍🚀 world"
+      },
+      "code": {
+        "tokens": 24,
+        "roundtrip_exact": true,
+        "decoded_preview": "def f(x: int) -> list[int]: return [x**2 for x in range(10)]"
+      },
+      "whitespace": {
+        "tokens": 9,
+        "roundtrip_exact": true,
+        "decoded_preview": "a\tb\n\nc   d"
+      },
+      "numbers": {
+        "tokens": 16,
+        "roundtrip_exact": true,
+        "decoded_preview": "1,234.567 -0.0001 3.14e-9"
+      }
+    }
+  },
+  "aggregate": {
+    "jin": {
+      "sample": "mixed",
+      "chars": 425000,
+      "words": 77535,
+      "tokens": 125847,
+      "tokens_per_char": 0.2961,
+      "chars_per_token": 3.377,
+      "tokens_per_word": 1.6231,
+      "vietnamese_words": 11027,
+      "vietnamese_tokens_per_word": 1.1683,
+      "english_words": 54073,
+      "english_tokens_per_word": 1.4883,
+      "roundtrip_exact": true,
+      "replacement_chars": 0,
+      "chars_per_second": 640427,
+      "vietnamese_diacritics_preserved": true
+    },
+    "gpt2": {
+      "sample": "mixed",
+      "chars": 425000,
+      "words": 77535,
+      "tokens": 174978,
+      "tokens_per_char": 0.4117,
+      "chars_per_token": 2.429,
+      "tokens_per_word": 2.2568,
+      "vietnamese_words": 11027,
+      "vietnamese_tokens_per_word": 5.1456,
+      "english_words": 54073,
+      "english_tokens_per_word": 1.3623,
+      "roundtrip_exact": true,
+      "replacement_chars": 0,
+      "chars_per_second": 996462,
+      "vietnamese_diacritics_preserved": true
+    }
+  }
+}

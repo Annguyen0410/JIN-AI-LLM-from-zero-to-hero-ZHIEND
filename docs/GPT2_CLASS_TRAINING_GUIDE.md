@@ -1,5 +1,11 @@
 # GPT-2-class training guide (Phase 4 / 6 / 11)
 
+> **Status: partly current.** The recipe and the 6 GB VRAM guidance still hold.
+> Two things changed in Phase 14: checkpoints now restore the sample-position
+> RNG (exact resume, `tests/test_exact_resume.py`), and a changed step budget is
+> refused unless `--extend-budget` is passed. See
+> `docs/PHASE14_TRAINING_REPORT.md`.
+
 How to pretrain JIN as a GPT-2-Small-shaped model, what each hyperparameter is
 for, what it costs on the hardware in this repository, and how to resume an
 interrupted run without corrupting the schedule.

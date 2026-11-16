@@ -1,0 +1,44 @@
+{
+  "method": "fp32 cross-entropy on fp32 logits, identical 64 windows of 1024 tokens from data/gpt2_corpus_v5/val.bin, identical gpt2_bpe token ids",
+  "models": {
+    "jin_phase14_wiki": {
+      "checkpoint": "checkpoints\\gpt2_small\\phase14_wiki\\best.pt",
+      "sha256": "069d9da650a81dc9e2c0fee94d0e20dc46a5c4f7e266a6c381a72140f48266fa",
+      "step": 640,
+      "tokens_seen": 47185920,
+      "val_bin": {
+        "loss": 4.9492,
+        "perplexity": 141.06,
+        "windows": 64,
+        "tokens_scored": 65536,
+        "file": "data\\gpt2_corpus_v5\\val.bin",
+        "file_sha256": "9eafe2dc4c554e2359d39bb80424ae2f235b97e3cf0b1b654c6107cee521639c"
+      }
+    },
+    "jin_pilot": {
+      "checkpoint": "checkpoints\\gpt2_small\\pilot\\best.pt",
+      "sha256": "bc44d10da2183857f78e5227a480aca1a20af68058e38c297d37dd0b8596ce29",
+      "step": 160,
+      "tokens_seen": 11796480,
+      "val_bin": {
+        "loss": 6.7888,
+        "perplexity": 887.85,
+        "windows": 64,
+        "tokens_scored": 65536,
+        "file": "data\\gpt2_corpus_v5\\val.bin",
+        "file_sha256": "9eafe2dc4c554e2359d39bb80424ae2f235b97e3cf0b1b654c6107cee521639c"
+      }
+    },
+    "gpt2_small_reference": {
+      "model": "openai-community/gpt2 (124,439,808 params)",
+      "loss": 3.2467,
+      "perplexity": 25.7,
+      "tokens_scored": 65536
+    }
+  },
+  "improvement": {
+    "loss_delta_vs_pilot": 1.8396,
+    "perplexity_ratio_vs_pilot": 6.29,
+    "perplexity_ratio_vs_gpt2": 5.49
+  }
+}

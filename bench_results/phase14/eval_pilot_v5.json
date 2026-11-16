@@ -1,0 +1,563 @@
+{
+  "checkpoint": "checkpoints\\gpt2_small\\pilot\\best.pt",
+  "checkpoint_sha256": "bc44d10da2183857f78e5227a480aca1a20af68058e38c297d37dd0b8596ce29",
+  "architecture_id": "gpt2_small",
+  "iteration": 160,
+  "tokens_seen": 11796480,
+  "tokenizer": {
+    "kind": "gpt2_bpe",
+    "vocab_size": 50257
+  },
+  "method": {
+    "loss": "fp32 cross-entropy on fp32 logits",
+    "windows": "evenly spaced offsets, fixed seed",
+    "data": "document-disjoint val/test splits of curated_v5"
+  },
+  "val_bin": {
+    "loss": 6.7888,
+    "perplexity": 887.85,
+    "windows": 64,
+    "tokens_scored": 65536,
+    "file": "data\\gpt2_corpus_v5\\val.bin",
+    "file_sha256": "9eafe2dc4c554e2359d39bb80424ae2f235b97e3cf0b1b654c6107cee521639c"
+  },
+  "per_group": {
+    "domain:conversation": {
+      "loss": 3.4832,
+      "perplexity": 32.57,
+      "documents": 24,
+      "tokens_scored": 3672,
+      "exact_window_padding": true
+    },
+    "domain:educational": {
+      "loss": 6.8329,
+      "perplexity": 927.88,
+      "documents": 24,
+      "tokens_scored": 5120,
+      "exact_window_padding": false
+    },
+    "domain:knowledge": {
+      "loss": 6.7567,
+      "perplexity": 859.79,
+      "documents": 24,
+      "tokens_scored": 21504,
+      "exact_window_padding": false
+    },
+    "domain:mixed": {
+      "loss": 2.1091,
+      "perplexity": 8.24,
+      "documents": 24,
+      "tokens_scored": 9000,
+      "exact_window_padding": true
+    },
+    "language:en": {
+      "loss": 6.8329,
+      "perplexity": 927.88,
+      "documents": 24,
+      "tokens_scored": 5120,
+      "exact_window_padding": false
+    },
+    "language:other": {
+      "loss": 4.3483,
+      "perplexity": 77.34,
+      "documents": 5,
+      "tokens_scored": 865,
+      "exact_window_padding": true
+    },
+    "language:unknown": {
+      "loss": 2.394,
+      "perplexity": 10.96,
+      "documents": 4,
+      "tokens_scored": 1252,
+      "exact_window_padding": true
+    },
+    "language:vi": {
+      "loss": 1.7115,
+      "perplexity": 5.54,
+      "documents": 24,
+      "tokens_scored": 7056,
+      "exact_window_padding": true
+    }
+  },
+  "generation": {
+    "decoding": "greedy + temperature 0.8, fixed seeds",
+    "summary": {
+      "en/educational": {
+        "prompts": 6,
+        "mean_distinct_2": 0.991,
+        "mean_repeat_4gram": 0.0,
+        "mean_words": 20.3
+      },
+      "en/knowledge": {
+        "prompts": 12,
+        "mean_distinct_2": 0.988,
+        "mean_repeat_4gram": 0.0,
+        "mean_words": 10.9
+      },
+      "vi/mixed": {
+        "prompts": 6,
+        "mean_distinct_2": 1.0,
+        "mean_repeat_4gram": 0.0,
+        "mean_words": 2.5
+      }
+    },
+    "samples": [
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:15",
+        "prompt": "Once upon a time, there was a little bunny named Benny who loved to craft and create beautiful things. One day, he decided that he wanted to make a special decoration for his burrow. He had heard about something called \"decorative basketry,\" which sounded like just the thing to brighten up his home!\n\nBenny asked his friend, a wise old owl named Oliver, what decorative basketry was.",
+        "greedy": "\nThe little girl and said, \"I'm so he said, \"I'm so happy.\nThe little girl said, \"I'm so he said, \"I'm so happy.\nThe little girl named Lily and said,",
+        "greedy_stats": {
+          "words": 30,
+          "distinct_1": 0.367,
+          "distinct_2": 0.483,
+          "repeat_4gram": 0.296
+        },
+        "sample_t0.8": " When far down. He said, a better!\" Lucy and dictator were so they told her quick.\nCan you broke his mom smiled and shouted. It was so happy. Sue was so sad. He went to come. I want to",
+        "sample_stats": {
+          "words": 39,
+          "distinct_1": 0.846,
+          "distinct_2": 0.974,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:106",
+        "prompt": "In a world where magic intertwines with reality, lived young Ella, who was no ordinary girl. Born into a humble home, she had the extraordinary company of her human family and two peculiar fairies - her mother, Seraphina, and the quirky household fairy named Mandy.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": " A.\n<|endoftext|>",
+        "sample_stats": {
+          "words": 2,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:122",
+        "prompt": "Chapter 14: Ohio River Valley Settlement Patterns and Financial Institutions\n\nIntroduction:\nThe Ohio River Valley has been home to various indigenous peoples and European settlers since prehistoric times. This chapter focuses on how the region's settlement patterns influenced its economic development and shaped the growth of financial institutions that serve this area today.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:165",
+        "prompt": "Once upon a time, there was a man named Mr. Mahek Mistry and a woman named Mrs. Neha Goswami Mistry. They had a big dream - to make sure that everyone could learn how to use computers like a pro! That's why they started the Sopan Group, which includes two main parts: the Sopan Institute of Engineering & Design (SIED), and Sopan Infotech.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": " A attack to the Greeks, and support a Baxter or usually important inequality on the rare journey, and energy cell and Union, the plane in the common experience in the time (itemundy, and avme. The most of the Roman",
+        "sample_stats": {
+          "words": 39,
+          "distinct_1": 0.769,
+          "distinct_2": 0.974,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:183",
+        "prompt": "Title: A Hidden Paradox in Ross\n\nI recently moved to this seemingly perfect town called Ross, nestled in beautiful Marin County, CA. It's known for its stunning landscapes, top-rated schools, and luxurious homes. I was excited about our new beginning until a casual conversation at a local coffee shop took me on an unexpected journey.\n\nWe got talking about the community over lattes.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": " They a poet and follow data, and it during the physical song. All Yellow, I can express the meanologies. Many, being usually interested of this episodes of their remains the subject. With a talented skies does all allows it, and",
+        "sample_stats": {
+          "words": 40,
+          "distinct_1": 0.85,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:214",
+        "prompt": "Once upon a time, in a bustling town called Corkville, there was a wonderful place known as the Treehouse School. This school had a special mission - to help everyone learn something new every day! To achieve this, they worked closely with the wise folks at University College Cork (UCC). Together, they created fantastic projects and fun learning experiences for all the children in Corkville.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:64722",
+        "prompt": "Quan điểm\nKhi không còn là tổng thống, ông đã bày tỏ quan điểm về việc cáo buộc Trung Quốc chiếm đất ở quần đảo này thông qua việc thuê bất động sản và xây dựng cơ sở, đe dọa chủ quyền quốc gia, phía Trung Quốc đã thuê trọn ít nhất 16 trong",
+        "greedy": " hốốốốốốốốộng cộng cốốc vành�",
+        "greedy_stats": {
+          "words": 4,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": " cết Nam, lủu tện cốấp của Chùng x vểnhân cảng",
+        "sample_stats": {
+          "words": 10,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:64730",
+        "prompt": "Đô đốc Mỹ William D. Crowe nói: \"Nguyên soái Sergei Akhromeev là bạn của tôi. Vụ tự sát của ông là một bi kịch phản ánh những cơn co giật làm rung chuyển Liên Xô. Ông ấy là một người cộng sản, một người yêu nước và một người lính.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:64868",
+        "prompt": "Meloe\n<|endoftext|>\nMeloe tarsalis là một loài bọ cánh cứng trong họ Meloidae. Loài này được Jakovlev miêu tả khoa học năm 1897.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:64932",
+        "prompt": "Psalydolytta\n<|endoftext|>\nPyrota lineata là một loài bọ cánh cứng trong họ Meloidae. Loài này được Olivier miêu tả khoa học năm 1795.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:65043",
+        "prompt": "Malthinus\n<|endoftext|>\nMalthinus tlanchinolensis là một loài bọ cánh cứng trong họ Cantharidae. Loài này được Wittmer miêu tả khoa học năm 1989.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:65160",
+        "prompt": "Cylicodiscus\n<|endoftext|>\nDidymaea floribunda là một loài thực vật có hoa trong họ Thiến thảo. Loài này được Rzed. mô tả khoa học đầu tiên năm 1983.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:21",
+        "prompt": "Alchemy (from Arabic: al-kīmiyā; from Ancient Greek: χυμεία, khumeía) is an ancient branch of natural philosophy, a philosophical and protoscientific tradition that was historically practiced in China, India, the Muslim world, and Europe. In its Western form, alchemy is first attested in a number of pseudepigraphical texts written in Greco-Roman Egypt during the first few centuries AD.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:43",
+        "prompt": "In organic chemistry, an alkane, or paraffin (a historical trivial name that also has other meanings), is an acyclic saturated hydrocarbon. In other words, an alkane consists of hydrogen and carbon atoms arranged in a tree structure in which all the carbon–carbon bonds are single. Alkanes have the general chemical formula .",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:121",
+        "prompt": "is hand-drawn and computer-generated animation originating from Japan. Outside Japan and in English, anime refers specifically to animation produced in Japan. However, in Japan and in Japanese,  (a term derived from a shortening of the English word animation) describes all animated works, regardless of style or origin.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": " For example, and the most lives. To those work and the future countries, the United States, but the source.\n<|endoftext|>",
+        "sample_stats": {
+          "words": 20,
+          "distinct_1": 0.8,
+          "distinct_2": 0.947,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:231",
+        "prompt": "Aarhus (, , ; officially spelled Århus from 1948 until 1 January 2011) is the second-largest city in Denmark and the seat of Aarhus Municipality. It is located on the eastern shore of Jutland in the Kattegat sea and approximately  northwest of Copenhagen.",
+        "greedy": " The United States, and the United States, and the United States. The United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States.\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 36,
+          "distinct_1": 0.194,
+          "distinct_2": 0.257,
+          "repeat_4gram": 0.545
+        },
+        "sample_t0.8": " \n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:248",
+        "prompt": "The Republic of Azerbaijan is a member of the United Nations, the Non-Aligned Movement, the Organization for Security and Cooperation in Europe, NATO's Partnership for Peace, the Euro-Atlantic Partnership Council, the World Health Organizat",
+        "greedy": ", and the United States.\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 6,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": " (g.  The player (Hunggon were a vital. The key was born, Classification of corresponding between the sum of the world.\n<|endoftext|>",
+        "sample_stats": {
+          "words": 21,
+          "distinct_1": 0.857,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:264",
+        "prompt": "Abner Doubleday (June 26, 1819 – January 26, 1893) was a career United States Army officer and Union major general in the American Civil War. He fired the first shot in defense of Fort Sumter, the opening battle of the war, and had a pivotal role in the early fighting at the Battle of Gettysburg. Gettysburg was his finest hour, but his relief by Maj. Gen. George G.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:274",
+        "prompt": "The Atlantic Ocean is the second largest of the world's oceans, that separates the old world from the new world.\n\nAtlantic may also refer to:\n\nPlaces\n\nIn Canada\n Atlantic, Nova Scotia\n Atlantic Canada\n\nIn the United States\n Atlantic, Iowa\n Atlantic, Massachusetts\n Atlantic, North Carolina, an unincorporated community in eastern Carteret County\n Atlantic, Pennsylvania",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n|\n (integer\n-Pi th (the Flag treatments light\n<|endoftext|>",
+        "sample_stats": {
+          "words": 9,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:392",
+        "prompt": "Arachnophobia is a specific phobia brought about by the irrational fear of spiders and other arachnids such as scorpions and ticks. The word Arachnophobia comes from the Greek words arachne and phobia.\n\nSigns and symptoms\nPeople with arachnophobia tend to feel uneasy in any area they believe could harbour spiders or that has visible signs of their presence, such as webs.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "  As for global their English, other basket. \n<|endoftext|>",
+        "sample_stats": {
+          "words": 8,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:424",
+        "prompt": "Events\n\nPre-1600\n1 BC – Wang Mang consolidates his power in China and is declared marshal of state. Emperor Ai of Han, who died the previous day, had no heirs.\n 942 – Start of the four-day Battle of al-Mada'in, between the Hamdanids of Mosul and the Baridis of Basra over control of the Abbasid capital, Baghdad.\n 963 – Nikephoros II Phokas is crowned emperor of the Byzantine Empire.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n1974 books.\n<|endoftext|>",
+        "sample_stats": {
+          "words": 3,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:455",
+        "prompt": "Events\n\nPre-1600\n19 – The Roman general Germanicus dies near Antioch. He was convinced that the mysterious illness that ended in his death was a result of poisoning by the Syrian governor Gnaeus Calpurnius Piso, whom he had ordered to leave the province.\n 766 – Emperor Constantine V humiliates nineteen high-ranking officials, after discovering a plot against him.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n February rejected only the United States, Saint Lricadian, the United States (test of the USoddine of the United Kingdom in Vres and was a last buildings before the software, the United67, and the annual amounts of",
+        "sample_stats": {
+          "words": 36,
+          "distinct_1": 0.694,
+          "distinct_2": 0.914,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:476",
+        "prompt": "Agathon (; ; ) was an Athenian tragic poet whose works have been lost.  He is best known for his appearance in Plato's Symposium, which describes the banquet given to celebrate his obtaining a prize for his first tragedy at the Lenaia in 416.  He is also a prominent character in Aristophanes' comedy the Thesmophoriazusae.\n\nLife and career",
+        "greedy": ".\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 2,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": ".\nLengum. At World Romanminute, he was solar daughter of this, or the same year of the product of \"It is having president, the United Kingdom of theup\n<|endoftext|>",
+        "sample_stats": {
+          "words": 29,
+          "distinct_1": 0.828,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:548",
+        "prompt": "Ḥasan Ibn al-Haytham (Latinized as Alhazen; ; full name  ; ) was a medieval mathematician, astronomer, and physicist of the Islamic Golden Age from present-day Iraq. Referred to as \"the father of modern optics\", he made significant contributions to the principles of optics and visual perception in particular.",
+        "greedy": "\n<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      }
+    ]
+  }
+}

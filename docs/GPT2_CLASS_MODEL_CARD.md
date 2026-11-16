@@ -1,5 +1,11 @@
 # Model card — JIN GPT-2-class pilot checkpoint
 
+> **Status: historical (pre-Phase-14).** The pilot checkpoint still exists at
+> `checkpoints/gpt2_small/pilot/` and remains usable, but the current measured
+> checkpoint is `checkpoints/gpt2_small/phase14_wiki/best.pt`. Neither one is
+> "GPT-2 equivalent": the architecture matches GPT-2 Small, the trained
+> capability does not. See `docs/PHASE14_RELEASE_REPORT.md`.
+
 ## Identity
 
 | Field | Value |

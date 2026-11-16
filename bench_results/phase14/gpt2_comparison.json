@@ -1,0 +1,29 @@
+{
+  "comparable": true,
+  "why_comparable": "identical GPT-2 BPE token ids on identical windows, fp32 cross-entropy on both",
+  "tokenizer": {
+    "kind": "gpt2_bpe",
+    "vocab_size": 50257,
+    "jin_tokenizer_state_hash_prefix": "40bbc29de16d5ed2"
+  },
+  "jin": {
+    "checkpoint": "checkpoints\\gpt2_small\\phase14_wiki\\best.pt",
+    "sha256": "069d9da650a81dc9e2c0fee94d0e20dc46a5c4f7e266a6c381a72140f48266fa",
+    "params": 124444000,
+    "train_tokens": 47185920,
+    "loss": 4.9492,
+    "perplexity": 141.06
+  },
+  "gpt2": {
+    "checkpoint": "openai-community/gpt2 (HF, fp32)",
+    "params": 124439808,
+    "train_tokens_approx": 40000000000,
+    "loss": 3.2467,
+    "perplexity": 25.7
+  },
+  "ratios": {
+    "loss_delta": 1.7025,
+    "perplexity_ratio": 5.49
+  },
+  "claim_limit": "same architecture and tokenizer, ~800x fewer training tokens; scale gap, not capability parity"
+}

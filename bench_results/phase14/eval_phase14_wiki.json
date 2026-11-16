@@ -1,0 +1,563 @@
+{
+  "checkpoint": "checkpoints\\gpt2_small\\phase14_wiki\\best.pt",
+  "checkpoint_sha256": "069d9da650a81dc9e2c0fee94d0e20dc46a5c4f7e266a6c381a72140f48266fa",
+  "architecture_id": "gpt2_small",
+  "iteration": 640,
+  "tokens_seen": 47185920,
+  "tokenizer": {
+    "kind": "gpt2_bpe",
+    "vocab_size": 50257
+  },
+  "method": {
+    "loss": "fp32 cross-entropy on fp32 logits",
+    "windows": "evenly spaced offsets, fixed seed",
+    "data": "document-disjoint val/test splits of curated_v5"
+  },
+  "val_bin": {
+    "loss": 4.9492,
+    "perplexity": 141.06,
+    "windows": 64,
+    "tokens_scored": 65536,
+    "file": "data\\gpt2_corpus_v5\\val.bin",
+    "file_sha256": "9eafe2dc4c554e2359d39bb80424ae2f235b97e3cf0b1b654c6107cee521639c"
+  },
+  "per_group": {
+    "domain:conversation": {
+      "loss": 4.6718,
+      "perplexity": 106.89,
+      "documents": 24,
+      "tokens_scored": 3672,
+      "exact_window_padding": true
+    },
+    "domain:educational": {
+      "loss": 4.7789,
+      "perplexity": 118.98,
+      "documents": 24,
+      "tokens_scored": 5120,
+      "exact_window_padding": false
+    },
+    "domain:knowledge": {
+      "loss": 5.1037,
+      "perplexity": 164.64,
+      "documents": 24,
+      "tokens_scored": 21504,
+      "exact_window_padding": false
+    },
+    "domain:mixed": {
+      "loss": 4.2999,
+      "perplexity": 73.69,
+      "documents": 24,
+      "tokens_scored": 9000,
+      "exact_window_padding": true
+    },
+    "language:en": {
+      "loss": 4.7789,
+      "perplexity": 118.98,
+      "documents": 24,
+      "tokens_scored": 5120,
+      "exact_window_padding": false
+    },
+    "language:other": {
+      "loss": 4.6126,
+      "perplexity": 100.74,
+      "documents": 5,
+      "tokens_scored": 865,
+      "exact_window_padding": true
+    },
+    "language:unknown": {
+      "loss": 4.1324,
+      "perplexity": 62.33,
+      "documents": 4,
+      "tokens_scored": 1252,
+      "exact_window_padding": true
+    },
+    "language:vi": {
+      "loss": 4.0784,
+      "perplexity": 59.05,
+      "documents": 24,
+      "tokens_scored": 7056,
+      "exact_window_padding": true
+    }
+  },
+  "generation": {
+    "decoding": "greedy + temperature 0.8, fixed seeds",
+    "summary": {
+      "en/educational": {
+        "prompts": 6,
+        "mean_distinct_2": 0.996,
+        "mean_repeat_4gram": 0.0,
+        "mean_words": 38.3
+      },
+      "en/knowledge": {
+        "prompts": 12,
+        "mean_distinct_2": 0.974,
+        "mean_repeat_4gram": 0.0,
+        "mean_words": 32.5
+      },
+      "vi/mixed": {
+        "prompts": 6,
+        "mean_distinct_2": 1.0,
+        "mean_repeat_4gram": 0.0,
+        "mean_words": 4.0
+      }
+    },
+    "samples": [
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:15",
+        "prompt": "Once upon a time, there was a little bunny named Benny who loved to craft and create beautiful things. One day, he decided that he wanted to make a special decoration for his burrow. He had heard about something called \"decorative basketry,\" which sounded like just the thing to brighten up his home!\n\nBenny asked his friend, a wise old owl named Oliver, what decorative basketry was.",
+        "greedy": " He asked his friend, \"I am a little girl named Tim. I am a little girl named Tim!\"\n\nTimmy and his friend, Timmy, said, \"I'm sorry, I am a little girl named Timmy",
+        "greedy_stats": {
+          "words": 33,
+          "distinct_1": 0.576,
+          "distinct_2": 0.688,
+          "repeat_4gram": 0.167
+        },
+        "sample_t0.8": " When replied, anyone were planning the rabbit came and wanted to help, Tom and Max. From that day, some bushstock made sure they forgot about the park, and they were going to be considered a good friend.\n\nRenny",
+        "sample_stats": {
+          "words": 38,
+          "distinct_1": 0.842,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:106",
+        "prompt": "In a world where magic intertwines with reality, lived young Ella, who was no ordinary girl. Born into a humble home, she had the extraordinary company of her human family and two peculiar fairies - her mother, Seraphina, and the quirky household fairy named Mandy.",
+        "greedy": " She was a young girl who loved to learn about her own experiences and learn about her own experiences.\n\nOne day, she was a young girl named Lily, a young girl named Lily, who was a young girl named Lily. She",
+        "greedy_stats": {
+          "words": 41,
+          "distinct_1": 0.512,
+          "distinct_2": 0.65,
+          "repeat_4gram": 0.158
+        },
+        "sample_t0.8": " A. Leuxley, her mother had been her brother, a private friend, writing their father, and the Good Mour'tle.\n\nThis meet with ancient African American Community Administration, called his 14th century, was part of",
+        "sample_stats": {
+          "words": 33,
+          "distinct_1": 0.97,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:122",
+        "prompt": "Chapter 14: Ohio River Valley Settlement Patterns and Financial Institutions\n\nIntroduction:\nThe Ohio River Valley has been home to various indigenous peoples and European settlers since prehistoric times. This chapter focuses on how the region's settlement patterns influenced its economic development and shaped the growth of financial institutions that serve this area today.",
+        "greedy": " By examining the context of the context of the American Civil War, we will explore the importance of the importance of the historical context of the American Civil War.\n\nSection 1: Understanding the American Civil War\n\nThe history of the American",
+        "greedy_stats": {
+          "words": 41,
+          "distinct_1": 0.488,
+          "distinct_2": 0.625,
+          "repeat_4gram": 0.105
+        },
+        "sample_t0.8": "\n\nIn this course unit, we will delve into the Cold War’net Sea’s heritage, exploring its role in historical context in the early 20th century AD, insurance system and applications. We will examine how these historic",
+        "sample_stats": {
+          "words": 35,
+          "distinct_1": 0.914,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:165",
+        "prompt": "Once upon a time, there was a man named Mr. Mahek Mistry and a woman named Mrs. Neha Goswami Mistry. They had a big dream - to make sure that everyone could learn how to use computers like a pro! That's why they started the Sopan Group, which includes two main parts: the Sopan Institute of Engineering & Design (SIED), and Sopan Infotech.",
+        "greedy": "\n\nOne day, the company was named the first friend of the M. M. M. M. M. M. M. M. M. M. M. M. M. M. M. M. M.",
+        "greedy_stats": {
+          "words": 28,
+          "distinct_1": 0.357,
+          "distinct_2": 0.444,
+          "repeat_4gram": 0.52
+        },
+        "sample_t0.8": " A popular technology was utilized in science.\n\nImagine being able to find a rare reference to help you can enjoy your friend and accessories in the scenes. You might like having a little paper, a prospective figure. You may think you get",
+        "sample_stats": {
+          "words": 42,
+          "distinct_1": 0.857,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:183",
+        "prompt": "Title: A Hidden Paradox in Ross\n\nI recently moved to this seemingly perfect town called Ross, nestled in beautiful Marin County, CA. It's known for its stunning landscapes, top-rated schools, and luxurious homes. I was excited about our new beginning until a casual conversation at a local coffee shop took me on an unexpected journey.\n\nWe got talking about the community over lattes.",
+        "greedy": " We had a big, and I decided to learn about the world of our community. We were going to learn about the world of the world, and we were going to learn about the world of the world.\n\nNow, let's",
+        "greedy_stats": {
+          "words": 40,
+          "distinct_1": 0.55,
+          "distinct_2": 0.667,
+          "repeat_4gram": 0.243
+        },
+        "sample_t0.8": " They found themselves in a time when we met during the end of the country, I saw myself inside the room for a group of being amazed.Bruce, he named Tom Person, who wrote how our talented actor does all his friend, always",
+        "sample_stats": {
+          "words": 42,
+          "distinct_1": 0.905,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/educational",
+        "document_id": "cosmopedia_v2_sample:214",
+        "prompt": "Once upon a time, in a bustling town called Corkville, there was a wonderful place known as the Treehouse School. This school had a special mission - to help everyone learn something new every day! To achieve this, they worked closely with the wise folks at University College Cork (UCC). Together, they created fantastic projects and fun learning experiences for all the children in Corkville.",
+        "greedy": "\n\nOne day, while playing a big, Timmy asked, \"What is a friend?\"\n\n\"What is a friend?\"\n\"What is a friend?\"\n\"What is a friend?\"\n\"What is a friend",
+        "greedy_stats": {
+          "words": 28,
+          "distinct_1": 0.429,
+          "distinct_2": 0.481,
+          "repeat_4gram": 0.48
+        },
+        "sample_t0.8": "\n\nBut then, there was a group of the Laws of the Midwest. You decided to learn about this location – the regular graps made up, the four times the team won't care of friends. He started looking for the majors",
+        "sample_stats": {
+          "words": 40,
+          "distinct_1": 0.825,
+          "distinct_2": 0.974,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:64722",
+        "prompt": "Quan điểm\nKhi không còn là tổng thống, ông đã bày tỏ quan điểm về việc cáo buộc Trung Quốc chiếm đất ở quần đảo này thông qua việc thuê bất động sản và xây dựng cơ sở, đe dọa chủ quyền quốc gia, phía Trung Quốc đã thuê trọn ít nhất 16 trong",
+        "greedy": " đốốủa đủa đủa đủa đủa đủa đủa",
+        "greedy_stats": {
+          "words": 7,
+          "distinct_1": 0.286,
+          "distinct_2": 0.333,
+          "repeat_4gram": 0.5
+        },
+        "sample_t0.8": " cảc vài một đãn cếnh lậc chính là sổ vànhân cảng",
+        "sample_stats": {
+          "words": 11,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:64730",
+        "prompt": "Đô đốc Mỹ William D. Crowe nói: \"Nguyên soái Sergei Akhromeev là bạn của tôi. Vụ tự sát của ông là một bi kịch phản ánh những cơn co giật làm rung chuyển Liên Xô. Ông ấy là một người cộng sản, một người yêu nước và một người lính.",
+        "greedy": "<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "\n đã đờiủn Mạiểm kợc nh nức các năm ngướ",
+        "sample_stats": {
+          "words": 9,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:64868",
+        "prompt": "Meloe\n<|endoftext|>\nMeloe tarsalis là một loài bọ cánh cứng trong họ Meloidae. Loài này được Jakovlev miêu tả khoa học năm 1897.",
+        "greedy": "<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:64932",
+        "prompt": "Psalydolytta\n<|endoftext|>\nPyrota lineata là một loài bọ cánh cứng trong họ Meloidae. Loài này được Olivier miêu tả khoa học năm 1795.",
+        "greedy": "<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:65043",
+        "prompt": "Malthinus\n<|endoftext|>\nMalthinus tlanchinolensis là một loài bọ cánh cứng trong họ Cantharidae. Loài này được Wittmer miêu tả khoa học năm 1989.",
+        "greedy": "<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "vi/mixed",
+        "document_id": "prepared_v4:65160",
+        "prompt": "Cylicodiscus\n<|endoftext|>\nDidymaea floribunda là một loài thực vật có hoa trong họ Thiến thảo. Loài này được Rzed. mô tả khoa học đầu tiên năm 1983.",
+        "greedy": "<|endoftext|>",
+        "greedy_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        },
+        "sample_t0.8": "<|endoftext|>",
+        "sample_stats": {
+          "words": 1,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:21",
+        "prompt": "Alchemy (from Arabic: al-kīmiyā; from Ancient Greek: χυμεία, khumeía) is an ancient branch of natural philosophy, a philosophical and protoscientific tradition that was historically practiced in China, India, the Muslim world, and Europe. In its Western form, alchemy is first attested in a number of pseudepigraphical texts written in Greco-Roman Egypt during the first few centuries AD.",
+        "greedy": "\n\nThe first published in the early 19th century, the first published in the first published in the first published in the 19th century, the first published in the first published in the 19th century.\n\nThe first published in",
+        "greedy_stats": {
+          "words": 38,
+          "distinct_1": 0.237,
+          "distinct_2": 0.324,
+          "repeat_4gram": 0.486
+        },
+        "sample_t0.8": "\n\nThe Portuguese language is concerned with the long-like life of the Ethiopian language and can have been adapted in Europe, it was widely used as the be distinguished; the Islamic origin of the term they have through the Catholic religion system.",
+        "sample_stats": {
+          "words": 41,
+          "distinct_1": 0.805,
+          "distinct_2": 0.975,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:43",
+        "prompt": "In organic chemistry, an alkane, or paraffin (a historical trivial name that also has other meanings), is an acyclic saturated hydrocarbon. In other words, an alkane consists of hydrogen and carbon atoms arranged in a tree structure in which all the carbon–carbon bonds are single. Alkanes have the general chemical formula .",
+        "greedy": "\n\nThe term is the term \"the term\" is the \"the term\" or \"the term\" is the \"the term\" or \"the term\" or \"the term\" or \"the\" or \"the\" or \"",
+        "greedy_stats": {
+          "words": 30,
+          "distinct_1": 0.3,
+          "distinct_2": 0.448,
+          "repeat_4gram": 0.333
+        },
+        "sample_t0.8": "\n\nThe heterodid representation of a number of geological and synthetic molecular is the commune Cayiolars, which are normally extracted from quadiferes. As a nomene-making, the angles may be used to generate the",
+        "sample_stats": {
+          "words": 32,
+          "distinct_1": 0.875,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:121",
+        "prompt": "is hand-drawn and computer-generated animation originating from Japan. Outside Japan and in English, anime refers specifically to animation produced in Japan. However, in Japan and in Japanese,  (a term derived from a shortening of the English word animation) describes all animated works, regardless of style or origin.",
+        "greedy": "\n\nThe term \"The word \"a\" is used in the word \"a\" or \"a\" (a \"a \"a\" or \"a\" or \"a\" or \"a\" (or \"a \"a\"",
+        "greedy_stats": {
+          "words": 25,
+          "distinct_1": 0.52,
+          "distinct_2": 0.667,
+          "repeat_4gram": 0.091
+        },
+        "sample_t0.8": " For example, electronic video can also mean \"put the original game\". This is commonly known as well as \"R\".\n\nSpecifications\n\nA demo trademark is generally used in the United Kingdom, and has been used in the 1980",
+        "sample_stats": {
+          "words": 37,
+          "distinct_1": 0.838,
+          "distinct_2": 0.944,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:231",
+        "prompt": "Aarhus (, , ; officially spelled Århus from 1948 until 1 January 2011) is the second-largest city in Denmark and the seat of Aarhus Municipality. It is located on the eastern shore of Jutland in the Kattegat sea and approximately  northwest of Copenhagen.",
+        "greedy": "\n\nHistory\nThe town of the town is located in the town of the town of the town of the town of the town of the town of the town of the town of St. The town of the town of St. Louis,",
+        "greedy_stats": {
+          "words": 42,
+          "distinct_1": 0.238,
+          "distinct_2": 0.293,
+          "repeat_4gram": 0.59
+        },
+        "sample_t0.8": "\n\nHistory\nThe district of Util is divided into the town of Garban, the first branch of the town of the western border from the east of Sajiben and the region of Kidzhat: the city is",
+        "sample_stats": {
+          "words": 35,
+          "distinct_1": 0.629,
+          "distinct_2": 0.912,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:248",
+        "prompt": "The Republic of Azerbaijan is a member of the United Nations, the Non-Aligned Movement, the Organization for Security and Cooperation in Europe, NATO's Partnership for Peace, the Euro-Atlantic Partnership Council, the World Health Organizat",
+        "greedy": ", and the United States.\n\nThe United States is a member of the United States, the United States, and the United States. It is a member of the United States, and is the United States Army, and the United States",
+        "greedy_stats": {
+          "words": 40,
+          "distinct_1": 0.35,
+          "distinct_2": 0.538,
+          "repeat_4gram": 0.162
+        },
+        "sample_t0.8": " Arts and South Africa. The International Organization provides primarily on the formation of the National Health, Classification, and the importation of the world.\n\nReferences\n\nExternal links\n These Jewish Educational Interests and Techniques\n\nEgyptianism",
+        "sample_stats": {
+          "words": 33,
+          "distinct_1": 0.818,
+          "distinct_2": 0.969,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:264",
+        "prompt": "Abner Doubleday (June 26, 1819 – January 26, 1893) was a career United States Army officer and Union major general in the American Civil War. He fired the first shot in defense of Fort Sumter, the opening battle of the war, and had a pivotal role in the early fighting at the Battle of Gettysburg. Gettysburg was his finest hour, but his relief by Maj. Gen. George G.",
+        "greedy": " Louis, the war was the first time of the war, and was the first time of the war.\n\nIn 18th century, the war was the first time of the war, and the war was the first time of the war",
+        "greedy_stats": {
+          "words": 40,
+          "distinct_1": 0.325,
+          "distinct_2": 0.436,
+          "repeat_4gram": 0.405
+        },
+        "sample_t0.8": " Clark was a \"London and his highest Canada Labor\". During his war, a war runs – one of the award, this time, when he met in a flight company near the improuser and unexpected wreckage.\n\nDuring his strike",
+        "sample_stats": {
+          "words": 38,
+          "distinct_1": 0.816,
+          "distinct_2": 0.973,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:274",
+        "prompt": "The Atlantic Ocean is the second largest of the world's oceans, that separates the old world from the new world.\n\nAtlantic may also refer to:\n\nPlaces\n\nIn Canada\n Atlantic, Nova Scotia\n Atlantic Canada\n\nIn the United States\n Atlantic, Iowa\n Atlantic, Massachusetts\n Atlantic, North Carolina, an unincorporated community in eastern Carteret County\n Atlantic, Pennsylvania",
+        "greedy": "\n\nSee also\n\nReferences\n\nExternal links\n\nTransportation in the United States\nTransportation in the United States\nTransportation in the United States\nTransportation in the United States\nTransportation in the United States\n",
+        "greedy_stats": {
+          "words": 30,
+          "distinct_1": 0.333,
+          "distinct_2": 0.345,
+          "repeat_4gram": 0.63
+        },
+        "sample_t0.8": "\nUnited States (1872-1941-19), Milwaukee, New Jersey<|endoftext|>",
+        "sample_stats": {
+          "words": 6,
+          "distinct_1": 1.0,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:392",
+        "prompt": "Arachnophobia is a specific phobia brought about by the irrational fear of spiders and other arachnids such as scorpions and ticks. The word Arachnophobia comes from the Greek words arachne and phobia.\n\nSigns and symptoms\nPeople with arachnophobia tend to feel uneasy in any area they believe could harbour spiders or that has visible signs of their presence, such as webs.",
+        "greedy": "\n\nThe most common name of the word \"the word\" is the word \"the word \"the word\" or \"the word \"the word\" or \"the word\" or \"the word \"the word\" or \"the word",
+        "greedy_stats": {
+          "words": 32,
+          "distinct_1": 0.344,
+          "distinct_2": 0.419,
+          "repeat_4gram": 0.345
+        },
+        "sample_t0.8": "  As for example, Englishiina is Shia, using in antiques or Beyondes.\n\nCriticalness and innerversion\n\nReimutally is the common human in the operasian representation of God and the Ales",
+        "sample_stats": {
+          "words": 28,
+          "distinct_1": 0.821,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:424",
+        "prompt": "Events\n\nPre-1600\n1 BC – Wang Mang consolidates his power in China and is declared marshal of state. Emperor Ai of Han, who died the previous day, had no heirs.\n 942 – Start of the four-day Battle of al-Mada'in, between the Hamdanids of Mosul and the Baridis of Basra over control of the Abbasid capital, Baghdad.\n 963 – Nikephoros II Phokas is crowned emperor of the Byzantine Empire.",
+        "greedy": "\n 1531 – The Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor of the Emperor",
+        "greedy_stats": {
+          "words": 46,
+          "distinct_1": 0.13,
+          "distinct_2": 0.133,
+          "repeat_4gram": 0.86
+        },
+        "sample_t0.8": "\n 1674 – The sanctuary of Pope of conflicts, sources of the Indian border between Sicily and the Romans.\n 1926 - The Caribbean in independent territories in the southern Rule of Gaul and the Deputy Inian forces.\n 1941 – Talbot",
+        "sample_stats": {
+          "words": 39,
+          "distinct_1": 0.744,
+          "distinct_2": 0.974,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:455",
+        "prompt": "Events\n\nPre-1600\n19 – The Roman general Germanicus dies near Antioch. He was convinced that the mysterious illness that ended in his death was a result of poisoning by the Syrian governor Gnaeus Calpurnius Piso, whom he had ordered to leave the province.\n 766 – Emperor Constantine V humiliates nineteen high-ranking officials, after discovering a plot against him.",
+        "greedy": "\n 16 – The King of the King of the King of the Battle of the Battle of the Battle of the Battle of the Battle of the Battle of the Battle of the Battle of the Battle of the Battle of the Battle of the Battle of",
+        "greedy_stats": {
+          "words": 47,
+          "distinct_1": 0.149,
+          "distinct_2": 0.174,
+          "repeat_4gram": 0.773
+        },
+        "sample_t0.8": " At least rejected only the death, he had surrendered to get the army. After the government of the Treaty of England, General Aleverns, the Order was held carrying a matter of a Conservative army.\nTwenty-German garrisoned at",
+        "sample_stats": {
+          "words": 37,
+          "distinct_1": 0.784,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:476",
+        "prompt": "Agathon (; ; ) was an Athenian tragic poet whose works have been lost.  He is best known for his appearance in Plato's Symposium, which describes the banquet given to celebrate his obtaining a prize for his first tragedy at the Lenaia in 416.  He is also a prominent character in Aristophanes' comedy the Thesmophoriazusae.\n\nLife and career",
+        "greedy": "\n\nHe is a member of the first-century English-century English-century English-century English-language surnames, and a member of the English-language surnames of the English-language surnames of the English-language",
+        "greedy_stats": {
+          "words": 26,
+          "distinct_1": 0.462,
+          "distinct_2": 0.6,
+          "repeat_4gram": 0.217
+        },
+        "sample_t0.8": "\nAfter his work the first two child, his father, Lindsey (1907).  Their father was a shepherd, a poet and historian, having a father's sons, often a longtime daughter, and Facedarius, with a",
+        "sample_stats": {
+          "words": 32,
+          "distinct_1": 0.812,
+          "distinct_2": 1.0,
+          "repeat_4gram": 0.0
+        }
+      },
+      {
+        "key": "en/knowledge",
+        "document_id": "wikipedia_en_20231101:548",
+        "prompt": "Ḥasan Ibn al-Haytham (Latinized as Alhazen; ; full name  ; ) was a medieval mathematician, astronomer, and physicist of the Islamic Golden Age from present-day Iraq. Referred to as \"the father of modern optics\", he made significant contributions to the principles of optics and visual perception in particular.",
+        "greedy": "\n\nIn the early 20th century, the first published in the early 20th century, the first published in the first published in the 18th century, was the first published in the first published in the 18th century. In the",
+        "greedy_stats": {
+          "words": 38,
+          "distinct_1": 0.289,
+          "distinct_2": 0.405,
+          "repeat_4gram": 0.429
+        },
+        "sample_t0.8": "\n\nPence of medicine\nHe is considered a critical name, with it an adaptation of social science, and is considered by the Ocheananaphan. He is a conveying of the epistocene binding Azerbaivian language",
+        "sample_stats": {
+          "words": 32,
+          "distinct_1": 0.75,
+          "distinct_2": 0.935,
+          "repeat_4gram": 0.0
+        }
+      }
+    ]
+  }
+}

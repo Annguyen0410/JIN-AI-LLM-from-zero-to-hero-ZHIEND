@@ -1,0 +1,119 @@
+{
+  "metric": "held-out loss per domain and per language (val.jsonl, document-disjoint, one window per document)",
+  "jin_phase14_wiki": {
+    "domain:conversation": {
+      "loss": 4.6718,
+      "perplexity": 106.89,
+      "documents": 24,
+      "tokens_scored": 3672,
+      "exact_window_padding": true
+    },
+    "domain:educational": {
+      "loss": 4.7789,
+      "perplexity": 118.98,
+      "documents": 24,
+      "tokens_scored": 5120,
+      "exact_window_padding": false
+    },
+    "domain:knowledge": {
+      "loss": 5.1037,
+      "perplexity": 164.64,
+      "documents": 24,
+      "tokens_scored": 21504,
+      "exact_window_padding": false
+    },
+    "domain:mixed": {
+      "loss": 4.2999,
+      "perplexity": 73.69,
+      "documents": 24,
+      "tokens_scored": 9000,
+      "exact_window_padding": true
+    },
+    "language:en": {
+      "loss": 4.7789,
+      "perplexity": 118.98,
+      "documents": 24,
+      "tokens_scored": 5120,
+      "exact_window_padding": false
+    },
+    "language:other": {
+      "loss": 4.6126,
+      "perplexity": 100.74,
+      "documents": 5,
+      "tokens_scored": 865,
+      "exact_window_padding": true
+    },
+    "language:unknown": {
+      "loss": 4.1324,
+      "perplexity": 62.33,
+      "documents": 4,
+      "tokens_scored": 1252,
+      "exact_window_padding": true
+    },
+    "language:vi": {
+      "loss": 4.0784,
+      "perplexity": 59.05,
+      "documents": 24,
+      "tokens_scored": 7056,
+      "exact_window_padding": true
+    }
+  },
+  "jin_pilot": {
+    "domain:conversation": {
+      "loss": 3.4832,
+      "perplexity": 32.57,
+      "documents": 24,
+      "tokens_scored": 3672,
+      "exact_window_padding": true
+    },
+    "domain:educational": {
+      "loss": 6.8329,
+      "perplexity": 927.88,
+      "documents": 24,
+      "tokens_scored": 5120,
+      "exact_window_padding": false
+    },
+    "domain:knowledge": {
+      "loss": 6.7567,
+      "perplexity": 859.79,
+      "documents": 24,
+      "tokens_scored": 21504,
+      "exact_window_padding": false
+    },
+    "domain:mixed": {
+      "loss": 2.1091,
+      "perplexity": 8.24,
+      "documents": 24,
+      "tokens_scored": 9000,
+      "exact_window_padding": true
+    },
+    "language:en": {
+      "loss": 6.8329,
+      "perplexity": 927.88,
+      "documents": 24,
+      "tokens_scored": 5120,
+      "exact_window_padding": false
+    },
+    "language:other": {
+      "loss": 4.3483,
+      "perplexity": 77.34,
+      "documents": 5,
+      "tokens_scored": 865,
+      "exact_window_padding": true
+    },
+    "language:unknown": {
+      "loss": 2.394,
+      "perplexity": 10.96,
+      "documents": 4,
+      "tokens_scored": 1252,
+      "exact_window_padding": true
+    },
+    "language:vi": {
+      "loss": 1.7115,
+      "perplexity": 5.54,
+      "documents": 24,
+      "tokens_scored": 7056,
+      "exact_window_padding": true
+    }
+  }
+}
