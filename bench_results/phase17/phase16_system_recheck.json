@@ -1,0 +1,485 @@
+{
+  "protocol": "phase16.system.v1",
+  "checkpoint": "checkpoints\\gpt2_small\\phase14_wiki\\best.pt",
+  "adapter": null,
+  "components": {
+    "retrieval": {
+      "queries": 12,
+      "k": 3,
+      "recall_at_k": 1.0,
+      "mrr": 1.0,
+      "credited_to": "retrieval"
+    },
+    "calculator": {
+      "expressions": 14,
+      "correct_rate": 1.0,
+      "credited_to": "tool",
+      "model": "not involved"
+    },
+    "citations": {
+      "checked": 12,
+      "valid_rate": 1.0,
+      "credited_to": "system"
+    },
+    "abstention": {
+      "unanswerable_queries": 5,
+      "credited_to": "system",
+      "note": "top BM25 scores reported; no threshold tuned on the answers"
+    },
+    "model_in_loop": {
+      "queries": 12,
+      "answer_contains_gold_rate": 0.0,
+      "credited_to": "model (retrieval-assisted)"
+    }
+  },
+  "rows": {
+    "retrieval": [
+      {
+        "query": "How long is the Kestrel Bridge?",
+        "k": 3,
+        "retrieved": [
+          "d01",
+          "d07",
+          "d02"
+        ],
+        "gold": [
+          "d01"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "What role did Mara have?",
+        "k": 3,
+        "retrieved": [
+          "d02"
+        ],
+        "gold": [
+          "d02"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "When was the treaty signed?",
+        "k": 3,
+        "retrieved": [
+          "d03",
+          "d01",
+          "d07"
+        ],
+        "gold": [
+          "d03"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "Sông Hồng dài bao nhiêu km?",
+        "k": 3,
+        "retrieved": [
+          "d04"
+        ],
+        "gold": [
+          "d04"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "Ông Nguyễn Văn An sinh ở đâu?",
+        "k": 3,
+        "retrieved": [
+          "d05"
+        ],
+        "gold": [
+          "d05"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "How many grams of sugar does the recipe use?",
+        "k": 3,
+        "retrieved": [
+          "d06",
+          "d07",
+          "d02"
+        ],
+        "gold": [
+          "d06"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "When is the vote now scheduled?",
+        "k": 3,
+        "retrieved": [
+          "d07",
+          "d01",
+          "d02"
+        ],
+        "gold": [
+          "d07"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "Cửa hàng đóng cửa lúc mấy giờ?",
+        "k": 3,
+        "retrieved": [
+          "d08"
+        ],
+        "gold": [
+          "d08"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "What does photosynthesis convert?",
+        "k": 3,
+        "retrieved": [
+          "d09"
+        ],
+        "gold": [
+          "d09"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "When did the museum open?",
+        "k": 3,
+        "retrieved": [
+          "d10",
+          "d07",
+          "d02"
+        ],
+        "gold": [
+          "d10"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "Thủ đô của Việt Nam là gì?",
+        "k": 3,
+        "retrieved": [
+          "d11"
+        ],
+        "gold": [
+          "d11"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      },
+      {
+        "query": "At what temperature does water boil at sea level?",
+        "k": 3,
+        "retrieved": [
+          "d12"
+        ],
+        "gold": [
+          "d12"
+        ],
+        "recall_at_k": 1.0,
+        "rank_of_gold": 1
+      }
+    ],
+    "calculator": [
+      {
+        "expression": "4837 * 29",
+        "result": "140,273",
+        "expected": 140273.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "(120 + 45) * 3",
+        "result": "495",
+        "expected": 495.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "2.5 * 1000",
+        "result": "2,500",
+        "expected": 2500.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "3 * 7 + 4 * 2",
+        "result": "29",
+        "expected": 29.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "20 - 4 * 3",
+        "result": "8",
+        "expected": 8.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "100 / 4",
+        "result": "25",
+        "expected": 25.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "2 ** 10",
+        "result": "1,024",
+        "expected": 1024.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "sqrt(144)",
+        "result": "12",
+        "expected": 12.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "(8 + 2) / 5",
+        "result": "2",
+        "expected": 2.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "17 * 24",
+        "result": "408",
+        "expected": 408.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "1000 - 375",
+        "result": "625",
+        "expected": 625.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "7 * 6",
+        "result": "42",
+        "expected": 42.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "(144 / 12) + 5",
+        "result": "17",
+        "expected": 17.0,
+        "passed": true,
+        "error": null
+      },
+      {
+        "expression": "0.15 * 200",
+        "result": "30",
+        "expected": 30.0,
+        "passed": true,
+        "error": null
+      }
+    ],
+    "abstention": [
+      {
+        "query": "How many grams of butter does the recipe need?",
+        "top_score": 8.658,
+        "retrieved": [
+          "d06",
+          "d07",
+          "d02"
+        ]
+      },
+      {
+        "query": "Ai là tổng thống của Việt Nam hiện nay?",
+        "top_score": 8.548,
+        "retrieved": [
+          "d11"
+        ]
+      },
+      {
+        "query": "What is the population of the museum's city today?",
+        "top_score": 3.633,
+        "retrieved": [
+          "d06",
+          "d10",
+          "d01"
+        ]
+      },
+      {
+        "query": "Khi nào thì cửa hàng mở cửa vào Chủ nhật?",
+        "top_score": 7.148,
+        "retrieved": [
+          "d08"
+        ]
+      },
+      {
+        "query": "What colour is the Kestrel Bridge?",
+        "top_score": 6.815,
+        "retrieved": [
+          "d01",
+          "d07",
+          "d02"
+        ]
+      }
+    ],
+    "citations": [
+      {
+        "query": "How long is the Kestrel Bridge?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "What role did Mara have?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "When was the treaty signed?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "Sông Hồng dài bao nhiêu km?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "Ông Nguyễn Văn An sinh ở đâu?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "How many grams of sugar does the recipe use?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "When is the vote now scheduled?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "Cửa hàng đóng cửa lúc mấy giờ?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "What does photosynthesis convert?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "When did the museum open?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "Thủ đô của Việt Nam là gì?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      },
+      {
+        "query": "At what temperature does water boil at sea level?",
+        "citations_checked": 1,
+        "invalid": [],
+        "valid": true
+      }
+    ],
+    "model": [
+      {
+        "query": "How long is the Kestrel Bridge?",
+        "gold_answer": "412",
+        "output": "\n\nThe first step is the first step of the first time of the first time, but the first step is the first step of the first time of the",
+        "contains_answer": false
+      },
+      {
+        "query": "What role did Mara have?",
+        "gold_answer": "data engineer",
+        "output": "\n```\n",
+        "contains_answer": false
+      },
+      {
+        "query": "When was the treaty signed?",
+        "gold_answer": "1949",
+        "output": "\n\nThe answer is the first step of the first time of the first time, the first step of the first time of the first time of the first time",
+        "contains_answer": false
+      },
+      {
+        "query": "Sông Hồng dài bao nhiêu km?",
+        "gold_answer": "1.149",
+        "output": "\n\nThe answer is: \"The answer is the word \"The answer is: \"The answer is: \"The answer is: \"The answer is:",
+        "contains_answer": false
+      },
+      {
+        "query": "Ông Nguyễn Văn An sinh ở đâu?",
+        "gold_answer": "Huế",
+        "output": "\n```\nThe answer is:\n```\nThe answer is:\n```\n",
+        "contains_answer": false
+      },
+      {
+        "query": "How many grams of sugar does the recipe use?",
+        "gold_answer": "80",
+        "output": "\n```python\ndef calculate_to_to_to_to_n_n_n_n_n_n_n_n_",
+        "contains_answer": false
+      },
+      {
+        "query": "When is the vote now scheduled?",
+        "gold_answer": "spring",
+        "output": "\n```\n",
+        "contains_answer": false
+      },
+      {
+        "query": "Cửa hàng đóng cửa lúc mấy giờ?",
+        "gold_answer": "21",
+        "output": "\nThe following is:\n\nThe following is the following:\n\nThe following is the following:\n\nThe following is the following:\n\nThe",
+        "contains_answer": false
+      },
+      {
+        "query": "What does photosynthesis convert?",
+        "gold_answer": "chemical energy",
+        "output": "\n\nThe answer is the value of the following code:\n\n1. The answer is:\n2. The answer is the value of the following code",
+        "contains_answer": false
+      },
+      {
+        "query": "When did the museum open?",
+        "gold_answer": "1902",
+        "output": "\n```\n",
+        "contains_answer": false
+      },
+      {
+        "query": "Thủ đô của Việt Nam là gì?",
+        "gold_answer": "Hà Nội",
+        "output": "\n\nThe answer is:\n\nThe answer is:\n\nThe answer is:\n\nThe answer is:\n\nThe answer is:\n\n",
+        "contains_answer": false
+      },
+      {
+        "query": "At what temperature does water boil at sea level?",
+        "gold_answer": "100",
+        "output": "\n\nThe answer is the value of the value of the value of the value of the value of the value of the value of the number of the number of",
+        "contains_answer": false
+      }
+    ]
+  },
+  "elapsed_seconds": 12.2
+}

@@ -484,6 +484,17 @@ def save_state(path: str, model, optimizer, scaler, step: int, tokens_seen: int,
         "tokenizer": meta["tokenizer"],
         "model_config": model.export_config(),
         "history_tail": history[-10:],
+        # Phase 17 lineage: which model this run started from, and whether the
+        # optimizer was fresh. A reader must be able to tell a continued run
+        # from a resumed one without trusting a report.
+        "init_mode": meta.get("init_mode"),
+        "parent_checkpoint": meta.get("parent_checkpoint"),
+        "parent_sha256": meta.get("parent_sha256"),
+        "parent_iteration": meta.get("parent_iteration"),
+        "parent_tokens_seen": meta.get("parent_tokens_seen"),
+        "additional_tokens_this_run": tokens_seen,
+        "experiment_config_hash": meta.get("experiment_config_hash"),
+        "schedule": meta.get("schedule"),
     })
 
 
@@ -516,6 +527,19 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--save-interval", type=int, default=250)
     p.add_argument("--out-dir", default=OUT_DIR)
     p.add_argument("--resume", action="store_true")
+    p.add_argument("--resume-from", default=None,
+                   help="Resume from this checkpoint instead of <out-dir>/latest.pt "
+                        "(e.g. a checkpoint attached read-only from a Kaggle input).")
+    p.add_argument("--init-from", default=None,
+                   help="Initialize MODEL WEIGHTS from this checkpoint and start a NEW "
+                        "experiment (fresh optimizer/schedule/data state). This is how "
+                        "continued pretraining is started; it is not a resume.")
+    p.add_argument("--continue-pretrain", action="store_true",
+                   help="Mark this run as continued pretraining. Refuses to start "
+                        "without --init-from: random initialization is not continuation.")
+    p.add_argument("--session-max-minutes", type=float, default=0.0,
+                   help="Stop at an optimizer-step boundary after this many minutes and "
+                        "save. Does NOT change the global step budget or the LR schedule.")
     p.add_argument("--extend-budget", action="store_true",
                    help="Resume into a DIFFERENT (larger) step budget. Without this "
                         "flag a changed budget is refused, because silently "
@@ -546,6 +570,95 @@ def resolve_files(args) -> tuple[list[str], list[str]]:
     if not val:
         raise SystemExit("No validation files matched (document-disjoint set required).")
     return train, val
+
+
+def validate_continued_args(init_from, resume, resume_from, continue_pretrain) -> None:
+    """Refuse argument combinations that would misrepresent the run."""
+    if init_from and (resume or resume_from):
+        raise SystemExit("[Fatal] --init-from starts a new experiment and cannot be "
+                         "combined with --resume/--resume-from.")
+    if continue_pretrain and not init_from:
+        raise SystemExit("[Fatal] --continue-pretrain requires --init-from <checkpoint>. "
+                         "A randomly initialized model is not a continuation.")
+
+
+def session_expired(started_at: float, limit_minutes: float, now: float | None = None) -> bool:
+    """True when the session wall-clock budget is spent. Never affects the schedule."""
+    if not limit_minutes:
+        return False
+    now = time.time() if now is None else now
+    return (now - started_at) / 60.0 >= limit_minutes
+
+
+def init_from_checkpoint(model, tokenizer, path: str, log_fn=print) -> dict:
+    """Initialize a model from a parent checkpoint and return its lineage.
+
+    This is continued pretraining, not a resume: only model weights are copied.
+    The optimizer, schedule, sampler and step counters belong to the new
+    experiment starting here, so none of them are restored.
+
+    Every compatibility check is a hard failure. Loading a checkpoint with a
+    different tokenizer or positional-embedding shape "works" in PyTorch and
+    silently produces a model that is neither the parent nor a fresh one.
+    """
+    if not os.path.exists(path):
+        raise SystemExit(f"[Fatal] --init-from checkpoint not found: {path}")
+    add_safe = getattr(torch.serialization, "add_safe_globals", None)
+    if add_safe is not None:
+        try:
+            from torch.torch_version import TorchVersion
+            add_safe([TorchVersion])
+        except Exception:
+            pass
+    parent = torch.load(path, map_location="cpu", weights_only=True, mmap=True)
+
+    if parent.get("architecture_id") != model.arch_id:
+        raise SystemExit(f"[Fatal] init-from architecture {parent.get('architecture_id')!r} "
+                         f"!= current {model.arch_id!r}")
+    p_tok = parent.get("tokenizer") or {}
+    if (p_tok.get("kind") != tokenizer.kind
+            or int(p_tok.get("vocab_size", -1)) != tokenizer.vocab_size):
+        raise SystemExit("[Fatal] init-from tokenizer differs from the tokenizer in use.")
+    p_cfg = parent.get("model_config") or {}
+    mine = model.export_config()
+    for key, value in (("block_size", model.block_size),
+                       ("embed_dim", mine.get("embed_dim")),
+                       ("n_layers", mine.get("n_layers")),
+                       ("vocab_size", model.vocab_size)):
+        if p_cfg.get(key) is not None and int(p_cfg[key]) != int(value):
+            raise SystemExit(f"[Fatal] init-from {key} {p_cfg[key]} != {value}")
+
+    parent_sd = parent["model_state_dict"]
+    p_pos = parent_sd.get("pos_emb.weight")
+    m_pos = model.state_dict().get("pos_emb.weight")
+    if p_pos is None or m_pos is None or tuple(p_pos.shape) != tuple(m_pos.shape):
+        raise SystemExit(
+            "[Fatal] positional embedding mismatch: parent "
+            f"{None if p_pos is None else tuple(p_pos.shape)} != model "
+            f"{None if m_pos is None else tuple(m_pos.shape)}")
+
+    try:
+        model.load_state_dict(parent_sd, strict=True)
+    except RuntimeError as exc:
+        raise SystemExit(f"[Fatal] init-from weights do not match the model: {exc}")
+    # The parent stores a duplicate copy of the embedding matrix as head.weight.
+    # Keep the model tied so the two cannot diverge after a save/load cycle.
+    if hasattr(model, "head") and hasattr(model, "tok_emb"):
+        if model.head.weight.data_ptr() != model.tok_emb.weight.data_ptr():
+            model.head.weight = model.tok_emb.weight
+
+    lineage = {
+        "parent_checkpoint": os.path.relpath(path, ROOT) if os.path.isabs(path) else path,
+        "parent_sha256": sha256_file(path),
+        "parent_iteration": parent.get("iteration"),
+        "parent_tokens_seen": parent.get("tokens_seen"),
+        "init_mode": "continued_pretrain",
+    }
+    log_fn(f"[Init] model weights from {path}")
+    log_fn(f"[Init] parent iter {parent.get('iteration')} | "
+           f"parent tokens {parent.get('tokens_seen')} | "
+           f"new optimizer, new schedule, new data state")
+    return lineage
 
 
 def main() -> None:
@@ -629,6 +742,11 @@ def main() -> None:
                      "peak_lr": args.lr, "min_lr_ratio": args.min_lr_ratio,
                      "grad_clip": 1.0},
         "effective_batch_tokens": args.batch_size * args.grad_accum * args.seq_len,
+        "parent_checkpoint": None,
+        "parent_sha256": None,
+        "parent_iteration": None,
+        "parent_tokens_seen": None,
+        "init_mode": "random",
         "revision": os.popen("git rev-parse HEAD").read().strip() or None,
         "hardware": {
             "device": device,
@@ -647,7 +765,20 @@ def main() -> None:
     tokens_seen = 0
     best_val = float("inf")
     history: list = []
-    if args.resume and os.path.exists(ckpt_path):
+
+    # ── continued pretraining: transfer MODEL WEIGHTS only ─────────────────
+    validate_continued_args(args.init_from, args.resume, args.resume_from,
+                            args.continue_pretrain)
+    if args.init_from:
+        meta.update(init_from_checkpoint(model, tokenizer, args.init_from, log_fn=log))
+
+    if args.resume_from and not args.resume:
+        if not os.path.exists(args.resume_from):
+            raise SystemExit(f"[Fatal] --resume-from checkpoint not found: {args.resume_from}")
+        restore_path = args.resume_from
+    else:
+        restore_path = ckpt_path
+    if (args.resume or args.resume_from) and os.path.exists(restore_path):
         # Allowlist TorchVersion so checkpoints written before the str() fix
         # still resume; nothing else is added to the safe-global list.
         add_safe = getattr(torch.serialization, "add_safe_globals", None)
@@ -659,7 +790,7 @@ def main() -> None:
                 pass
         # mmap: a 1.5 GB checkpoint must not be read into a machine that has
         # ~2.5 GB free. Pages are faulted in on demand instead.
-        blob = torch.load(ckpt_path, map_location="cpu", weights_only=True, mmap=True)
+        blob = torch.load(restore_path, map_location="cpu", weights_only=True, mmap=True)
 
         # ── refuse unsafe partial restorations, then restore everything ──
         current_fp = experiment_fingerprint(model, tokenizer, dataset_manifest, args,
@@ -672,7 +803,13 @@ def main() -> None:
         tokens_seen = int(blob["tokens_seen"])
         best_val = float(blob["best_val_loss"])
         history = list(blob.get("history", []))
-        log(f"[Resume] step {start_step:,} | tokens {tokens_seen:,} | best val {best_val:.4f} "
+        meta["init_mode"] = "resumed"
+        for key in ("parent_checkpoint", "parent_sha256", "parent_iteration",
+                    "parent_tokens_seen"):
+            if blob.get(key) is not None:
+                meta[key] = blob[key]
+        log(f"[Resume] {os.path.basename(restore_path)} step {start_step:,} | "
+            f"tokens {tokens_seen:,} | best val {best_val:.4f} "
             f"| sampler+cpu+cuda RNG restored")
 
     log(f"[Train] device={device} amp={use_amp} gc={args.grad_checkpoint} "
@@ -680,7 +817,9 @@ def main() -> None:
 
     model.train()
     t0 = time.time()
+    session_start = time.time()
     tokens_at_start = tokens_seen
+    stopped_for_session = False
     step_tokens = args.batch_size * args.grad_accum * args.seq_len
     run_loss = 0.0
     for step in range(start_step + 1, total_steps + 1):
@@ -737,9 +876,51 @@ def main() -> None:
                        best_val, history, meta, batcher=train_batcher)
             log(f"  [save] latest.pt (sha256 in latest.pt.manifest.json)")
 
-    log("\n[Done] Pretraining stopped at the configured budget.")
-    log(f"[Done] best val loss {best_val:.4f} (ppl {math.exp(min(20.0, best_val)):.2f})")
-    log(f"[Done] weights: {os.path.relpath(os.path.join(args.out_dir, 'best.pt'), ROOT)}")
+        # Session budget: stop at a step boundary, keep the global schedule.
+        # This is a wall-clock pause, not a budget change — the fingerprint and
+        # total_steps are untouched, so the next session resumes the same curve.
+        if session_expired(session_start, args.session_max_minutes) and step < total_steps:
+            minutes = (time.time() - session_start) / 60.0
+            if True:
+                save_state(ckpt_path, model, optimizer, scaler, step, tokens_seen,
+                           best_val, history, meta, batcher=train_batcher)
+                session_log = {
+                    "reason": "session_max_minutes",
+                    "session_minutes": round(minutes, 2),
+                    "limit_minutes": args.session_max_minutes,
+                    "global_step": step,
+                    "total_steps_unchanged": total_steps,
+                    "tokens_seen_this_run": tokens_seen,
+                    "tokens_this_session": tokens_seen - tokens_at_start,
+                    "checkpoint": os.path.relpath(ckpt_path, ROOT),
+                    "checkpoint_sha256": sha256_file(ckpt_path),
+                    "init_mode": meta.get("init_mode"),
+                    "parent_sha256": meta.get("parent_sha256"),
+                    "to_continue": (f"--resume --resume-from {ckpt_path} "
+                                    "with the same --max-steps and recipe"),
+                }
+                with open(os.path.join(args.out_dir, "session_log.json"), "w",
+                          encoding="utf-8") as fh:
+                    json.dump(session_log, fh, ensure_ascii=False, indent=2)
+                log(f"[Session] stopped at step {step:,}/{total_steps:,} after "
+                    f"{minutes:.1f} min; schedule unchanged; state saved")
+                stopped_for_session = True
+                break
+
+    if stopped_for_session:
+        log("\n[Session] Pretraining paused for this session; the global budget is "
+            "unchanged. Resume with the saved checkpoint.")
+    else:
+        log("\n[Done] Pretraining stopped at the configured budget.")
+    best_path = os.path.join(args.out_dir, "best.pt")
+    if math.isfinite(best_val) and os.path.exists(best_path):
+        log(f"[Done] best val loss {best_val:.4f} "
+            f"(ppl {math.exp(min(20.0, best_val)):.2f})")
+        log(f"[Done] weights: {os.path.relpath(best_path, ROOT)}")
+    else:
+        log("[Done] no validation ran in this session, so no best checkpoint was "
+            "selected; latest.pt holds the current state.")
+        log(f"[Done] weights: {os.path.relpath(ckpt_path, ROOT)}")
     log("[Done] This is a measured checkpoint, not a capability claim: run "
         "scripts/gpt2_bench.py to compare against GPT-2 Small.")
 

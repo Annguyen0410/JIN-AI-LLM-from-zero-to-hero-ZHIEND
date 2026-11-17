@@ -35,7 +35,11 @@ STOP = set(
     "he she his her him it its this that these those my mine can could would "
     "should will shall may might must have has had am be been being not "
     "là của ở và có một các những gì nào ai đâu khi hãy cho biết theo nguồn "
-    "thông tin thủ đô thành phố".split()
+    "thông tin thủ đô thành phố "
+    # Phase 17: Vietnamese question quantifiers are not content. Without them a
+    # query like "sông Lam có số liệu bao nhiêu?" only overlapped 2 of 6 terms
+    # with the correct passage and the >= 50 % coverage filter rejected it.
+    "bao nhiêu mấy sao".split()
 )
 
 

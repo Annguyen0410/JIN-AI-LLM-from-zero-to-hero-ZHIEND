@@ -1,0 +1,14 @@
+{
+  "supported_cases": 258,
+  "router_accuracy": 1.0,
+  "arithmetic_accuracy": 1.0,
+  "negative_cases": 14,
+  "negative_rejection_rate": 1.0,
+  "ambiguous_cases": 3,
+  "ambiguous_handled_rate": 1.0,
+  "invalid_cases": 6,
+  "invalid_handled_rate": 1.0,
+  "failures": [],
+  "credited_to_model": 0,
+  "attribution": "router + calculator; the base model generated none of these"
+}

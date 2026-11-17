@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-11-16T17:37:05",
+  "host": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "cpu_count": 12,
+    "ram_gb": null,
+    "is_kaggle": true
+  },
+  "torch": {
+    "version": "2.5.1+cu121",
+    "cuda_available": true,
+    "cuda_version": "12.1",
+    "device_count": 1,
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 2060",
+        "total_vram_gb": 6.0
+      }
+    ]
+  },
+  "nvidia_smi": {
+    "available": true,
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 2060",
+        "memory_total_mb": 6144,
+        "memory_used_mb": 10,
+        "driver": "617.42",
+        "compute_capability": "7.5"
+      }
+    ]
+  },
+  "storage": {
+    "repo_disk_free_gb": 521.5,
+    "kaggle_input": false,
+    "kaggle_working": false,
+    "kaggle_temp": false
+  },
+  "repository": {
+    "head": "c85af5292c6dfc1aed1da9c7d9f887808eb5a1c2",
+    "dirty": true
+  },
+  "checkpoint": {
+    "path": "checkpoints\\gpt2_small\\phase14_wiki\\best.pt",
+    "exists": true,
+    "bytes": 1493474638,
+    "sha256": "069d9da650a81dc9e2c0fee94d0e20dc46a5c4f7e266a6c381a72140f48266fa"
+  },
+  "data": {
+    "gpt2_corpus_v5": {
+      "exists": true,
+      "manifest_sha256": "a0f5a5886615bc71b1549f988f6be148902a9256a005e2d554d76018a53bba45",
+      "train_tokens": 51222642
+    },
+    "gpt2_corpus_v6a": {
+      "exists": true,
+      "manifest_sha256": "36d07af8a69d3c2325483b36967245e4c55539dd38a1af69c02aa80e62029c84",
+      "train_tokens": 10445705
+    },
+    "curated_v6": {
+      "exists": true,
+      "manifest_sha256": null,
+      "train_tokens": null
+    },
+    "curated_v7": {
+      "exists": false,
+      "manifest_sha256": null,
+      "train_tokens": null
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "protocol": "phase17.system.v1",
+  "router": {
+    "supported_cases": 258,
+    "router_accuracy": 1.0,
+    "arithmetic_accuracy": 1.0,
+    "negative_cases": 14,
+    "negative_rejection_rate": 1.0,
+    "ambiguous_cases": 3,
+    "ambiguous_handled_rate": 1.0,
+    "invalid_cases": 6,
+    "invalid_handled_rate": 1.0,
+    "failures": [],
+    "credited_to_model": 0,
+    "attribution": "router + calculator; the base model generated none of these"
+  },
+  "retrieval": {
+    "corpus_documents": 100,
+    "answerable_queries": 73,
+    "unanswerable_queries": 6,
+    "recall_at": {
+      "1": 0.8493,
+      "3": 1.0,
+      "5": 1.0
+    },
+    "precision_at": {
+      "1": 0.8493,
+      "3": 0.3151,
+      "5": 0.1808
+    },
+    "mrr": 0.9178,
+    "retrieval_latency_ms_mean": 0.364,
+    "retrieval_latency_ms_p95": 0.587,
+    "evidence_selection_accuracy": 0.9726,
+    "evidence_support_rate": 0.9726,
+    "abstention_accuracy": 1.0,
+    "by_kind": {
+      "direct": {
+        "n": 36,
+        "recall@3": 1.0,
+        "evidence_selection": 1.0,
+        "evidence_support": 1.0
+      },
+      "paraphrase": {
+        "n": 30,
+        "recall@3": 1.0,
+        "evidence_selection": 0.9667,
+        "evidence_support": 0.9667
+      },
+      "vietnamese": {
+        "n": 5,
+        "recall@3": 1.0,
+        "evidence_selection": 1.0,
+        "evidence_support": 1.0
+      },
+      "multi_doc": {
+        "n": 2,
+        "recall@3": 1.0,
+        "evidence_selection": 0.5,
+        "evidence_support": 0.5
+      }
+    },
+    "citation_syntax_checks_are_not_support": true,
+    "credited_to_model": 0
+  },
+  "attribution": {
+    "calculator": "router + calculator, model contributed nothing",
+    "retrieval": "BM25 + evidence selector, model contributed nothing",
+    "model_in_loop": "not measured here; Phase 16 measured 0/73 task ability"
+  },
+  "limitations": [
+    "the retrieval corpus is synthetic and project-authored; it is larger and harder than Phase 16's 12 passages but it is not a web corpus",
+    "the router suite is self-authored, so 100% means the implemented grammar is self-consistent, not that the router understands language",
+    "evidence_support checks that the answer string appears in the selected passage; it does not test entailment of a generated sentence"
+  ]
+}
