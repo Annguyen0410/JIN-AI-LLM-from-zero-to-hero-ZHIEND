@@ -365,6 +365,18 @@ def quality_flags(text: str, min_chars: int, max_repeat_ratio: float) -> list[st
     return flags
 
 
+def _display_path(path: str) -> str:
+    """Repo-relative when possible; absolute otherwise.
+
+    ``os.path.relpath`` raises ValueError when the paths are on different drives
+    on Windows (e.g. ``--out-root`` on C: while the repo is on D:).
+    """
+    try:
+        return os.path.relpath(path, ROOT)
+    except ValueError:
+        return path
+
+
 def content_hash(text: str) -> str:
     """Exact-duplicate key: whitespace-collapsed, case-preserved."""
     norm = re.sub(r"[ \t]+", " ", text)
@@ -462,7 +474,7 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
         "avg_chars": round(chars / max(1, written), 1),
         "languages": lang_count, "quality_flags": flags_count,
         "pii_findings": pii_count, "license_decision": decision.as_dict(),
-        "output": os.path.relpath(out_path, ROOT),
+        "output": _display_path(out_path),
         "output_sha256": hashlib.sha256(open(out_path, "rb").read()).hexdigest()
         if os.path.getsize(out_path) < 200 * 1024 * 1024 else None,
         "docs_per_second": round(written / elapsed, 1),
@@ -542,7 +554,7 @@ def main() -> None:
     manifest["sources"].sort(key=lambda s: s.get("source_id", ""))
     with open(manifest_path, "w", encoding="utf-8") as fh:
         json.dump(manifest, fh, ensure_ascii=False, indent=2)
-    print(f"\nWrote {os.path.relpath(manifest_path, ROOT)}")
+    print(f"\nWrote {_display_path(manifest_path)}")
 
 
 if __name__ == "__main__":

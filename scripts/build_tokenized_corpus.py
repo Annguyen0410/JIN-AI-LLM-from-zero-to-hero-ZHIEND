@@ -154,7 +154,7 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
     os.replace(tmp, out_bin)
     size = os.path.getsize(out_bin)
     return {
-        "path": os.path.relpath(out_bin, ROOT),
+        "path": _display_path(out_bin),
         "sha256": sha256_file(out_bin),
         "bytes": size,
         "tokens": tokens,
@@ -166,10 +166,22 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
         "language_composition": dict(per_lang),
         "domain_composition": dict(per_domain),
         "truncated_at_max_tokens": bool(stop),
-        "provenance": os.path.relpath(prov_path, ROOT),
+        "provenance": _display_path(prov_path),
         "provenance_sha256": sha256_file(prov_path),
-        "sources": [os.path.relpath(p, ROOT) for p in split_files],
+        "sources": [_display_path(p) for p in split_files],
     }
+
+
+def _display_path(path: str) -> str:
+    """Repo-relative when possible, absolute otherwise.
+
+    os.path.relpath raises ValueError across drives on Windows, which is only a
+    reporting problem: the file was written correctly.
+    """
+    try:
+        return os.path.relpath(path, ROOT)
+    except ValueError:
+        return path
 
 
 def main() -> None:
@@ -207,9 +219,9 @@ def main() -> None:
                           tokenizer.to_state_dict(), sort_keys=True).encode()).hexdigest()},
         # The manifest of the corpus the splits came from, not a hard-coded path:
         # a v6 build must never claim it was built from v5.
-        "curated_manifest": os.path.relpath(
+        "curated_manifest": _display_path(
             os.path.join(os.path.dirname(os.path.abspath(args.splits)),
-                         "raw_manifest.json"), ROOT),
+                         "raw_manifest.json")),
         "framing": "<eot> document <eot>, uint16 little-endian",
     }
     missing = []
@@ -244,7 +256,7 @@ def main() -> None:
                 manifest[key] = old[key]
     with open(out_path, "w", encoding="utf-8") as fh:
         json.dump(manifest, fh, ensure_ascii=False, indent=2)
-    print(f"\nWrote {os.path.relpath(out_path, ROOT)}")
+    print(f"\nWrote {_display_path(out_path)}")
 
 
 if __name__ == "__main__":
