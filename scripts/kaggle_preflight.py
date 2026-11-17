@@ -68,6 +68,23 @@ def total_ram_gb() -> float | None:
     return None
 
 
+def host_kind() -> str:
+    """"kaggle" only on a real Kaggle kernel.
+
+    ``os.path.isdir("/kaggle")`` is not that test: on Windows a leading slash
+    resolves against the current drive, so a local ``D:\\kaggle`` folder made a
+    Windows desktop report ``is_kaggle: true``. Kaggle always sets a kernel run
+    type and mounts ``/kaggle/working``.
+    """
+    if sys.platform.startswith("win"):
+        return "local"
+    if os.environ.get("KAGGLE_KERNEL_RUN_TYPE"):
+        return "kaggle"
+    if os.path.isdir("/kaggle/working") and os.path.isdir("/kaggle/input"):
+        return "kaggle"
+    return "local"
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Phase 17 environment preflight")
     ap.add_argument("--out", default=os.path.join(ROOT, "bench_results", "phase17",
@@ -86,7 +103,8 @@ def main() -> None:
             "python": platform.python_version(),
             "cpu_count": os.cpu_count(),
             "ram_gb": total_ram_gb(),
-            "is_kaggle": os.path.isdir("/kaggle"),
+            "is_kaggle": host_kind() == "kaggle",
+            "host_kind": host_kind(),
         },
         "torch": {"version": str(torch.__version__),
                   "cuda_available": torch.cuda.is_available(),
@@ -142,6 +160,7 @@ def main() -> None:
           f"available {report['torch']['cuda_available']}")
     for gpu in report["torch"].get("devices", []):
         print(f"gpu[{gpu['index']}]   {gpu['name']} | {gpu['total_vram_gb']} GB")
+    print(f"host kind {report['host']['host_kind']}")
     print(f"storage   repo free {report['storage']['repo_disk_free_gb']} GB | "
           f"kaggle input {report['storage']['kaggle_input']} | "
           f"working {report['storage']['kaggle_working']}")

@@ -103,6 +103,33 @@ def test_session_limit_is_not_part_of_the_experiment_fingerprint(tmp_path):
     assert not train_gpt2.compare_fingerprints(fp_a, fp_b)
 
 
+def test_resume_from_wins_over_resume(tmp_path):
+    """`--resume --resume-from X` must restore X, not <out-dir>/latest.pt."""
+    out_dir = tmp_path / "run"
+    out_dir.mkdir()
+    default = str(out_dir / "latest.pt")
+    chosen = str(tmp_path / "attached" / "latest.pt")
+    os.makedirs(os.path.dirname(chosen))
+    torch.save({"iteration": 5}, chosen)
+    assert train_gpt2.resolve_restore_path(True, chosen, default) == chosen
+    assert train_gpt2.resolve_restore_path(False, chosen, default) == chosen
+
+
+
+def test_missing_resume_checkpoint_is_fatal(tmp_path):
+    """A resume with nothing to restore must stop, never train from scratch."""
+    with pytest.raises(SystemExit):
+        train_gpt2.resolve_restore_path(True, None, str(tmp_path / "latest.pt"))
+    with pytest.raises(SystemExit):
+        train_gpt2.resolve_restore_path(True, str(tmp_path / "missing.pt"),
+                                        str(tmp_path / "latest.pt"))
+
+
+def test_no_resume_means_fresh_run(tmp_path):
+    assert train_gpt2.resolve_restore_path(False, None,
+                                           str(tmp_path / "latest.pt")) is None
+
+
 def test_session_expired_helper():
     assert train_gpt2.session_expired(0.0, 0.0, now=10_000.0) is False
     assert train_gpt2.session_expired(0.0, 90.0, now=60.0) is False

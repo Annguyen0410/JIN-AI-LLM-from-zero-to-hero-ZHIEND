@@ -61,6 +61,7 @@ two successes in 73 binary tasks is inside sampling noise.
 | CUDA / torch | 12.1 / 2.5.1+cu121 |
 | CPU / OS | 12 threads, Windows 10 |
 | `/kaggle/input` | absent — this is **not** a Kaggle machine |
+| `host.host_kind` | `local` (`is_kaggle: false`); the committed preflight artifact is a development-machine record, not Kaggle evidence |
 
 Kaggle availability, accelerator, VRAM, quota and runtime are therefore
 **unknown**, and no number in Phase 17 assumes them. The historical local figure

@@ -1,11 +1,12 @@
 {
-  "generated_at": "2026-11-16T17:37:05",
+  "generated_at": "2026-11-16T18:24:22",
   "host": {
     "platform": "Windows-10-10.0.26200-SP0",
     "python": "3.11.9",
     "cpu_count": 12,
     "ram_gb": null,
-    "is_kaggle": true
+    "is_kaggle": false,
+    "host_kind": "local"
   },
   "torch": {
     "version": "2.5.1+cu121",
@@ -39,7 +40,7 @@
     "kaggle_temp": false
   },
   "repository": {
-    "head": "c85af5292c6dfc1aed1da9c7d9f887808eb5a1c2",
+    "head": "cba9688e6444f67369258304fec3c70c221ab7ae",
     "dirty": true
   },
   "checkpoint": {

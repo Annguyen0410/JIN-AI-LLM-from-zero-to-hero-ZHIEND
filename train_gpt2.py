@@ -582,6 +582,26 @@ def validate_continued_args(init_from, resume, resume_from, continue_pretrain) -
                          "A randomly initialized model is not a continuation.")
 
 
+def resolve_restore_path(resume: bool, resume_from: str | None,
+                         default_ckpt: str) -> str | None:
+    """Which checkpoint a resume restores, or None for a fresh run.
+
+    ``--resume-from`` always wins over ``--resume``. Passing both used to fall
+    back to ``<out-dir>/latest.pt``; on a fresh Kaggle working directory that
+    file does not exist and the run silently trained from scratch while
+    claiming to be a resume. A requested resume with no checkpoint is now fatal.
+    """
+    if not (resume or resume_from):
+        return None
+    path = resume_from or default_ckpt
+    if not os.path.exists(path):
+        raise SystemExit(
+            f"[Fatal] resume requested but no checkpoint at {path}. Refusing to "
+            "start from scratch: pass --resume-from <checkpoint> (a Kaggle input "
+            "path works) or drop --resume for a new run.")
+    return path
+
+
 def session_expired(started_at: float, limit_minutes: float, now: float | None = None) -> bool:
     """True when the session wall-clock budget is spent. Never affects the schedule."""
     if not limit_minutes:
@@ -772,13 +792,8 @@ def main() -> None:
     if args.init_from:
         meta.update(init_from_checkpoint(model, tokenizer, args.init_from, log_fn=log))
 
-    if args.resume_from and not args.resume:
-        if not os.path.exists(args.resume_from):
-            raise SystemExit(f"[Fatal] --resume-from checkpoint not found: {args.resume_from}")
-        restore_path = args.resume_from
-    else:
-        restore_path = ckpt_path
-    if (args.resume or args.resume_from) and os.path.exists(restore_path):
+    restore_path = resolve_restore_path(args.resume, args.resume_from, ckpt_path)
+    if restore_path is not None:
         # Allowlist TorchVersion so checkpoints written before the str() fix
         # still resume; nothing else is added to the safe-global list.
         add_safe = getattr(torch.serialization, "add_safe_globals", None)

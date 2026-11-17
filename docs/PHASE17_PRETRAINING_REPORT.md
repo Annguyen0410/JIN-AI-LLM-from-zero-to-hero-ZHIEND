@@ -37,6 +37,7 @@ python train_gpt2.py --preset gpt2_small_reference --data-dir data/gpt2_corpus_v
 | quantity | value |
 |---|---|
 | hardware | RTX 2060 6 GB, CUDA 12.1, torch 2.5.1+cu121 (**not** Kaggle) |
+| corpus | `data/gpt2_corpus_v5` — v7 did not exist when this ran; the notebook now refuses to fall back to v5 |
 | context length | 1024 (unchanged; not reduced to 512) |
 | effective batch tokens | 4 × 4 × 1024 = 16,384 per step |
 | steps | 12 |

@@ -19,6 +19,13 @@ not `--resume`.
 `--init-from` with `--resume`/`--resume-from` is refused, as is
 `--continue-pretrain` without `--init-from`.
 
+`--resume-from PATH` always takes precedence over `--resume`. Earlier code chose
+`<out-dir>/latest.pt` whenever `--resume` was also present; on a fresh Kaggle
+working directory that file does not exist, the restore block was skipped, and
+the run trained from scratch while describing itself as a resume. The resolution
+is now `resolve_restore_path()`: a requested resume with no checkpoint is a hard
+error, never a silent fresh start.
+
 ## Implementation
 
 `train_gpt2.py::init_from_checkpoint(model, tokenizer, path)`:

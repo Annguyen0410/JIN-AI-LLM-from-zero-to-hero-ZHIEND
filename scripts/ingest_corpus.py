@@ -99,7 +99,54 @@ def _license_record(source_id: str, report: dict) -> dict:
             "quality_evidence": None, "text_columns": []}
 
 
-def discover_sources(max_report_entries: int = 60) -> list[Source]:
+def _external_sources(input_roots, license_map: dict) -> list[Source]:
+    """Parquet sources mounted outside the repo, e.g. ``/kaggle/input``.
+
+    A mounted folder name is not permission: licence and upstream URL must come
+    from the dataset card via ``--license-map``. Sources without a recorded
+    licence are listed so they can be identified, and ingestion refuses them.
+    """
+    out: list[Source] = []
+    for root in input_roots or []:
+        root = os.path.abspath(root)
+        if not os.path.isdir(root):
+            raise SystemExit(f"[Fatal] --input-root is not a directory: {root}")
+        base_depth = root.rstrip(os.sep).count(os.sep)
+        for dirpath, dirnames, filenames in os.walk(root):
+            if dirpath.rstrip(os.sep).count(os.sep) - base_depth >= 3:
+                dirnames[:] = []
+                continue
+            dirnames[:] = sorted(d for d in dirnames if not d.startswith("."))
+            if not any(f.endswith(".parquet") for f in filenames):
+                continue
+            dataset_id = os.path.basename(dirpath)
+            if any(s.source_id == dataset_id.replace("-", "_") for s in out):
+                continue
+            meta = (license_map or {}).get(dataset_id) or {}
+            lic = (meta.get("license") or "").strip() or None
+            out.append(Source(
+                source_id=dataset_id.replace("-", "_"),
+                source_name=dataset_id,
+                path_glob=os.path.join(dirpath, "*.parquet"),
+                fmt="parquet",
+                domain="knowledge" if "wiki" in dataset_id else "mounted",
+                license=lic,
+                license_status="documented" if lic else "uncertain",
+                source_url=meta.get("source_url"),
+                commercial_ok=None if not lic else bool(meta.get("commercial_ok", True)),
+                redistribution_ok=None if not lic else bool(meta.get("redistribution_ok", True)),
+                attribution=meta.get("attribution"),
+                text_field=(meta.get("text_columns") or [None])[0],
+                language_hint=meta.get("language"),
+                policy_key=dataset_id,
+                notes=("mounted input; licence from --license-map" if lic else
+                       "mounted input; NO licence recorded (see --license-map)"),
+            ))
+    return out
+
+
+def discover_sources(max_report_entries: int = 60, input_roots=None,
+                     license_map: dict | None = None) -> list[Source]:
     """Build the source list from what is on disk + the download report."""
     report = {"completed": []}
     if os.path.exists(DOWNLOAD_REPORT):
@@ -165,6 +212,7 @@ def discover_sources(max_report_entries: int = 60) -> list[Source]:
             attribution="Project-authored data", language_hint=None,
             policy_key="project_seed"
         ))
+    sources.extend(_external_sources(input_roots, license_map or {}))
     return sources
 
 
@@ -326,7 +374,9 @@ def content_hash(text: str) -> str:
 
 def ingest_source(src: Source, max_docs: int, min_chars: int,
                   batch_size: int = 512) -> dict:
-    files = sorted(glob.glob(os.path.join(ROOT, src.path_glob)))
+    pattern = src.path_glob if os.path.isabs(src.path_glob) else os.path.join(
+        ROOT, src.path_glob)
+    files = sorted(glob.glob(pattern))
     if not files:
         return {"source_id": src.source_id, "present": False}
     out_dir = os.path.join(OUT_ROOT, "documents")
@@ -428,12 +478,26 @@ def main() -> None:
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--max-docs-per-source", type=int, default=200_000)
     ap.add_argument("--min-chars", type=int, default=200)
+    ap.add_argument("--input-root", action="append", default=None,
+                    help="mounted read-only data root to discover parquet in, "
+                         "e.g. /kaggle/input (repeatable)")
+    ap.add_argument("--license-map", default=None,
+                    help="JSON: {\"dataset-dir-name\": {\"license\": ..., "
+                         "\"source_url\": ..., \"text_columns\": [...]}} taken from "
+                         "the upstream dataset card; required for mounted inputs")
     ap.add_argument("--out-root", default=OUT_ROOT,
                     help="where documents/ and raw_manifest.json are written")
     args = ap.parse_args()
     OUT_ROOT = args.out_root
 
-    sources = discover_sources()
+    license_map = {}
+    if args.license_map:
+        if not os.path.exists(args.license_map):
+            raise SystemExit(f"[Fatal] --license-map not found: {args.license_map}")
+        with open(args.license_map, encoding="utf-8") as fh:
+            license_map = json.load(fh)
+
+    sources = discover_sources(input_roots=args.input_root, license_map=license_map)
     if args.list or not (args.source or args.all):
         for s in sources:
             print(f"{s.source_id:28s} {s.fmt:8s} {s.domain:12s} "
@@ -443,6 +507,12 @@ def main() -> None:
     selected = sources if args.all else [s for s in sources if s.source_id == args.source]
     if not selected:
         raise SystemExit(f"Unknown source {args.source!r}. Use --list.")
+    unlicensed = [s.source_id for s in selected if not s.license]
+    if unlicensed:
+        raise SystemExit(
+            "[Fatal] no licence recorded for " + ", ".join(unlicensed) + ". A folder "
+            "name is not permission: pass --license-map with the licence and source "
+            "URL from the upstream dataset card, or the data must not be ingested.")
 
     os.makedirs(OUT_ROOT, exist_ok=True)
     manifest_path = os.path.join(OUT_ROOT, "raw_manifest.json")

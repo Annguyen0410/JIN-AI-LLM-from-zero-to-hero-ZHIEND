@@ -106,6 +106,23 @@ the first Phase 18 deliverable alongside the Kaggle run.
 | abstention | 6/6 | same |
 | Phase 16 recheck after the grounding fix | recall 1.00, calculator 14/14, citations 100 %, model 0 % | `bench_results/phase17/phase16_system_recheck.json` |
 
+## 4b. Corrections after review (before any Kaggle run)
+
+Six defects were found in the first committed version; all are fixed:
+
+| defect | fix | verification |
+|---|---|---|
+| notebook used `--only`, but ingestion declares `--source` | notebook corrected | `--help` flags inspected, sample command exercised locally |
+| `--resume --resume-from X` restored `<out-dir>/latest.pt` and, if absent, trained from scratch | `resolve_restore_path()`: `--resume-from` wins, and a requested resume with no checkpoint is fatal | `tests/test_phase17_session_resume.py::test_resume_from_wins_over_resume`, `::test_missing_resume_checkpoint_is_fatal` |
+| `CONFIG["wikipedia_path"]` was unused; discovery only scanned `data/downloads/general_v1` | `scripts/ingest_corpus.py --input-root` discovers parquet under a mounted root | mounted-root listing exercised; licence-less source refused |
+| Stage G still trained `data/gpt2_corpus_v5` | Stage G/E read `TRAIN_DATA`, which is `data/gpt2_corpus_v7` or unset — never an older shard | notebook asserts `TRAIN_DATA` before training |
+| Stage E needed corpus/benchmark files absent from GitHub | Stage B2 copies the repo into `/kaggle/working/repo` and checks inputs; eval reports `NOT MEASURED` when the frozen file is absent | notebook cells assert paths |
+| preflight marked a Windows machine `is_kaggle: true` | `host_kind()` requires `KAGGLE_KERNEL_RUN_TYPE` or both `/kaggle` mounts and is never true on Windows | artifact regenerated: `host_kind: local`, `is_kaggle: false` |
+
+Also new: ingestion refuses to write a mounted source whose licence is not recorded
+(`--license-map` from the upstream dataset card). `--all` against every mounted
+folder would otherwise have produced an ineligible corpus that looks fine.
+
 ## 5. Candid conclusion
 
 **Did JIN become more capable?** No — and Phase 17 does not pretend otherwise. It

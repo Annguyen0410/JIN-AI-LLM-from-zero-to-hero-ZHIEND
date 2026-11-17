@@ -45,6 +45,15 @@ It records GPU name/count/VRAM, CUDA, torch, Python, CPU, RAM, disk,
 manifests. It **exits non-zero if the checkpoint is missing** — that is the
 point: the run must fail rather than silently train from random weights.
 
+`host.host_kind` is `kaggle` only inside a real kernel (`KAGGLE_KERNEL_RUN_TYPE`
+or both `/kaggle/input` and `/kaggle/working`). A local run records
+`host_kind: local`, so a desktop preflight artifact can never be mistaken for
+Kaggle evidence — Stage A asserts this before training.
+
+The committed `bench_results/phase17/kaggle_preflight.json` was generated on the
+development machine and says `host_kind: local`. Replace it with the Kaggle run's
+output; the two are not interchangeable.
+
 Record the GPU you actually got in the run log. Kaggle may provide P100, T4,
 multiple T4s, or something else. The trainer is single-GPU: with two visible GPUs
 it still uses device 0, and throughput is not expected to double.
@@ -53,9 +62,18 @@ Do not replace the installed PyTorch unless it is incompatible with the repo.
 
 ## 3. Corpus (Stages C/D)
 
+The mounted Dataset lives outside the repo, so ingestion needs `--input-root`. The
+licence must come from the dataset card via `--license-map`; a folder name is not
+permission and ingestion refuses a source with no recorded licence.
+
 ```bash
-python scripts/ingest_corpus.py --list
-python scripts/ingest_corpus.py --only <the-reviewed-source-id> \
+python scripts/ingest_corpus.py --input-root /kaggle/input/wikipedia-en-parquet --list
+
+# {"wikipedia-en-20231101": {"license": "<from the card>",
+#                            "source_url": "<dataset card>",
+#                            "text_columns": ["text"], "language": "en"}}
+python scripts/ingest_corpus.py --input-root /kaggle/input/wikipedia-en-parquet \
+    --source <the-reviewed-source-id> --license-map license_map.json \
     --max-docs-per-source 10000 --out-root data/curated_v7_sample
 du -sh data/curated_v7_sample
 ```
@@ -63,7 +81,8 @@ du -sh data/curated_v7_sample
 Project bytes-per-document and tokens-per-document from that sample. Only then:
 
 ```bash
-python scripts/ingest_corpus.py --only <the-reviewed-source-id> \
+python scripts/ingest_corpus.py --input-root /kaggle/input/wikipedia-en-parquet \
+    --source <the-reviewed-source-id> --license-map license_map.json \
     --max-docs-per-source 1000000 --out-root data/curated_v7
 python scripts/verify_corpus.py --in-root data/curated_v7 --out-root data/curated_v7 \
     --pii-policy exclude --license-policy enforce
@@ -78,7 +97,7 @@ acceptance.
 ## 4. Smoke test (Stage E) — 20 steps
 
 ```bash
-python train_gpt2.py --preset gpt2_small_reference --data-dir data/gpt2_corpus_v5 \
+python train_gpt2.py --preset gpt2_small_reference --data-dir data/gpt2_corpus_v7 \
     --init-from $CKPT --continue-pretrain --out-dir $OUT/smoke \
     --seq-len 1024 --batch-size 4 --grad-accum 4 --max-steps 20 \
     --warmup 2 --lr 1e-4 --eval-interval 10 --eval-iters 4 --save-interval 10 --seed 17
@@ -127,15 +146,19 @@ experiment fingerprint. Do not use `--extend-budget` to move between sessions.
 
 ```bash
 python train_gpt2.py --preset gpt2_small_reference --data-dir data/gpt2_corpus_v7 \
-    --resume --resume-from /kaggle/input/jin-phase17-s1/latest.pt --out-dir $OUT/run_100m \
+    --resume-from /kaggle/input/jin-phase17-s1/latest.pt --out-dir $OUT/run_100m \
     --seq-len 1024 --batch-size 4 --grad-accum 8 --max-steps 3052 \
     --warmup 100 --lr <chosen> --eval-interval 250 --eval-iters 8 \
     --save-interval 250 --session-max-minutes 500 --seed 17
 ```
 
-`--resume-from` exists precisely so a read-only Kaggle input can be restored into
-a fresh working directory. `--max-steps` must equal the first session's value;
-the fingerprint check refuses anything else.
+`--resume-from` alone is enough: it restores that path directly, wherever it is
+mounted. `--resume` is only for the default `<out-dir>/latest.pt`, and combining
+the two is harmless but unnecessary — `--resume-from` wins. If a resume is
+requested and the file does not exist, the trainer **stops** with
+"resume requested but no checkpoint at …" instead of starting a fresh run.
+`--max-steps` must equal the first session's value; the fingerprint check refuses
+anything else.
 
 ## 8. Output contract
 
