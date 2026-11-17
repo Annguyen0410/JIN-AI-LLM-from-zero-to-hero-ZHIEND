@@ -31,6 +31,7 @@ import glob
 import hashlib
 import json
 import os
+import subprocess
 import re
 import sys
 import time
@@ -124,6 +125,11 @@ def _external_sources(input_roots, license_map: dict) -> list[Source]:
                 continue
             meta = (license_map or {}).get(dataset_id) or {}
             lic = (meta.get("license") or "").strip() or None
+            # A re-uploaded dataset keeps its folder name, not the reviewed source id.
+            # ``policy_source`` lets the licence map point at the reviewed entry
+            # (e.g. wikipedia-en-20231101) instead of asking the policy to trust a
+            # folder name.
+            policy_key = (meta.get("policy_source") or dataset_id)
             out.append(Source(
                 source_id=dataset_id.replace("-", "_"),
                 source_name=dataset_id,
@@ -138,7 +144,7 @@ def _external_sources(input_roots, license_map: dict) -> list[Source]:
                 attribution=meta.get("attribution"),
                 text_field=(meta.get("text_columns") or [None])[0],
                 language_hint=meta.get("language"),
-                policy_key=dataset_id,
+                policy_key=policy_key,
                 notes=("mounted input; licence from --license-map" if lic else
                        "mounted input; NO licence recorded (see --license-map)"),
             ))
@@ -431,6 +437,12 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
                     doc = {
                         "document_id": f"{src.source_id}:{written}",
                         "source_id": src.source_id,
+                        # The reviewed id this data is classified under. A mounted
+                        # re-upload keeps its own folder name, so verification must
+                        # resolve the policy through this field, not through
+                        # source_id. It selects a reviewed entry; it cannot grant a
+                        # licence by itself.
+                        "policy_source": src.policy_key or src.source_id,
                         "source_name": src.source_name,
                         "source_url": rec.get("url") or src.source_url,
                         "license": src.license,
@@ -482,6 +494,21 @@ def ingest_source(src: Source, max_docs: int, min_chars: int,
     }
 
 
+def _git_rev() -> str | None:
+    """Current commit, or None outside a git work tree.
+
+    The Kaggle working copy has no .git, so `git rev-parse` used to print
+    "fatal: not a git repository" into every run log. A missing revision is
+    reported as None instead of noise.
+    """
+    try:
+        out = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
+                             text=True, timeout=10)
+        return out.stdout.strip() or None
+    except Exception:
+        return None
+
+
 def main() -> None:
     global OUT_ROOT
     ap = argparse.ArgumentParser(description="Phase 2 corpus ingestion")
@@ -529,7 +556,7 @@ def main() -> None:
     os.makedirs(OUT_ROOT, exist_ok=True)
     manifest_path = os.path.join(OUT_ROOT, "raw_manifest.json")
     manifest = {"schema_version": 2, "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
-                "repo_revision": os.popen("git rev-parse HEAD").read().strip(),
+                "repo_revision": _git_rev() or "",
                 "sources": [], "policy": {
                     "license_unknown": "excluded from the default training mixture",
                     "normalisation": "CRLF->LF, trailing spaces, document trim only",

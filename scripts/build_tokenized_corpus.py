@@ -18,6 +18,7 @@ import argparse
 import hashlib
 import json
 import os
+import subprocess
 import sys
 import time
 from collections import Counter
@@ -184,6 +185,21 @@ def _display_path(path: str) -> str:
         return path
 
 
+def _git_rev() -> str | None:
+    """Current commit, or None outside a git work tree.
+
+    The Kaggle working copy has no .git, so `git rev-parse` used to print
+    "fatal: not a git repository" into every run log. A missing revision is
+    reported as None instead of noise.
+    """
+    try:
+        out = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
+                             text=True, timeout=10)
+        return out.stdout.strip() or None
+    except Exception:
+        return None
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Build the v5 token stream")
     ap.add_argument("--splits", default=SPLITS)
@@ -212,7 +228,7 @@ def main() -> None:
     manifest = {
         "schema_version": 2,
         "built_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        "revision": os.popen("git rev-parse HEAD").read().strip(),
+        "revision": _git_rev() or "",
         "tokenizer": {"kind": tokenizer.kind, "vocab_size": tokenizer.vocab_size,
                       "eot_id": int(tokenizer.eot_id),
                       "hash": hashlib.sha256(json.dumps(

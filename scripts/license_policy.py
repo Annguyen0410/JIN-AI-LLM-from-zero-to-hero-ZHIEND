@@ -166,7 +166,12 @@ def decision_from_document(doc: dict) -> "LicenseDecision":
     # `canonical_license` field is data, not a permission: trusting it would let
     # any record (or any compromised upstream file) declare itself
     # "project-authored" or "cc-by-sa-3.0+gfdl" and become eligible.
-    reviewed = classify_source(source_id, doc.get("license"))
+    # A mounted re-upload keeps its folder name in source_id while the reviewed
+    # entry it was ingested under is recorded as policy_source. Resolving the
+    # policy through that id still uses the reviewed table: a record cannot
+    # invent a licence, it can only point at one that was already reviewed.
+    policy_key = str(doc.get("policy_source") or source_id)
+    reviewed = classify_source(policy_key, doc.get("license"))
     recorded = doc.get("canonical_license")
 
     if recorded and recorded != reviewed.canonical:

@@ -38,6 +38,7 @@ import hashlib
 import json
 import math
 import os
+import subprocess
 import sys
 import time
 
@@ -318,7 +319,7 @@ def experiment_fingerprint(model, tokenizer, dataset_manifest: dict,
         "precision": {"amp": not args.no_amp, "amp_dtype": "float16"},
         "seed": args.seed,
         "dropout": args.dropout,
-        "code_revision": os.popen("git rev-parse HEAD").read().strip() or None,
+        "code_revision": _git_rev(),
     }
 
 
@@ -681,6 +682,21 @@ def init_from_checkpoint(model, tokenizer, path: str, log_fn=print) -> dict:
     return lineage
 
 
+def _git_rev() -> str | None:
+    """Current commit, or None outside a git work tree.
+
+    The Kaggle working copy has no .git, so `git rev-parse` used to print
+    "fatal: not a git repository" into every run log. A missing revision is
+    reported as None instead of noise.
+    """
+    try:
+        out = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
+                             text=True, timeout=10)
+        return out.stdout.strip() or None
+    except Exception:
+        return None
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):
         try:
@@ -767,7 +783,7 @@ def main() -> None:
         "parent_iteration": None,
         "parent_tokens_seen": None,
         "init_mode": "random",
-        "revision": os.popen("git rev-parse HEAD").read().strip() or None,
+        "revision": _git_rev(),
         "hardware": {
             "device": device,
             "gpu": torch.cuda.get_device_name(0) if device == "cuda" else None,

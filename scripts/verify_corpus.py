@@ -304,6 +304,14 @@ def main() -> None:
         keep[rep] = {"split": split, "cluster_size": len(members)}
     near_dup_removed = sum(v["cluster_size"] - 1 for v in keep.values())
     print(f"[filter] kept {len(keep):,} clusters | drops {dict(drops)}")
+    if not keep:
+        # An empty corpus used to pass the duplicate/leak audit and then fail much
+        # later with a confusing tokenizer error. Stop here and say why.
+        raise SystemExit(
+            f"[Fatal] 0 documents survived filtering (drops: {dict(drops)}). "
+            "If the drop is license_ineligible, the source is not in the reviewed "
+            "licence mapping: pass its upstream id as policy_source in --license-map "
+            "instead of relying on the mounted folder name.")
 
     # ── pass 2: write each retained document exactly once ────────────
     split_paths = {name: os.path.join(splits_dir, f"{name}.jsonl")
