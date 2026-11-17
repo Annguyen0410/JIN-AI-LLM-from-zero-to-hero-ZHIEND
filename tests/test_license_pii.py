@@ -130,8 +130,11 @@ def test_verify_excludes_ineligible_license_documents(tmp_path):
     unlicensed = "A long paragraph from a source whose licence was never reviewed. " * 5
     root = tmp_path / "curated"
     _write_docs(str(root / "documents" / "d.jsonl"), [
-        _doc(clean, "src_ok", "1"),
-        _doc(unlicensed, "src_unreviewed", "1", eligible=False, canonical="unknown"),
+        _doc(clean, "wikipedia_en_20231101", "1", canonical="cc-by-sa-3.0+gfdl"),
+        # Unreviewed source that *claims* an approved licence: Phase 16 made the
+        # reviewed source mapping authoritative, so the claim must not help it.
+        _doc(unlicensed, "scraped_dump", "1", eligible=False,
+             canonical="project-authored"),
     ])
     proc = subprocess.run(
         [sys.executable, os.path.join(ROOT, "scripts", "verify_corpus.py"),
@@ -146,13 +149,14 @@ def test_verify_excludes_ineligible_license_documents(tmp_path):
         with open(root / "splits" / f"{split}.jsonl", encoding="utf-8") as fh:
             kept += [json.loads(l) for l in fh if l.strip()]
     assert len(kept) == 1
-    assert kept[0]["source_id"] == "src_ok"
+    assert kept[0]["source_id"] == "wikipedia_en_20231101"
 
 
 def test_provenance_fields_survive_verification(tmp_path):
     text = "Provenance must survive verification: source, revision, licence, id. " * 5
     root = tmp_path / "curated"
-    record = _doc(text, "src_ok", "42")
+    record = _doc(text, "wikipedia_en_20231101", "42",
+                  canonical="cc-by-sa-3.0+gfdl")
     record["dataset_revision"] = "abc123"
     record["license"] = "CC-BY-SA-3.0"
     record["original_title"] = "A title"

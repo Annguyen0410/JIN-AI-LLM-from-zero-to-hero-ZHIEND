@@ -1,5 +1,15 @@
 # PHASE 15E — CLEAN UNSEEN-BY-BOTH COMPARISON
 
+> **SUPERSEDED (Phase 16).** The numbers below were computed with the Phase 15
+> evaluator, which discarded documents shorter than one window and every final
+> partial window: only **11,264 of 37,558** available tokens were scored, so the
+> comparison covered a non-random 30 % of the benchmark. Protocol v2
+> (`scripts/eval_phase16.py`) scores 100 % of the tokens and gives JIN Phase 14
+> **4.8935** (ppl 133.4) vs GPT-2 **3.3203** (ppl 27.7), i.e. a **1.57-nat**
+> token-weighted gap rather than the 1.78 nats quoted here. The table and its
+> per-domain conclusions are kept as a historical artifact.
+> See `docs/PHASE16_EVALUATION_PROTOCOL.md`.
+
 ## 1. Why Phase 14's comparison was tainted
 
 The Phase 14 table compared JIN checkpoints against GPT-2 on validation windows

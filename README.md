@@ -99,6 +99,59 @@
 > [clean comparison](docs/PHASE15_CLEAN_COMPARISON.md) · [resume](docs/PHASE15_RESUME_REPORT.md) ·
 > [experiments](docs/PHASE15_TRAINING_EXPERIMENTS.md) · [data strategy](docs/PHASE15_DATA_STRATEGY.md).
 
+> ## Trạng thái Phase 16 — 2026-11-16 (`BASELINE_AI_CAPABILITY_MEASURED`)
+>
+> Phase 16 đo **năng lực làm việc thật** của JIN, tách hẳn 3 tầng:
+>
+> **1. Kiến trúc (đã xác minh từ checkpoint):** 12 layer, 768 chiều, 12 head,
+> context 1.024, **124.439.808 tham số**. File checkpoint chứa 163.037.184 giá trị
+> vì `head.weight` được lưu trùng với `tok_emb.weight` (giống hệt từng byte) →
+> tốn 155 MB mỗi checkpoint, **không phải model to hơn**. Số "~25M / 4-layer"
+> trong báo cáo Phase 15 là **sai** và đã được sửa.
+>
+> **2. Năng lực model nền — đo trên 73 task có chấm điểm deterministic:**
+>
+> | Nhóm | Kết quả |
+> |---|---|
+> | Tuân thủ chỉ dẫn | 0/8 |
+> | Hỏi–đáp | 0/8 |
+> | Toán / suy luận | 0/8 |
+> | Lập trình (30 bài, có hidden tests) | 0/30 (syntax cũng 0%) |
+> | Tiếng Việt | 0/6 |
+> | Trích xuất / tóm tắt | 0/5 |
+> | Đa lượt | 0/4 |
+> | Quyết định dùng tool | 0/4 |
+> | **Tổng** | **0/73 (0%)** |
+>
+> Benchmark tự kiểm bằng gold answers: **73/73 pass** (nếu checker sai thì oracle
+> không thể đạt 100%).
+>
+> **3. Hệ thống (retrieval + calculator + citation) — đo riêng, không gộp điểm:**
+> BM25 recall@3 **1,00** (12 truy vấn), calculator **100%** (14 biểu thức), citation
+> hợp lệ **100%**, nhưng model đọc evidence trả lời đúng **0%**. Năng lực dùng được
+> nằm ở tool, không ở model.
+>
+> **4. SFT (LoRA):** dataset 44.631 hội thoại đã qua gate license/dedup/PII/
+> contamination (5 nguồn eligible; `smol-smoltalk` và `chat_train.txt` bị loại).
+> Adapter rank 16, 2,36M tham số (1,9%), 615k token, val loss 4,27 → **3,96**.
+> Trên benchmark: base 0/73 → adapter **2/73** (raw) / 1/73 (chat) — **chưa đủ để
+> gọi là cải thiện** (p ≈ 0,13). Không tuyên bố `CAPABILITY_GAIN_VERIFIED`.
+>
+> **5. Evaluation đã sửa:** evaluator cũ bỏ document ngắn và cửa sổ cuối, nên số
+> Phase 15 chỉ tính trên **11.264/37.558 token (30%)**. Protocol v2 chấm đủ 100%:
+> Phase 14 **4,8935** (ppl 133) vs GPT-2 **3,3203** (ppl 27,7) → khoảng cách thật
+> **1,57 nats**, không phải 1,78.
+>
+> **Giới hạn:** không có năng lực task nào; sinh văn bản vẫn lặp; tiếng Việt 0/6;
+> chưa có human review; chưa commit/push.
+>
+> Chi tiết: [release](docs/PHASE16_RELEASE_REPORT.md) ·
+> [baseline model](docs/PHASE16_MODEL_BASELINE.md) ·
+> [evaluation](docs/PHASE16_EVALUATION_PROTOCOL.md) ·
+> [capability benchmark](docs/PHASE16_CAPABILITY_BENCHMARK.md) ·
+> [SFT data](docs/PHASE16_SFT_DATA_AUDIT.md) ·
+> [SFT training](docs/PHASE16_SFT_TRAINING_REPORT.md).
+
 **Training chia rõ 3 loại:** mở [trung tâm Pretrain / SFT / Preference](docs/training/README.md) để chọn đúng dữ liệu, checkpoint, test và lệnh tiếp tục. [Kế hoạch dữ liệu tổng quát 70/30](docs/training/DATA_GENERALIST.md) tải từ nguồn công bố, trần mới 20 GiB; xem báo cáo tiến độ, không coi kế hoạch là dữ liệu đã sẵn sàng train. V4 60k là SFT, hash checkpoint đã khớp log; chưa có benchmark năng lực v4 mới.
 
 > **Verified status — 2026-09-30:** See [upgrade report](docs/UPGRADE_2026.md)

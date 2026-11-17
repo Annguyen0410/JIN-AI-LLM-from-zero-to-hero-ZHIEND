@@ -1,0 +1,137 @@
+{
+  "protocol": "phase16.coverage.v2",
+  "identity": {
+    "hf_model": "gpt2"
+  },
+  "benchmark": {
+    "file": "data\\curated_v6\\benchmark\\clean_unseen.jsonl",
+    "sha256": "92b57ea52865ecd321a0d4fb56036800d487fd6fc23bc77ee4bdfc42105db084",
+    "candidate_pool_documents": 4000,
+    "sampling": {
+      "strata": [
+        "source_id",
+        "language",
+        "domain"
+      ],
+      "docs_per_stratum": 24,
+      "seed": 15
+    }
+  },
+  "tokenizer": {
+    "kind": "gpt2_bpe",
+    "vocab_size": 50257,
+    "eot_id": 50256
+  },
+  "seq_len": 512,
+  "selected_document_ids": {
+    "('wikipedia_en_20231101', 'en', 'knowledge')": [
+      "wikipedia_en_20231101:60837",
+      "wikipedia_en_20231101:88665",
+      "wikipedia_en_20231101:77886",
+      "wikipedia_en_20231101:63921",
+      "wikipedia_en_20231101:191653",
+      "wikipedia_en_20231101:36343",
+      "wikipedia_en_20231101:183026",
+      "wikipedia_en_20231101:195372",
+      "wikipedia_en_20231101:123723",
+      "wikipedia_en_20231101:16872",
+      "wikipedia_en_20231101:138542",
+      "wikipedia_en_20231101:193099",
+      "wikipedia_en_20231101:63254",
+      "wikipedia_en_20231101:20836",
+      "wikipedia_en_20231101:69959",
+      "wikipedia_en_20231101:156775",
+      "wikipedia_en_20231101:173602",
+      "wikipedia_en_20231101:149297",
+      "wikipedia_en_20231101:128497",
+      "wikipedia_en_20231101:194856",
+      "wikipedia_en_20231101:154803",
+      "wikipedia_en_20231101:28019",
+      "wikipedia_en_20231101:192111",
+      "wikipedia_en_20231101:65419"
+    ],
+    "('cosmopedia_v2_sample', 'en', 'educational')": [
+      "cosmopedia_v2_sample:16170",
+      "cosmopedia_v2_sample:86447",
+      "cosmopedia_v2_sample:142961",
+      "cosmopedia_v2_sample:182592",
+      "cosmopedia_v2_sample:429",
+      "cosmopedia_v2_sample:49543",
+      "cosmopedia_v2_sample:102967",
+      "cosmopedia_v2_sample:7883",
+      "cosmopedia_v2_sample:91987",
+      "cosmopedia_v2_sample:107710",
+      "cosmopedia_v2_sample:188473",
+      "cosmopedia_v2_sample:25287",
+      "cosmopedia_v2_sample:135334",
+      "cosmopedia_v2_sample:58313",
+      "cosmopedia_v2_sample:94247",
+      "cosmopedia_v2_sample:168106",
+      "cosmopedia_v2_sample:195429",
+      "cosmopedia_v2_sample:5290",
+      "cosmopedia_v2_sample:160601",
+      "cosmopedia_v2_sample:112501",
+      "cosmopedia_v2_sample:76613",
+      "cosmopedia_v2_sample:104026",
+      "cosmopedia_v2_sample:1268",
+      "cosmopedia_v2_sample:60230"
+    ],
+    "('project_seed', 'en', 'conversation')": [
+      "project_seed:290",
+      "project_seed:608",
+      "project_seed:411",
+      "project_seed:236",
+      "project_seed:609",
+      "project_seed:638",
+      "project_seed:483"
+    ]
+  },
+  "strata": {
+    "cosmopedia_v2_sample|en|educational": {
+      "loss": 3.0007,
+      "perplexity": 20.1,
+      "documents_selected": 24,
+      "documents_scored": 24,
+      "tokens_scored": 16169,
+      "nll_sum": 48518.43
+    },
+    "project_seed|en|conversation": {
+      "loss": 3.7075,
+      "perplexity": 40.75,
+      "documents_selected": 7,
+      "documents_scored": 7,
+      "tokens_scored": 301,
+      "nll_sum": 1115.95
+    },
+    "wikipedia_en_20231101|en|knowledge": {
+      "loss": 3.5598,
+      "perplexity": 35.16,
+      "documents_selected": 24,
+      "documents_scored": 24,
+      "tokens_scored": 21088,
+      "nll_sum": 75069.79
+    }
+  },
+  "aggregate": {
+    "macro_loss": 3.4227,
+    "macro_perplexity": 30.65,
+    "token_weighted_loss": 3.3203,
+    "token_weighted_perplexity": 27.67,
+    "documents_selected": 55,
+    "documents_scored": 55,
+    "documents_unscored": 0,
+    "eligible_tokens": 37558,
+    "tokens_scored": 37558,
+    "token_coverage": 1.0,
+    "padding_tokens": 0
+  },
+  "document_length_buckets": {
+    "0-128": 9,
+    "1024-2048": 6,
+    "128-256": 3,
+    "2048+": 2,
+    "256-512": 14,
+    "512-1024": 21
+  },
+  "unscored_documents": []
+}

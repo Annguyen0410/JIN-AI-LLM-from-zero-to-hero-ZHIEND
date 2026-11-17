@@ -1,0 +1,185 @@
+{
+  "checkpoint": "checkpoints\\gpt2_small\\phase14_wiki\\best.pt",
+  "sha256": "069d9da650a81dc9e2c0fee94d0e20dc46a5c4f7e266a6c381a72140f48266fa",
+  "bytes": 1493474638,
+  "load_seconds": 0.06,
+  "load_state_dict": {
+    "missing": [],
+    "unexpected": []
+  },
+  "state_dict": {
+    "parameter_count": 163037184,
+    "by_prefix": {
+      "tok_emb": 38597376,
+      "pos_emb": 786432,
+      "blocks": 85054464,
+      "ln_f": 1536,
+      "head": 38597376
+    },
+    "embedding_parameters": 39383808,
+    "output_head_parameters": 38597376,
+    "output_head_tied_to_embeddings": true,
+    "non_embedding_parameters": 123653376,
+    "tensors": 149
+  },
+  "instantiated_model_parameters": 124439808,
+  "parameters_match_state_dict": false,
+  "model_config": {
+    "vocab_size": 50257,
+    "embed_dim": 768,
+    "block_size": 1024,
+    "n_layers": 12,
+    "n_heads": 12,
+    "n_kv_heads": 12,
+    "dropout": 0.0,
+    "gradient_checkpointing": true,
+    "modern": false,
+    "arch_id": "gpt2_small",
+    "gelu_tanh": true,
+    "resid_scaled_init": true,
+    "qk_norm": false,
+    "rope_theta": 10000.0,
+    "rope_scaling": null,
+    "sliding_window": null,
+    "local_layer_every": null,
+    "moe": null,
+    "expert_offload": false,
+    "static_kv_cache": false,
+    "kv_cache_int8": false
+  },
+  "iteration": 640,
+  "tokens_seen": 47185920,
+  "best_val_loss": 4.7399,
+  "dataset_manifest": {
+    "schema_version": 2,
+    "built_at": "2026-11-16T10:58:19",
+    "revision": "f353dc829029813d590a2630470f5261413c3445",
+    "tokenizer": {
+      "kind": "gpt2_bpe",
+      "vocab_size": 50257,
+      "eot_id": 50256,
+      "hash": "40bbc29de16d5ed2e80b3149450d9365f123f8c1ead87579cf2e0a1d9c23b0b5"
+    },
+    "curated_manifest": "data\\curated_v5\\raw_manifest.json",
+    "framing": "<eot> document <eot>, uint16 little-endian",
+    "train": {
+      "path": "data\\gpt2_corpus_v5\\train.bin",
+      "sha256": "a44913e192991a6663b19444afe847e0f7a581cb4265823ba615d509ccdb1bd5",
+      "bytes": 102445284,
+      "tokens": 51222642,
+      "documents": 81311,
+      "source_chars": 222368823,
+      "chars_per_token": 4.341,
+      "tokens_per_byte": 0.5,
+      "token_composition": {
+        "cosmopedia_v2_sample": 10884310,
+        "prepared_v4": 5930568,
+        "project_seed": 33198,
+        "wikipedia_en_20231101": 34374566
+      },
+      "language_composition": {
+        "en": 49664157,
+        "unknown": 347,
+        "other": 4950,
+        "vi": 1553188
+      },
+      "domain_composition": {
+        "educational": 10884310,
+        "mixed": 5930568,
+        "conversation": 33198,
+        "knowledge": 34374566
+      },
+      "truncated_at_max_tokens": false,
+      "sources": [
+        "data\\curated_v5\\splits\\train.jsonl"
+      ]
+    },
+    "val": {
+      "path": "data\\gpt2_corpus_v5\\val.bin",
+      "sha256": "9eafe2dc4c554e2359d39bb80424ae2f235b97e3cf0b1b654c6107cee521639c",
+      "bytes": 57939318,
+      "tokens": 28969659,
+      "documents": 37419,
+      "source_chars": 132705397,
+      "chars_per_token": 4.581,
+      "tokens_per_byte": 0.5,
+      "token_composition": {
+        "cosmopedia_v2_sample": 11936570,
+        "prepared_v4": 749015,
+        "project_seed": 2583,
+        "wikipedia_en_20231101": 16281491
+      },
+      "language_composition": {
+        "en": 28743303,
+        "unknown": 562,
+        "other": 469,
+        "vi": 225325
+      },
+      "domain_composition": {
+        "educational": 11936570,
+        "mixed": 749015,
+        "conversation": 2583,
+        "knowledge": 16281491
+      },
+      "truncated_at_max_tokens": false,
+      "sources": [
+        "data\\curated_v5\\splits\\val.jsonl"
+      ]
+    },
+    "test": {
+      "path": "data\\gpt2_corpus_v5\\test.bin",
+      "sha256": "ba6250ae3d68f60bef7891974c05765bca84bc6ceb7bdf91feba89686e068463",
+      "bytes": 14806656,
+      "tokens": 7403328,
+      "documents": 9476,
+      "source_chars": 33776955,
+      "chars_per_token": 4.562,
+      "tokens_per_byte": 0.5,
+      "token_composition": {
+        "cosmopedia_v2_sample": 2994809,
+        "prepared_v4": 229626,
+        "project_seed": 657,
+        "wikipedia_en_20231101": 4178236
+      },
+      "language_composition": {
+        "en": 7338410,
+        "unknown": 54,
+        "other": 284,
+        "vi": 64580
+      },
+      "domain_composition": {
+        "educational": 2994809,
+        "mixed": 229626,
+        "conversation": 657,
+        "knowledge": 4178236
+      },
+      "truncated_at_max_tokens": false,
+      "sources": [
+        "data\\curated_v5\\splits\\test.jsonl"
+      ]
+    }
+  },
+  "tokenizer": {
+    "kind": "gpt2_bpe",
+    "vocab_size": 50257,
+    "backend": "transformers"
+  },
+  "tokenizer_fingerprint": "40bbc29de16d5ed2e80b3149450d9365f123f8c1ead87579cf2e0a1d9c23b0b5",
+  "hardware": {
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 2060",
+    "torch": "2.5.1+cu121",
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0"
+  },
+  "generation": {
+    "prompt_tokens": 7,
+    "new_tokens_per_run": 32,
+    "runs": 3,
+    "time_to_first_token_seconds": 0.0122,
+    "end_to_end_seconds_mean": 0.284,
+    "tokens_per_second": 112.6,
+    "peak_vram_mb": 498.1
+  },
+  "reproduce": "python scripts/phase16_inspect_model.py --checkpoint checkpoints\\gpt2_small\\phase14_wiki\\best.pt"
+}

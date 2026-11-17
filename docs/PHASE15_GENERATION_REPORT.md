@@ -81,7 +81,9 @@ is the explanation, and it is not an excuse to hide the result.
 
 Generation quality is capped by two things this suite can measure:
 
-1. **Model and budget.** A ~25 M-parameter transformer trained on 47 M tokens
+1. **Model and budget.** A 124,439,808-parameter, 12-layer transformer trained on
+   47 M tokens (size verified from the checkpoint in `docs/PHASE16_MODEL_BASELINE.md`;
+   this report originally said "~25 M", which was wrong)
    cannot produce coherent multi-sentence text; GPT-2 needed 100 B tokens for
    that. Scaling tokens is the lever, not decoding tricks.
 2. **No instruction data in pretraining.** The model is a document continuator.

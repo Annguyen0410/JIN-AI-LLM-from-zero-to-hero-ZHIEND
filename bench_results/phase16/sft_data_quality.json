@@ -1,0 +1,129 @@
+{
+  "protocol": "phase16.sft.v1",
+  "input_records": 54091,
+  "kept_after_gates": 44632,
+  "unique_after_exact_dedup": 44631,
+  "after_near_dedup": 44631,
+  "gates": {
+    "exact_duplicates": 1,
+    "near_duplicates": 280,
+    "jaccard_comparisons": 2091009
+  },
+  "splits": {
+    "train": 43706,
+    "val": 467,
+    "test": 458
+  },
+  "clusters": 44351,
+  "clusters_straddling_splits": 0,
+  "duplicate_content_hashes": 0,
+  "near_dup_jaccard": 0.8,
+  "near_dup_method": "bottom-12 shingle-hash LSH banding + exact Jaccard; pairs that share no signature bucket are not compared",
+  "sources": {
+    "dolly-15k.jsonl": {
+      "file": "dolly-15k.jsonl",
+      "read": 9498,
+      "kept": 9468,
+      "dropped": {
+        "quality:answer_too_long": 26,
+        "quality:answer_too_short": 3,
+        "pii": 1
+      },
+      "source_id": "dolly-15k"
+    },
+    "gsm8k-train.jsonl": {
+      "file": "gsm8k-train.jsonl",
+      "read": 7061,
+      "kept": 7061,
+      "dropped": {},
+      "source_id": "gsm8k-train"
+    },
+    "metamathqa.jsonl": {
+      "file": "metamathqa.jsonl",
+      "read": 9476,
+      "kept": 9476,
+      "dropped": {},
+      "source_id": "metamathqa"
+    },
+    "oasst2.jsonl": {
+      "file": "oasst2.jsonl",
+      "read": 9548,
+      "kept": 9443,
+      "dropped": {
+        "pii": 20,
+        "quality:answer_too_short": 12,
+        "quality:answer_too_long": 62,
+        "quality:no_alphanumeric": 9,
+        "quality:degenerate_repetition": 1,
+        "contamination:benchmark_answer": 1
+      },
+      "source_id": "oasst2"
+    },
+    "opencodeinstruct.jsonl": {
+      "file": "opencodeinstruct.jsonl",
+      "read": 9246,
+      "kept": 9184,
+      "dropped": {
+        "pii": 57,
+        "contamination:benchmark_answer": 2,
+        "quality:answer_too_long": 3
+      },
+      "source_id": "opencodeinstruct"
+    },
+    "smol-smoltalk.jsonl": {
+      "file": "smol-smoltalk.jsonl",
+      "read": 9262,
+      "kept": 0,
+      "dropped": {
+        "license:apache-2.0": 9262
+      },
+      "source_id": "smol-smoltalk"
+    }
+  },
+  "license_table": {
+    "dolly-15k": {
+      "license": "cc-by-sa-3.0",
+      "eligible": true,
+      "card": "https://huggingface.co/datasets/databricks/databricks-dolly-15k",
+      "review": "Human-written instruction/response pairs. CC-BY-SA-3.0: attribution and share-alike obligations follow the data."
+    },
+    "gsm8k-train": {
+      "license": "mit",
+      "eligible": true,
+      "card": "https://huggingface.co/datasets/openai/gsm8k",
+      "review": "MIT per dataset card. Grade-school math word problems with worked solutions."
+    },
+    "metamathqa": {
+      "license": "mit",
+      "eligible": true,
+      "card": "https://huggingface.co/datasets/meta-math/MetaMathQA",
+      "review": "MIT per dataset card. Augmented from GSM8K and MATH **train** splits only; the card states no test-set data is included."
+    },
+    "oasst2": {
+      "license": "apache-2.0",
+      "eligible": true,
+      "card": "https://huggingface.co/datasets/OpenAssistant/oasst2",
+      "review": "Apache-2.0 per dataset card. Crowd-written conversations: user content, so the PII gate and quality filter are mandatory, not optional."
+    },
+    "opencodeinstruct": {
+      "license": "cc-by-4.0",
+      "eligible": true,
+      "card": "https://huggingface.co/datasets/nvidia/OpenCodeInstruct",
+      "review": "CC-BY-4.0 per dataset card. Synthetic code instructions with unit-test fields."
+    },
+    "smol-smoltalk": {
+      "license": "apache-2.0",
+      "eligible": false,
+      "card": "https://huggingface.co/datasets/HuggingFaceTB/smol-smoltalk",
+      "review": "Aggregated from many upstream datasets; the mixture licence does not grant rights over constituents that were not reviewed here."
+    },
+    "chat_train_txt": {
+      "license": "unknown",
+      "eligible": false,
+      "card": null,
+      "review": "No per-record provenance: source, licence and author are unknown. Excluded from SFT until that is resolved."
+    }
+  },
+  "pii": "pattern-based only: emails, phones, IPv4, card-shaped numbers, SSNs; this is not comprehensive PII removal",
+  "output_root": "data\\phase16_sft"
+}

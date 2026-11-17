@@ -122,7 +122,16 @@ class LicenseDecision:
 
 def classify_source(source_id: str, original_license: str | None) -> LicenseDecision:
     """Map a source to a reviewed policy. No inference from the string."""
+    # Documents carry the id with underscores (wikipedia_en_20231101) while the
+    # reviewed table uses hyphens; both spellings must resolve to the same entry,
+    # and an id that resolves to nothing stays unknown.
     reviewed = REVIEWED_SOURCES.get(source_id)
+    if reviewed is None and source_id:
+        for candidate in (source_id.replace("_", "-"), source_id.replace("-", "_")):
+            if candidate in REVIEWED_SOURCES:
+                reviewed = REVIEWED_SOURCES[candidate]
+                source_id = candidate
+                break
     if reviewed is None:
         policy = LICENSE_POLICIES["unknown"]
         return LicenseDecision(
@@ -152,19 +161,34 @@ def decision_from_document(doc: dict) -> "LicenseDecision":
     mapping otherwise (so a hand-written document without the fields is still
     classified, not trusted).
     """
-    canonical = doc.get("canonical_license")
-    if canonical in LICENSE_POLICIES:
-        p = LICENSE_POLICIES[canonical]
+    source_id = str(doc.get("source_id", "?"))
+    # The reviewed source mapping is authoritative. A record's own
+    # `canonical_license` field is data, not a permission: trusting it would let
+    # any record (or any compromised upstream file) declare itself
+    # "project-authored" or "cc-by-sa-3.0+gfdl" and become eligible.
+    reviewed = classify_source(source_id, doc.get("license"))
+    recorded = doc.get("canonical_license")
+
+    if recorded and recorded != reviewed.canonical:
         return LicenseDecision(
-            source_id=str(doc.get("source_id", "?")), canonical=canonical,
+            source_id=source_id, canonical=reviewed.canonical,
             original=doc.get("license"),
-            commercial=p["commercial"], redistribution=p["redistribution"],
-            attribution=p["attribution"], share_alike=p["share_alike"],
-            nc_restriction=p["nc_restriction"], eligible=p["eligible"],
-            obligations=p["obligations"], review=p["review"],
-            reason=f"recorded at ingestion as {canonical}",
+            commercial=False, redistribution=False, attribution=False,
+            share_alike=False, nc_restriction=False, eligible=False,
+            obligations=[], review=reviewed.review,
+            reason=(f"license_conflict: record declares {recorded!r} but source "
+                    f"{source_id!r} is reviewed as {reviewed.canonical!r}"),
         )
-    return classify_source(str(doc.get("source_id", "?")), doc.get("license"))
+
+    return LicenseDecision(
+        source_id=source_id, canonical=reviewed.canonical,
+        original=doc.get("license"),
+        commercial=reviewed.commercial, redistribution=reviewed.redistribution,
+        attribution=reviewed.attribution, share_alike=reviewed.share_alike,
+        nc_restriction=reviewed.nc_restriction, eligible=reviewed.eligible,
+        obligations=reviewed.obligations, review=reviewed.review,
+        reason=reviewed.reason if not recorded else f"reviewed mapping confirms {recorded!r}",
+    )
 
 
 # ── PII detection ────────────────────────────────────────────────────────

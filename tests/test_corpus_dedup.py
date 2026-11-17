@@ -26,18 +26,30 @@ def write_documents(path: str, records: list[dict]) -> None:
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
+# Phase 16 made the reviewed source mapping authoritative: a record whose source
+# was never reviewed is ineligible even if it declares an approved licence. These
+# tests are about deduplication, so they use reviewed source ids.
+_REVIEWED = {
+    "src_a": ("wikipedia_en_20231101", "cc-by-sa-3.0+gfdl"),
+    "src_b": ("cosmopedia_v2_sample", "odc-by-1.0"),
+    "src": ("wikipedia_en_20231101", "cc-by-sa-3.0+gfdl"),
+}
+
+
 def doc(text: str, source: str, doc_id: str, language: str = "en",
         domain: str = "knowledge", flags: list[str] | None = None) -> dict:
     import hashlib
     norm = " ".join(text.split())
+    source_id, canonical = _REVIEWED.get(source, ("wikipedia_en_20231101",
+                                                 "cc-by-sa-3.0+gfdl"))
     return {
         "document_id": f"{source}:{doc_id}",
-        "source_id": source,
+        "source_id": source_id,
         "source_name": source,
         "source_url": f"https://example.invalid/{doc_id}",
-        "license": "project-authored",
+        "license": canonical,
         "license_status": "documented",
-        "canonical_license": "project-authored",
+        "canonical_license": canonical,
         "eligible_for_training_mixture": True,
         "language": language,
         "domain": domain,

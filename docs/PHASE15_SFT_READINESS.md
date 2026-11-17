@@ -36,8 +36,11 @@ a `provenance` block.
    held-out loss and format compliance (does the model emit the required
    `<|system|>…<|end|>` structure, does it stop at the right token). Loss on SFT
    data measures imitation of the data, not helpfulness.
-5. **The base model is too small for a fair SFT test.** A ~4-layer / 25 M-parameter
-   model fine-tuned on 54 k instructions will produce the format and little else.
+5. **The base model is small for a fair SFT test.** A 124,439,808-parameter,
+   12-layer model (verified from the checkpoint in `docs/PHASE16_MODEL_BASELINE.md`;
+   an earlier version of this report said "~4-layer / 25 M", which was wrong)
+   trained on only 47 M tokens, fine-tuned on 54 k instructions, will produce the
+   format and little else.
    Reporting that as "instruction following" would be a claim without evidence.
 
 ## 3. What would make it ready
