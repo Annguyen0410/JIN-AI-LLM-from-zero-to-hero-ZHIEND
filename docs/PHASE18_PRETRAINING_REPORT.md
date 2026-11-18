@@ -20,7 +20,7 @@ saved log excerpt — `NOT MEASURED` from the log).
 | steps | **9,155** (`--max-steps`, closed budget) |
 | tokens processed by training | **299,991,040** |
 | schedule | warmup 300, cosine 1e-4 → 1e-5 (`min_lr_ratio` 0.1) |
-| eval | every 500 steps × 20 iters (81,920 val tokens per eval) |
+| eval | every 500 steps × 20 iters at val batch 2 (40,960 val tokens per eval) |
 | saves | every 250 steps, `latest.pt` + `best.pt` with manifests |
 | session budget | 560 min; used **500 min of wall clock in one session** (`--session-max-minutes` never triggered) |
 | wall clock | 30,000.7 s = **8.33 h** |
@@ -46,7 +46,7 @@ The two numbers are directly comparable: same `val.bin`, same tokenizer, same
 Phase 16 → 17 comparison this is not a cross-evaluator comparison.
 
 Validation bottomed at step 8,500 and sat 0.0405 higher at step 9,155 while
-training loss kept falling (3.5174). Each eval is only 81,920 tokens, so a 0.04
+training loss kept falling (3.5174). Each eval is only 40,960 tokens, so a 0.04
 swing is near the noise band of the measurement — the honest reading is **no
 further improvement in the last 655 steps**, on **1.86 passes over the same
 160.9 M tokens** (2.49 passes counting Phase 17's 100 M). The last six hours of

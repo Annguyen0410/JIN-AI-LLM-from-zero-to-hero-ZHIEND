@@ -75,6 +75,7 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
     os.makedirs(os.path.dirname(out_bin), exist_ok=True)
     tmp = out_bin + ".tmp"
     keep_prob: dict[str, float] = {}
+    target_by_source: dict[str, int] = {}
     if mix and max_tokens:
         chars_by_source, _ = source_char_counts(split_files)
         present = {s: c for s, c in chars_by_source.items() if c > 0}
@@ -85,6 +86,10 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
         for source, chars in present.items():
             share = weights[source] / wsum
             target_tokens = max_tokens * share
+            # Per-source budget, enforced below. A single global cap stopped at
+            # whichever source came first in file order, so a mixture of wiki
+            # 0.85 + cosmopedia 0.15 could silently become 100% wiki.
+            target_by_source[source] = int(target_tokens)
             est_tokens = chars * tok_per_char
             keep_prob[source] = min(1.0, target_tokens / max(1.0, est_tokens))
         log(f"[mix] keep probability per source: "
@@ -117,6 +122,9 @@ def build(split_files: list[str], out_bin: str, tokenizer, max_tokens: int,
                 ids = tokenizer.encode(text)
                 if not ids:
                     continue
+                source_id = rec.get("source_id", "?")
+                if target_by_source and per_source[source_id] >= target_by_source.get(source_id, 0):
+                    continue        # this source has had its share; others still get theirs
                 seq = [tokenizer.eot_id] + ids + [tokenizer.eot_id]
                 np.asarray(seq, dtype=np.uint16).tofile(fh)
                 # Attribution must survive tokenisation: every token range is
