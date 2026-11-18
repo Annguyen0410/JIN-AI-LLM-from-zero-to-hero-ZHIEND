@@ -1,0 +1,91 @@
+{
+  "phase": 18,
+  "status": "measured_from_kaggle_log",
+  "source": "papermill log tail pasted by the operator (Kaggle), lines 2070-2109",
+  "what_is_measured": "training/validation loss and checkpoint lineage of a 300M-token continued-pretrain run",
+  "what_is_not_measured": [
+    "GPU model and copy of the training log (only the pasted tail exists locally)",
+    "validation curve between step 0 and 9150 (only the last eval is in the excerpt)",
+    "any capability metric (no scripts/gpt2_bench.py run on this checkpoint)",
+    "test-split loss"
+  ],
+  "run": {
+    "out_dir_on_host": "/kaggle/working/phase18_output/run_400m",
+    "init_mode": "continued_pretrain",
+    "parent_checkpoint": "phase17_output/run_100m/best.pt",
+    "parent_sha256": "caac54d4fcbc...",
+    "preset": "gpt2_small_reference",
+    "parameters_total": "124.44M",
+    "seq_len": 1024,
+    "batch_size": 4,
+    "grad_accum": 8,
+    "tokens_per_step": 32768,
+    "steps": 9155,
+    "warmup_steps": 300,
+    "peak_lr": 0.0001,
+    "final_lr": 0.00001,
+    "min_lr_ratio": 0.1,
+    "eval_interval": 500,
+    "eval_iters": 20,
+    "save_interval": 250,
+    "session_max_minutes": 560,
+    "seed": 17,
+    "code_revision": "4366fa76 and earlier",
+    "corpus": "data/gpt2_corpus_v7 (reused from Phase 17 output)",
+    "corpus_train_sha256": "1b9d57384bb6d620810de402adfa92eeb4376dcaa7a788841a681f8b4fbaad90",
+    "corpus_train_tokens": 160920724,
+    "corpus_val_sha256": "b8a2369039d246eed48f5ada6641a39c4e1b20d3075269c17d284106a2225dfc"
+  },
+  "additional_tokens_this_run": 299991040,
+  "epochs_over_corpus_this_run": 1.86,
+  "epochs_over_corpus_cumulative": 2.49,
+  "wall_clock_seconds": 30000.7,
+  "wall_clock_hours": 8.33,
+  "throughput_tokens_per_second": 10055,
+  "peak_vram_gb": 5.8,
+  "sessions_used": 1,
+  "final_train_loss": 3.5174,
+  "final_val_loss": 3.5244,
+  "final_val_ppl": 33.93,
+  "best_val_loss": 3.4839,
+  "best_val_ppl": 32.59,
+  "best_step": 8500,
+  "best_additional_tokens": 278528000,
+  "checkpoints": {
+    "latest.pt": {
+      "sha256_prefix": "4f0555bd09c34dda",
+      "iteration": 9155,
+      "additional_tokens_this_run": 299991040,
+      "best_val_loss": 3.4839,
+      "init_mode": "continued_pretrain",
+      "parent_sha256_prefix": "caac54d4fcbc"
+    },
+    "best.pt": {
+      "sha256_prefix": "cc9c4a73575e7ba0",
+      "iteration": 8500,
+      "additional_tokens_this_run": 278528000,
+      "best_val_loss": 3.4839,
+      "init_mode": "continued_pretrain",
+      "parent_sha256_prefix": "caac54d4fcbc"
+    }
+  },
+  "sha256_note": "Only the 16-hex-char prefix appears in the log; the full digests are in the Kaggle output manifests, not on this machine.",
+  "comparison_to_phase17": {
+    "phase17_best_val_loss": 3.8585,
+    "phase17_best_val_ppl": 47.39,
+    "delta_loss": -0.3746,
+    "relative_loss_reduction_percent": 9.7,
+    "ppl_reduction_percent": 31.2,
+    "comparable": true,
+    "why_comparable": "Same val.bin (sha b8a23690...), same tokenizer, same eval_iters=20, same corpus"
+  },
+  "interpretation_limit": "In-domain Wikipedia validation perplexity only. No downstream task, generation or tool-use metric was measured, so this is not a capability claim.",
+  "milestones": {
+    "PRETRAINING_100M_ADDITIONAL_TOKENS": "achieved (299,991,040)",
+    "PRETRAINING_300M_ADDITIONAL_TOKENS": "achieved",
+    "PRETRAINING_1B_ADDITIONAL_TOKENS": "not achieved",
+    "KAGGLE_ENVIRONMENT_VERIFIED": "partially: throughput 10,055 tok/s and 5.8 GB VRAM reported by the run; GPU model not in the log excerpt, and the log itself is not archived locally",
+    "KAGGLE_SESSION_PAUSE_RESUME_VERIFIED": "not achieved - the run finished in a single 8.3 h session, so the mid-run pause path was never exercised; resume-from-completed was exercised and exited immediately",
+    "CAPABILITY_BENCHMARK_ON_PHASE18_CHECKPOINT": "NOT MEASURED"
+  }
+}
